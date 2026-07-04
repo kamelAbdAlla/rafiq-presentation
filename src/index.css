@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  body {
+    @apply bg-white text-rafiq-neutral-900 antialiased selection:bg-rafiq-primary-200 selection:text-rafiq-primary-900;
+  }
+}
