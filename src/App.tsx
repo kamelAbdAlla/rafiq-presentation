@@ -924,16 +924,16 @@ const TimePlanPage = () => {
    ========================================================================= */
 const TeamRolesPage = () => {
   const teamRoles = [
-    { member: "Fatma Mohamed Abu Elfadl", tasks: "Frontend Web Implementation & Semantic Layouts" },
-    { member: "Habiba Mohamed Mamdouh", tasks: "Mobile App Implementation (Flutter & Provider)" },
-    { member: "Mariam Mohamed Khalil", tasks: "System Analysis, Requirements Definition & Documentation" },
-    { member: "Nour Ahmed Zewita", tasks: "Backend Implementation (ASP.NET Core & Auth)" },
-    { member: "Nouran Mohamed Amin", tasks: "UI/UX Design, Wireframing & Prototyping (Figma)" },
-    { member: "Shahd Makkawy Ibrahim", tasks: "Frontend Web Optimization & API Integration" },
-    { member: "Ahmed Abd Alalim Tawfiq", tasks: "Mobile App State Management & HTTP Communication" },
-    { member: "Kamel Mohamed Abdulla", tasks: "AI Integrations (RAG, Recommendation Engine) & Core Backend" },
-    { member: "Moaz Mostafa Zehry", tasks: "Database Schema Management & Unit of Work Layer" },
-    { member: "Mohamed Saber Ahmed", tasks: "Quality Assurance, Security Architecture & Testing" },
+    { member: "Kamel Mohamed Abdulla", tasks: "Artificial Intelligence (AI)" },
+    { member: "Shahd Makkawy Ibrahim", tasks: "Artificial Intelligence (AI)" },
+    { member: "Nouran Mohamed Amin", tasks: "Artificial Intelligence (AI)" },
+    { member: "Moaz Mostafa Zehry", tasks: "Backend Development" },
+    { member: "Mohamed Saber Ahmed", tasks: "Backend Development" },
+    { member: "Ahmed Abd Alalim Tawfiq", tasks: "Frontend Web Development" },
+    { member: "Fatma Mohamed Abu Elfadl", tasks: "Frontend Web Development" },
+    { member: "Nour Ahmed Zewita", tasks: "Mobile App Development (Flutter)" },
+    { member: "Mariam Mohamed Khalil", tasks: "Mobile App Development (Flutter)" },
+    { member: "Habiba Mohamed Mamdouh", tasks: "UI/UX Design" },
   ];
   return (
     <PremiumSlideTemplate>
