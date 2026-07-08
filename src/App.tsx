@@ -2,2170 +2,1031 @@ import { useState } from 'react';
 import type { ReactNode } from 'react';
 import Navbar from './components/layout/Navbar';
 import HeroSection from './components/sections/HeroSection';
-import { Code2, Layers, Zap, Route, Boxes, Send, Palette, Heart, GitBranch } from 'lucide-react';
-import {
-  Search,
-  Users,
-  PenTool,
-  CheckCircle2,
-} from "lucide-react";
-import {Target, Sparkles, TrendingUp, GraduationCap, Award } from 'lucide-react';
+
+/* UNIFIED LUCIDE ICONS IMPORT */
+import { 
+  Code2, Layers, Zap, Route, Boxes, Send, Palette, Heart, GitBranch, 
+  Search, Users, PenTool, CheckCircle2, Target, Sparkles, TrendingUp, 
+  GraduationCap, Award, Smartphone, Lock, Bell, Server, Filter, Database, 
+  ShieldCheck, Repeat, Users2, TestTube2, Package, AlertTriangle, BookOpen, 
+  Wifi, Building2, UserX, Rocket, Check, X, PlayCircle, Cpu, Wrench, 
+  Brain, Calendar, ClipboardList, BookMarked, XCircle, FileImage,
+  Monitor, BrainCircuit, ArrowRightLeft, ArrowRight 
+} from 'lucide-react';
 
 /* =========================================================================
    THE PREMIUM SLIDE TEMPLATE
-   Wrap any new page you build in this component. It automatically adds:
-   - The Dot Grid Background
-   - The Glowing Orb
-   - The Menu Placeholder (pt-32) so the menu never overlaps your text!
    ========================================================================= */
 const PremiumSlideTemplate = ({ children }: { children: ReactNode }) => (
   <div className="relative min-h-screen w-full bg-[#FAFAFA] flex flex-col overflow-hidden">
-    
-    {/* Premium Backgrounds (Matches the Hero Section) */}
     <div className="absolute inset-0 z-0 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#E2E8F0 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-rafiq-primary-400/10 rounded-full blur-[120px] pointer-events-none" />
-
-    {/* THE MENU PLACEHOLDER: 
-      'pt-32' adds physical empty space at the top of the page exactly the size of your menu 
-    */}
-    <main className="relative z-10 flex-1 w-full max-w-6xl mx-auto px-6 pt-32 pb-16 overflow-y-auto">
+    <main className="relative z-10 flex-1 w-full max-w-7xl mx-auto px-6 pt-32 pb-16 overflow-y-auto">
       {children}
     </main>
   </div>
 );
 
 /* =========================================================================
-   YOUR SEPARATED SLIDE PAGES
-   Here is where you will add your actual content for each section!
+   1. Problem Overview
    ========================================================================= */
-
-   /* ===================== SYSTEM ARCHITECTURE DIAGRAM ===================== */
-const ArchitectureDiagram = () => (
-  <svg viewBox="0 0 800 320" className="w-full h-auto">
-    {/* Actors */}
-    <rect x="20" y="20" width="160" height="90" rx="12" fill="#F0F6FF" stroke="#1564BF" strokeWidth="1.5"/>
-    <text x="100" y="45" textAnchor="middle" fontSize="13" fontWeight="600" fill="#082956">Actors</text>
-    <text x="100" y="68" textAnchor="middle" fontSize="11" fill="#40414A">Student · Admin</text>
-    <text x="100" y="84" textAnchor="middle" fontSize="11" fill="#40414A">Instructor · Advisor</text>
-
-    {/* Channels */}
-    <rect x="20" y="200" width="160" height="70" rx="12" fill="#F0F6FF" stroke="#1564BF" strokeWidth="1.5"/>
-    <text x="100" y="228" textAnchor="middle" fontSize="13" fontWeight="600" fill="#082956">Channels</text>
-    <text x="100" y="250" textAnchor="middle" fontSize="11" fill="#40414A">Web Portal · Mobile App</text>
-
-    {/* GUI */}
-    <rect x="290" y="110" width="140" height="70" rx="12" fill="#1564BF"/>
-    <text x="360" y="150" textAnchor="middle" fontSize="14" fontWeight="700" fill="white">GUI</text>
-
-    {/* Backend DB */}
-    <rect x="290" y="230" width="140" height="70" rx="12" fill="#0C3C7D"/>
-    <text x="360" y="260" textAnchor="middle" fontSize="12" fontWeight="600" fill="white">Backend</text>
-    <text x="360" y="278" textAnchor="middle" fontSize="12" fontWeight="600" fill="white">Database</text>
-
-    {/* AI Agent */}
-    <rect x="560" y="170" width="140" height="70" rx="12" fill="#3A82F6"/>
-    <text x="630" y="200" textAnchor="middle" fontSize="12" fontWeight="600" fill="white">AI Agent</text>
-    <text x="630" y="218" textAnchor="middle" fontSize="10" fill="#F0F6FF">Recs · Chatbot</text>
-
-    {/* Notification Service */}
-    <rect x="560" y="20" width="140" height="60" rx="12" fill="#BAD6FE"/>
-    <text x="630" y="45" textAnchor="middle" fontSize="11" fontWeight="600" fill="#082956">Notification</text>
-    <text x="630" y="61" textAnchor="middle" fontSize="11" fontWeight="600" fill="#082956">Service</text>
-
-    {/* External Services */}
-    <rect x="560" y="260" width="140" height="45" rx="12" fill="#DCDDE2"/>
-    <text x="630" y="287" textAnchor="middle" fontSize="11" fontWeight="600" fill="#40414A">Email / External</text>
-
-    {/* Arrows */}
-    <line x1="180" y1="65" x2="290" y2="130" stroke="#8F91A0" strokeWidth="1.5" markerEnd="url(#arrow)"/>
-    <line x1="180" y1="235" x2="290" y2="180" stroke="#8F91A0" strokeWidth="1.5" markerEnd="url(#arrow)"/>
-    <line x1="430" y1="150" x2="560" y2="195" stroke="#8F91A0" strokeWidth="1.5" markerEnd="url(#arrow)"/>
-    <line x1="430" y1="245" x2="560" y2="215" stroke="#8F91A0" strokeWidth="1.5" markerEnd="url(#arrow)"/>
-    <line x1="360" y1="180" x2="360" y2="230" stroke="#8F91A0" strokeWidth="1.5" markerEnd="url(#arrow)"/>
-    <line x1="630" y1="170" x2="630" y2="80" stroke="#8F91A0" strokeWidth="1.5" markerEnd="url(#arrow)"/>
-    <line x1="630" y1="240" x2="630" y2="260" stroke="#8F91A0" strokeWidth="1.5" markerEnd="url(#arrow)"/>
-
-    <defs>
-      <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
-        <path d="M0,0 L8,4 L0,8 Z" fill="#8F91A0"/>
-      </marker>
-    </defs>
-  </svg>
-);
-
-/* ===================== USE CASE DIAGRAM ===================== */
-const UseCaseDiagram = () => (
-  <svg viewBox="0 0 600 320" className="w-full h-auto">
-    {/* Actor: Student */}
-    <g transform="translate(30,140)">
-      <circle cx="20" cy="10" r="12" fill="none" stroke="#0C3C7D" strokeWidth="2"/>
-      <line x1="20" y1="22" x2="20" y2="55" stroke="#0C3C7D" strokeWidth="2"/>
-      <line x1="0" y1="35" x2="40" y2="35" stroke="#0C3C7D" strokeWidth="2"/>
-      <line x1="20" y1="55" x2="5" y2="80" stroke="#0C3C7D" strokeWidth="2"/>
-      <line x1="20" y1="55" x2="35" y2="80" stroke="#0C3C7D" strokeWidth="2"/>
-      <text x="20" y="98" textAnchor="middle" fontSize="11" fill="#40414A">Student</text>
-    </g>
-
-    {/* Use case ovals */}
-    {[
-      { cx: 220, cy: 40, label: "Login" },
-      { cx: 220, cy: 110, label: "Enroll in Courses" },
-      { cx: 220, cy: 180, label: "View Grades" },
-      { cx: 220, cy: 250, label: "Interact with Chatbot" },
-      { cx: 460, cy: 75, label: "Generate Schedule" },
-      { cx: 460, cy: 215, label: "Course Recommendations" },
-    ].map((u, i) => (
-      <g key={i}>
-        <ellipse cx={u.cx} cy={u.cy} rx="95" ry="28" fill="#F0F6FF" stroke="#1564BF" strokeWidth="1.5"/>
-        <text x={u.cx} y={u.cy + 4} textAnchor="middle" fontSize="11" fill="#082956">{u.label}</text>
-      </g>
-    ))}
-
-    {/* Connections from actor */}
-    <line x1="60" y1="155" x2="125" y2="40" stroke="#8F91A0" strokeWidth="1.2"/>
-    <line x1="60" y1="165" x2="125" y2="110" stroke="#8F91A0" strokeWidth="1.2"/>
-    <line x1="60" y1="175" x2="125" y2="180" stroke="#8F91A0" strokeWidth="1.2"/>
-    <line x1="60" y1="185" x2="125" y2="250" stroke="#8F91A0" strokeWidth="1.2"/>
-
-    {/* Include relationships */}
-    <line x1="315" y1="110" x2="365" y2="80" stroke="#8F91A0" strokeWidth="1" strokeDasharray="4,3"/>
-    <text x="330" y="90" fontSize="9" fill="#8F91A0">include</text>
-    <line x1="315" y1="180" x2="365" y2="210" stroke="#8F91A0" strokeWidth="1" strokeDasharray="4,3"/>
-    <text x="330" y="200" fontSize="9" fill="#8F91A0">extend</text>
-  </svg>
-);
-
-/* ===================== SEQUENCE DIAGRAM ===================== */
-const SequenceDiagram = () => (
-  <svg viewBox="0 0 640 320" className="w-full h-auto">
-    {/* Lifeline headers */}
-    {[
-      { x: 60, label: "Student" },
-      { x: 220, label: "UI" },
-      { x: 400, label: "Registration\nService" },
-      { x: 570, label: "AI Scheduler" },
-    ].map((l, i) => (
-      <g key={i}>
-        <rect x={l.x - 55} y="10" width="110" height="40" rx="8" fill="#1564BF"/>
-        {l.label.split('\n').map((line, j) => (
-          <text key={j} x={l.x} y={26 + j * 14} textAnchor="middle" fontSize="10" fontWeight="600" fill="white">{line}</text>
-        ))}
-        <line x1={l.x} y1="50" x2={l.x} y2="300" stroke="#C5C6CE" strokeWidth="1.5" strokeDasharray="4,3"/>
-      </g>
-    ))}
-
-    {/* Messages */}
-    <line x1="60" y1="80" x2="220" y2="80" stroke="#40414A" strokeWidth="1.3" markerEnd="url(#arrow2)"/>
-    <text x="140" y="74" textAnchor="middle" fontSize="9.5" fill="#40414A">Open Registration Page</text>
-
-    <line x1="220" y1="115" x2="400" y2="115" stroke="#40414A" strokeWidth="1.3" markerEnd="url(#arrow2)"/>
-    <text x="310" y="109" textAnchor="middle" fontSize="9.5" fill="#40414A">Request Courses</text>
-
-    <line x1="400" y1="150" x2="220" y2="150" stroke="#40414A" strokeWidth="1.3" strokeDasharray="4,3" markerEnd="url(#arrow2)"/>
-    <text x="310" y="144" textAnchor="middle" fontSize="9.5" fill="#40414A">Display Available Courses</text>
-
-    <line x1="220" y1="185" x2="400" y2="185" stroke="#40414A" strokeWidth="1.3" markerEnd="url(#arrow2)"/>
-    <text x="310" y="179" textAnchor="middle" fontSize="9.5" fill="#40414A">Submit Course Selection</text>
-
-    <line x1="400" y1="215" x2="570" y2="215" stroke="#40414A" strokeWidth="1.3" markerEnd="url(#arrow2)"/>
-    <text x="485" y="209" textAnchor="middle" fontSize="9.5" fill="#40414A">Request Schedule Generation</text>
-
-    <line x1="570" y1="250" x2="220" y2="250" stroke="#40414A" strokeWidth="1.3" strokeDasharray="4,3" markerEnd="url(#arrow2)"/>
-    <text x="395" y="244" textAnchor="middle" fontSize="9.5" fill="#40414A">Return Conflict-Free Schedule</text>
-
-    <line x1="220" y1="280" x2="60" y2="280" stroke="#40414A" strokeWidth="1.3" strokeDasharray="4,3" markerEnd="url(#arrow2)"/>
-    <text x="140" y="274" textAnchor="middle" fontSize="9.5" fill="#40414A">Show Schedule</text>
-
-    <defs>
-      <marker id="arrow2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
-        <path d="M0,0 L8,4 L0,8 Z" fill="#40414A"/>
-      </marker>
-    </defs>
-  </svg>
-);
-
-/* ===================== ACTIVITY DIAGRAM ===================== */
-const ActivityDiagram = () => (
-  <svg viewBox="0 0 320 460" className="w-full h-auto">
-    <circle cx="160" cy="20" r="10" fill="#0C3C7D"/>
-    <line x1="160" y1="30" x2="160" y2="55" stroke="#8F91A0" strokeWidth="1.5" markerEnd="url(#arrow3)"/>
-
-    <rect x="70" y="55" width="180" height="40" rx="20" fill="#F0F6FF" stroke="#1564BF" strokeWidth="1.5"/>
-    <text x="160" y="80" textAnchor="middle" fontSize="11" fill="#082956">Open Registration Page</text>
-    <line x1="160" y1="95" x2="160" y2="120" stroke="#8F91A0" strokeWidth="1.5" markerEnd="url(#arrow3)"/>
-
-    <rect x="70" y="120" width="180" height="40" rx="20" fill="#F0F6FF" stroke="#1564BF" strokeWidth="1.5"/>
-    <text x="160" y="145" textAnchor="middle" fontSize="11" fill="#082956">Select Courses</text>
-    <line x1="160" y1="160" x2="160" y2="185" stroke="#8F91A0" strokeWidth="1.5" markerEnd="url(#arrow3)"/>
-
-    <rect x="70" y="185" width="180" height="40" rx="20" fill="#F0F6FF" stroke="#1564BF" strokeWidth="1.5"/>
-    <text x="160" y="210" textAnchor="middle" fontSize="11" fill="#082956">Generate Smart Table</text>
-    <line x1="160" y1="225" x2="160" y2="255" stroke="#8F91A0" strokeWidth="1.5" markerEnd="url(#arrow3)"/>
-
-    {/* Decision diamond */}
-    <polygon points="160,255 220,290 160,325 100,290" fill="white" stroke="#1564BF" strokeWidth="1.5"/>
-    <text x="160" y="294" textAnchor="middle" fontSize="10" fill="#082956">Table Suitable?</text>
-
-    {/* Yes path */}
-    <line x1="160" y1="325" x2="160" y2="355" stroke="#8F91A0" strokeWidth="1.5" markerEnd="url(#arrow3)"/>
-    <text x="172" y="342" fontSize="10" fill="#40414A">yes</text>
-    <rect x="70" y="355" width="180" height="40" rx="20" fill="#F0F6FF" stroke="#1564BF" strokeWidth="1.5"/>
-    <text x="160" y="380" textAnchor="middle" fontSize="11" fill="#082956">Save Registration</text>
-    <line x1="160" y1="395" x2="160" y2="420" stroke="#8F91A0" strokeWidth="1.5" markerEnd="url(#arrow3)"/>
-
-    {/* No path (loop back) */}
-    <line x1="220" y1="290" x2="270" y2="290" stroke="#8F91A0" strokeWidth="1.5"/>
-    <text x="230" y="283" fontSize="10" fill="#40414A">no</text>
-    <line x1="270" y1="290" x2="270" y2="140" stroke="#8F91A0" strokeWidth="1.5"/>
-    <line x1="270" y1="140" x2="250" y2="140" stroke="#8F91A0" strokeWidth="1.5" markerEnd="url(#arrow3)"/>
-
-    <circle cx="160" cy="432" r="10" fill="none" stroke="#0C3C7D" strokeWidth="2"/>
-    <circle cx="160" cy="432" r="5" fill="#0C3C7D"/>
-
-    <defs>
-      <marker id="arrow3" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
-        <path d="M0,0 L8,4 L0,8 Z" fill="#8F91A0"/>
-      </marker>
-    </defs>
-  </svg>
-);
-
-/* ===================== CLASS DIAGRAM ===================== */
-const ClassDiagram = () => {
-  const ClassBox = ({ x, y, w, title, attrs, methods, fill = "#F0F6FF", titleFill = "#1564BF" }: any) => (
-    <g transform={`translate(${x},${y})`}>
-      <rect width={w} height={attrs.length * 14 + methods.length * 14 + 34} fill={fill} stroke="#1564BF" strokeWidth="1.2"/>
-      <rect width={w} height="24" fill={titleFill}/>
-      <text x={w / 2} y="16" textAnchor="middle" fontSize="11" fontWeight="700" fill="white">{title}</text>
-      <line x1="0" y1={24 + attrs.length * 14 + 6} x2={w} y2={24 + attrs.length * 14 + 6} stroke="#1564BF" strokeWidth="1"/>
-      {attrs.map((a: string, i: number) => (
-        <text key={i} x="8" y={24 + 14 * (i + 1)} fontSize="9" fill="#40414A">{a}</text>
-      ))}
-      {methods.map((m: string, i: number) => (
-        <text key={i} x="8" y={24 + attrs.length * 14 + 14 * (i + 1) + 6} fontSize="9" fill="#40414A">{m}</text>
-      ))}
-    </g>
-  );
+const ProblemOverviewPage = () => {
+  const problems = [
+    { title: "Course Planning Complexity", desc: "As academic requirements become more complex, students increasingly struggle with manual course planning, understanding academic regulations, and tracking GPA." },
+    { title: "Inadequate Academic Advising", desc: "Traditional advising relies heavily on limited faculty availability, leading to rushed decisions, delayed graduation, and a high burden on human advisors." },
+    { title: "Lack of Centralized Tracking", desc: "The absence of an integrated platform makes it difficult for students to monitor their academic performance and progression in real-time." },
+    { title: "Manual Registration Conflicts", desc: "Manual scheduling often leads to time conflicts, invalid prerequisite selections, and inefficient academic loads for students." },
+    { title: "Absence of Proactive Guidance", desc: "Students frequently fail to foresee academic risks, falling below required GPA levels without early warnings or smart intervention." },
+    { title: "Fragmented Educational Ecosystem", desc: "Existing platforms focus only on course delivery (LMS) or basic registration (SIS) without providing unified, intelligent academic guidance." }
+  ];
 
   return (
-    <svg viewBox="0 0 760 380" className="w-full h-auto">
-      <ClassBox x={300} y={10} w={160} title="User" attrs={["userId: String", "name: String", "role: String"]} methods={["login()", "logout()"]} titleFill="#0C3C7D" />
-
-      <ClassBox x={20} y={130} w={150} title="Student" attrs={["gpa: Double", "level: int"]} methods={["enrollCourse()", "viewGPA()"]} />
-      <ClassBox x={210} y={130} w={140} title="Admin" attrs={["adminType: String"]} methods={["addStudent()", "addCourse()"]} />
-      <ClassBox x={390} y={130} w={150} title="Instructor" attrs={["specialization: String"]} methods={["enterGrades()", "viewClassList()"]} />
-      <ClassBox x={580} y={130} w={160} title="AcademicAdvisor" attrs={["department: String"]} methods={["reviewPlan()", "registerCourses()"]} />
-
-      <ClassBox x={20} y={270} w={150} title="ScheduleGenerator" attrs={[]} methods={["generateSchedule()", "detectConflict()"]} fill="#FFFFFF" titleFill="#3A82F6" />
-      <ClassBox x={210} y={270} w={150} title="RecommendationEngine" attrs={[]} methods={["recommendCourse()"]} fill="#FFFFFF" titleFill="#3A82F6" />
-      <ClassBox x={400} y={270} w={140} title="Chatbot" attrs={[]} methods={["answerQuestion()"]} fill="#FFFFFF" titleFill="#3A82F6" />
-      <ClassBox x={580} y={270} w={150} title="Course" attrs={["credits: int"]} methods={["checkEligibility()"]} />
-
-      {/* Inheritance lines (triangle arrows) from User */}
-      {[95, 280, 460, 660].map((x, i) => (
-        <line key={i} x1={x} y1={34} x2={x} y2={130} stroke="#0C3C7D" strokeWidth="1.3"/>
-      ))}
-
-      {/* Student to helper classes */}
-      <line x1="95" y1="200" x2="95" y2="270" stroke="#8F91A0" strokeWidth="1.2"/>
-      <line x1="95" y1="235" x2="285" y2="270" stroke="#8F91A0" strokeWidth="1.2"/>
-      <line x1="95" y1="235" x2="470" y2="270" stroke="#8F91A0" strokeWidth="1.2"/>
-      <line x1="95" y1="235" x2="655" y2="270" stroke="#8F91A0" strokeWidth="1.2"/>
-    </svg>
+    <PremiumSlideTemplate>
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-5xl font-bold text-slate-900 mb-6 tracking-tight text-center">Problem Overview</h2>
+        <p className="text-lg text-slate-500 text-center mb-12 max-w-3xl mx-auto">Addressing the growing need for an intelligent and centralized academic management platform.</p>
+        
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {problems.map((p, i) => (
+            <div key={i} className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/60 hover:shadow-md transition-shadow">
+              <div className="w-10 h-10 rounded-full bg-red-50 text-red-500 flex items-center justify-center mb-4"><AlertTriangle className="w-5 h-5" /></div>
+              <h4 className="font-bold text-slate-900 mb-2">{p.title}</h4>
+              <p className="text-sm text-slate-600 leading-relaxed">{p.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </PremiumSlideTemplate>
   );
 };
-const BusinessPage = () => (
+
+/* =========================================================================
+   2. Project Goals
+   ========================================================================= */
+const ProjectGoalsPage = () => {
+  const goals = [
+    "Develop a smart Academic Management System powered by data analytics and AI-driven recommendations.",
+    "Provide an integrated platform to monitor academic performance and track GPA progression accurately.",
+    "Enable seamless course enrollment while automatically validating prerequisites and scheduling conflicts.",
+    "Introduce an intelligent chatbot (Rafiq) to serve as a 24/7 academic advising companion.",
+    "Support early-warning and risk detection to alert students of potential academic standing issues.",
+    "Provide a dedicated Smart Advisor Portal for human advisors to monitor and assist at-risk students.",
+    "Ensure secure integration and data exchange with existing university systems (e.g., Ibn Al-Haitham).",
+    "Enhance overall student learning outcomes and improve the institutional graduation rate.",
+  ];
+
+  return (
+    <PremiumSlideTemplate>
+      <div className="max-w-4xl mx-auto">
+        <h2 className="text-5xl font-bold text-slate-900 mb-6 tracking-tight text-center">Project Goals</h2>
+        <p className="text-lg text-slate-500 text-center mb-12">The strategic objectives of the Rafiq Academic Guidance System.</p>
+        
+        <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200/60">
+          <ul className="space-y-4">
+            {goals.map((goal, i) => (
+              <li key={i} className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full bg-green-50 text-green-600 flex items-center justify-center shrink-0 mt-0.5"><Target className="w-4 h-4" /></div>
+                <p className="text-slate-700 leading-relaxed pt-1">{goal}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </PremiumSlideTemplate>
+  );
+};
+
+/* =========================================================================
+   3. Business Model Canvas (BMC)
+   ========================================================================= */
+const BusinessModelCanvasPage = () => (
   <PremiumSlideTemplate>
-    <div className="max-w-5xl mx-auto">
-      <h2 className="text-5xl font-bold text-slate-900 mb-4 tracking-tight text-center">
-        Business & Strategy
-      </h2>
-      <p className="text-lg text-slate-500 text-center mb-16 max-w-2xl mx-auto">
-        How Rafiq positions itself, how it's structured, and how it works
-        under the hood.
-      </p>
+    <div className="max-w-6xl mx-auto">
+      <h2 className="text-5xl font-bold text-slate-900 mb-6 tracking-tight text-center">Business Model Canvas</h2>
+      
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-3 mb-4">
+        {/* Key Partners */}
+        <div className="md:row-span-2 bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm">
+          <h4 className="font-bold text-slate-900 mb-3 text-sm flex items-center gap-2"><Building2 className="w-4 h-4 text-slate-500"/> Key Partners</h4>
+          <ul className="space-y-2 text-xs text-slate-600">
+            <li>• Mansoura University Registrar</li>
+            <li>• Faculty Advisory Departments</li>
+            <li>• Student Associations</li>
+            <li>• AI & Cloud Service Providers</li>
+            <li>• SIS Providers (Ibn Al-Haitham)</li>
+          </ul>
+        </div>
 
-      {/* SWOT ANALYSIS */}
-      <h3 className="text-2xl font-semibold text-slate-800 mb-6 text-center">SWOT Analysis</h3>
-      <div className="grid md:grid-cols-2 gap-5 mb-16">
-        <div className="bg-white p-6 rounded-2xl border border-slate-200/60 shadow-sm">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="h-2.5 w-2.5 rounded-full bg-rafiq-primary-500" />
-            <h4 className="font-semibold text-slate-900">Strengths</h4>
-          </div>
-          <ul className="space-y-2 text-sm text-slate-600">
-            <li>• Adaptive guidance tailored to individual student needs</li>
-            <li>• Reduces dependency on traditional academic advisors</li>
-            <li>• Minimizes mistakes like poor course selection</li>
-            <li>• User-friendly, easy-to-use interface</li>
+        {/* Key Activities */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm">
+          <h4 className="font-bold text-slate-900 mb-3 text-sm flex items-center gap-2"><Zap className="w-4 h-4 text-slate-500"/> Key Activities</h4>
+          <ul className="space-y-2 text-xs text-slate-600">
+            <li>• LLM & RAG Integration</li>
+            <li>• Platform Engineering (Web/App)</li>
+            <li>• Secure API Development</li>
+            <li>• Academic Data Analytics</li>
           </ul>
         </div>
-        <div className="bg-white p-6 rounded-2xl border border-slate-200/60 shadow-sm">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="h-2.5 w-2.5 rounded-full bg-slate-400" />
-            <h4 className="font-semibold text-slate-900">Weaknesses</h4>
-          </div>
-          <ul className="space-y-2 text-sm text-slate-600">
-            <li>• Effectiveness relies heavily on accurate academic data</li>
-            <li>• Requires continuous maintenance as curricula/policies change</li>
+
+        {/* Value Propositions */}
+        <div className="md:row-span-2 bg-rafiq-primary-50 p-5 rounded-2xl border border-rafiq-primary-100 shadow-sm">
+          <h4 className="font-bold text-slate-900 mb-3 text-sm flex items-center gap-2"><Sparkles className="w-4 h-4 text-rafiq-primary-500"/> Value Propositions</h4>
+          <p className="text-xs text-slate-700 mb-3"><span className="font-bold">For Students:</span> A 24/7 intelligent companion for automated GPA tracking, conflict-free scheduling, and personalized AI advising.</p>
+          <p className="text-xs text-slate-700 mb-3"><span className="font-bold">For Academic Advisors:</span> A Smart Portal to monitor cohorts, automate repetitive queries, and identify at-risk students proactively.</p>
+          <p className="text-xs text-slate-700"><span className="font-bold">For Administration:</span> Enhanced educational ecosystem, improved retention, and seamless LMS/SIS integration.</p>
+        </div>
+
+        {/* Customer Relationships */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm">
+          <h4 className="font-bold text-slate-900 mb-3 text-sm flex items-center gap-2"><Heart className="w-4 h-4 text-slate-500"/> Cust. Relationships</h4>
+          <ul className="space-y-2 text-xs text-slate-600">
+            <li>• Automated 24/7 Chatbot Support</li>
+            <li>• Dedicated Faculty Helpdesk</li>
+            <li>• Continuous Student Feedback</li>
           </ul>
         </div>
-        <div className="bg-white p-6 rounded-2xl border border-slate-200/60 shadow-sm">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="h-2.5 w-2.5 rounded-full bg-rafiq-primary-400" />
-            <h4 className="font-semibold text-slate-900">Opportunities</h4>
-          </div>
-          <ul className="space-y-2 text-sm text-slate-600">
-            <li>• Growing student numbers increase demand for smart advising</li>
-            <li>• Potential integration with university SIS platforms</li>
-            <li>• Expansion into career and internship guidance</li>
-            <li>• Aligns with higher-education digitalization strategies</li>
+
+        {/* Customer Segments */}
+        <div className="md:row-span-2 bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm">
+          <h4 className="font-bold text-slate-900 mb-3 text-sm flex items-center gap-2"><Users className="w-4 h-4 text-slate-500"/> Cust. Segments</h4>
+          <ul className="space-y-2 text-xs text-slate-600">
+            <li>• Undergrad & Postgrad Students</li>
+            <li>• Academic Advisors & Faculty</li>
+            <li>• University Administration</li>
           </ul>
         </div>
-        <div className="bg-white p-6 rounded-2xl border border-slate-200/60 shadow-sm">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="h-2.5 w-2.5 rounded-full bg-slate-700" />
-            <h4 className="font-semibold text-slate-900">Threats</h4>
-          </div>
-          <ul className="space-y-2 text-sm text-slate-600">
-            <li>• Data privacy risks from handling sensitive student data</li>
-            <li>• Sudden academic policy changes may affect system accuracy</li>
+
+        {/* Key Resources */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm">
+          <h4 className="font-bold text-slate-900 mb-3 text-sm flex items-center gap-2"><Database className="w-4 h-4 text-slate-500"/> Key Resources</h4>
+          <ul className="space-y-2 text-xs text-slate-600">
+            <li>• Proprietary Recommendation AI</li>
+            <li>• University Curriculum Data</li>
+            <li>• Cloud Infrastructure</li>
+            <li>• Specialized Dev Team</li>
+          </ul>
+        </div>
+
+        {/* Channels */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm">
+          <h4 className="font-bold text-slate-900 mb-3 text-sm flex items-center gap-2"><Smartphone className="w-4 h-4 text-slate-500"/> Channels</h4>
+          <ul className="space-y-2 text-xs text-slate-600">
+            <li>• Mobile Application (Flutter)</li>
+            <li>• Web Portal (React)</li>
+            <li>• Campus Workshops</li>
           </ul>
         </div>
       </div>
 
-      {/* BUSINESS MODEL CANVAS — FULL 9-BLOCK LAYOUT */}
-<h3 className="text-2xl font-semibold text-slate-800 mb-6 text-center">Business Model Canvas</h3>
-
-<div className="grid grid-cols-1 md:grid-cols-5 gap-3 mb-6">
-  {/* Key Partners */}
-  <div className="md:row-span-2 bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm">
-    <h4 className="font-semibold text-slate-900 mb-2 text-sm">Key Partners</h4>
-    <ul className="space-y-1.5 text-xs text-slate-600">
-      <li>• University Registrar's Office</li>
-      <li>• Pilot Advisory Departments</li>
-      <li>• Student Associations / Government</li>
-      <li>• Cloud Service Providers</li>
-      <li>• Payment Gateways (future)</li>
-    </ul>
-  </div>
-
-  {/* Key Activities */}
-  <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm">
-    <h4 className="font-semibold text-slate-900 mb-2 text-sm">Key Activities</h4>
-    <ul className="space-y-1.5 text-xs text-slate-600">
-      <li>• AI model development (recommendation engine, chatbot)</li>
-      <li>• Platform engineering (web/mobile)</li>
-      <li>• Secure API integration with university SIS</li>
-      <li>• Data analytics for advisors/admin</li>
-    </ul>
-  </div>
-
-  {/* Value Propositions */}
-  <div className="md:row-span-2 bg-rafiq-primary-50 p-4 rounded-2xl border border-rafiq-primary-100 shadow-sm">
-    <h4 className="font-semibold text-slate-900 mb-2 text-sm">Value Propositions</h4>
-    <p className="text-xs text-slate-600 mb-2">
-      <span className="font-medium text-slate-800">Students:</span> a 24/7 companion with GPA
-      tracking, what-if scenarios, and instant course recommendations.
-    </p>
-    <p className="text-xs text-slate-600 mb-2">
-      <span className="font-medium text-slate-800">Advisors:</span> a dashboard to monitor
-      progress and identify at-risk students early.
-    </p>
-    <p className="text-xs text-slate-600">
-      <span className="font-medium text-slate-800">Administration:</span> higher retention
-      through proactive alerts and reduced admin overhead.
-    </p>
-  </div>
-
-  {/* Customer Relationships */}
-  <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm">
-    <h4 className="font-semibold text-slate-900 mb-2 text-sm">Customer Relationships</h4>
-    <ul className="space-y-1.5 text-xs text-slate-600">
-      <li>• Automated & proactive support (students)</li>
-      <li>• Dedicated helpdesk (advisors/admin)</li>
-      <li>• Community feedback & student forums</li>
-    </ul>
-  </div>
-
-  {/* Customer Segments */}
-  <div className="md:row-span-2 bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm">
-    <h4 className="font-semibold text-slate-900 mb-2 text-sm">Customer Segments</h4>
-    <ul className="space-y-1.5 text-xs text-slate-600">
-      <li>• University Students</li>
-      <li>• Academic Advisors & Faculty</li>
-      <li>• University Administration</li>
-    </ul>
-  </div>
-
-  {/* Key Resources */}
-  <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm">
-    <h4 className="font-semibold text-slate-900 mb-2 text-sm">Key Resources</h4>
-    <ul className="space-y-1.5 text-xs text-slate-600">
-      <li>• Proprietary AI models</li>
-      <li>• University data agreement</li>
-      <li>• Technical infrastructure</li>
-      <li>• Specialized team</li>
-    </ul>
-  </div>
-
-  {/* Channels */}
-  <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm">
-    <h4 className="font-semibold text-slate-900 mb-2 text-sm">Channels</h4>
-    <ul className="space-y-1.5 text-xs text-slate-600">
-      <li>• Mobile app (Android, iOS)</li>
-      <li>• Official university websites</li>
-      <li>• Workshops & demos on campus</li>
-    </ul>
-  </div>
-</div>
-
-{/* Cost Structure + Revenue Streams (full width bottom row) */}
-<div className="grid md:grid-cols-2 gap-3 mb-16">
-  <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm">
-    <h4 className="font-semibold text-slate-900 mb-2 text-sm">Cost Structure</h4>
-    <ul className="space-y-1.5 text-xs text-slate-600">
-      <li>• Technology infrastructure: cloud hosting, database, API costs</li>
-      <li>• Personnel: backend, frontend, AI/ML engineers, UI/UX designer</li>
-      <li>• R&D: chatbot/recommendation engine training & data labeling</li>
-      <li>• Sales & marketing: workshops and demos</li>
-      <li>• Support & maintenance: helpdesk, updates, bug fixes</li>
-    </ul>
-  </div>
-  <div className="bg-rafiq-primary-50 p-4 rounded-2xl border border-rafiq-primary-100 shadow-sm">
-    <h4 className="font-semibold text-slate-900 mb-2 text-sm">Revenue Streams</h4>
-    <p className="text-xs text-slate-600 mb-2 font-medium text-slate-800">B2B SaaS Model</p>
-    <ul className="space-y-1.5 text-xs text-slate-600">
-      <li>• Primary: annual institutional licenses sold to universities or large faculties</li>
-      <li>• Optional: one-time setup & data-integration fees</li>
-      <li>• Optional: premium fees for advanced analytics modules</li>
-    </ul>
-  </div>
-</div>
-
-      {/* SYSTEM ARCHITECTURE */}
-      <h3 className="text-2xl font-semibold text-slate-800 mb-4 text-center">System Architecture</h3>
-      <p className="text-sm text-slate-600 text-center max-w-2xl mx-auto mb-6">
-        Students, Admins, Instructors, and Advisors access Rafiq through the Web Portal or Mobile App. Every request flows through the GUI into a shared backend database, which feeds the AI Agent for recommendations and chatbot support.
-      </p>
-      <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/60 mb-16">
-        <ArchitectureDiagram />
-      </div>
-
-        <h3 className="text-2xl font-semibold text-slate-800 mb-4 text-center">
-        Use Case Diagrams
-      </h3>
-      <p className="text-sm text-slate-600 text-center max-w-2xl mx-auto mb-6">
-        Students enroll in courses, generate conflict-free schedules, check
-        prerequisites, and chat with the AI advisor. Admins manage students,
-        courses, and announcements across the platform.
-      </p>
-      <div className="grid md:grid-cols-2 gap-5 mb-16">
-        <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-200/60 flex flex-col items-center overflow-hidden min-h-[180px]">
-          <img
-            src="/usecase-student.png"
-            alt="Student Use Case Diagram"
-            className="w-full h-auto rounded-xl mb-2"
-            onError={(e) => (e.currentTarget.style.display = 'none')}
-          />
-          <span className="text-xs text-slate-400">Student Portal</span>
+      <div className="grid md:grid-cols-2 gap-3">
+        {/* Cost Structure */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm">
+          <h4 className="font-bold text-slate-900 mb-3 text-sm">Cost Structure</h4>
+          <ul className="space-y-2 text-xs text-slate-600">
+            <li>• Infrastructure: Cloud hosting, Vector Databases, API licensing (LLMs).</li>
+            <li>• Personnel: SWE & AI Engineers, UI/UX Designers.</li>
+            <li>• R&D: Algorithm training, data embedding, and system integration.</li>
+            <li>• Operational: System maintenance, bug fixes, and security audits.</li>
+          </ul>
         </div>
-        <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-200/60 flex flex-col items-center overflow-hidden min-h-[180px]">
-          <img
-            src="/usecase-admin.png"
-            alt="Admin Use Case Diagram"
-            className="w-full h-auto rounded-xl mb-2"
-            onError={(e) => (e.currentTarget.style.display = 'none')}
-          />
-          <span className="text-xs text-slate-400">Admin Portal</span>
+        {/* Revenue Streams */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm">
+          <h4 className="font-bold text-slate-900 mb-3 text-sm">Revenue Streams</h4>
+          <p className="text-xs text-slate-800 font-semibold mb-2">B2B SaaS (Software-as-a-Service) Model:</p>
+          <ul className="space-y-2 text-xs text-slate-600">
+            <li>• Primary Stream: Annual institutional licenses sold to universities.</li>
+            <li>• Optional Streams: One-time setup & data integration fees, premium fees for advanced analytics.</li>
+          </ul>
         </div>
-      </div>
-
-      {/* ===================== SEQUENCE & ACTIVITY DIAGRAMS ===================== */}
-      <h3 className="text-2xl font-semibold text-slate-800 mb-4 text-center">
-        Sequence & Activity Diagrams
-      </h3>
-      <p className="text-sm text-slate-600 text-center max-w-2xl mx-auto mb-6">
-        Example: course enrollment. The UI requests available courses, the
-        student selects them, and the AI Scheduler instantly generates a
-        conflict-free timetable — regenerating on request if it isn't suitable.
-      </p>
-      <div className="grid md:grid-cols-2 gap-5 mb-16">
-        <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-200/60 flex flex-col items-center overflow-hidden min-h-[180px]">
-          <img
-            src="/sequence-enrollment.png"
-            alt="Enrollment Sequence Diagram"
-            className="w-full h-auto rounded-xl mb-2"
-            onError={(e) => (e.currentTarget.style.display = 'none')}
-          />
-          <span className="text-xs text-slate-400">Enroll in Courses — Sequence Diagram</span>
-        </div>
-        <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-200/60 flex flex-col items-center overflow-hidden min-h-[180px]">
-          <img
-            src="/activity-enrollment.png"
-            alt="Enrollment Activity Diagram"
-            className="w-full h-auto rounded-xl mb-2"
-            onError={(e) => (e.currentTarget.style.display = 'none')}
-          />
-          <span className="text-xs text-slate-400">Enroll in Courses — Activity Diagram</span>
-        </div>
-      </div>
-
-      {/* ===================== CLASS DIAGRAM ===================== */}
-      <h3 className="text-2xl font-semibold text-slate-800 mb-4 text-center">
-        Class Diagram
-      </h3>
-      <p className="text-sm text-slate-600 text-center max-w-2xl mx-auto mb-6">
-        A central User class is extended by Student, Admin, Instructor, and
-        Academic Advisor. Students link to Enrollment, StudyPlan, GPAServices,
-        ScheduleGenerator, and the AI-powered RecommendationEngine and Chatbot.
-      </p>
-      <div className="bg-white p-4 rounded-3xl shadow-sm border border-slate-200/60 flex items-center justify-center overflow-hidden min-h-[200px]">
-        <img
-          src="/class-diagram.png"
-          alt="Class Diagram"
-          className="w-full h-auto rounded-xl"
-          onError={(e) => (e.currentTarget.style.display = 'none')}
-        />
       </div>
     </div>
   </PremiumSlideTemplate>
 );
 
 /* =========================================================================
-   ADD THESE ICONS to your existing lucide-react import line at the top of
-   App.tsx (alongside Code2, Layers, Zap, Route, Boxes, Send, Palette, Heart,
-   GitBranch). Do NOT create a second import line for lucide-react.
+   4. Previous Work (Competitors' Study)
    ========================================================================= */
-// Search, Users, PenTool, CheckCircle2, ShieldCheck as TrustIcon, Sparkles, TrendingUp, MinusCircle, MessageCircleQuestion, CalendarClock, LayoutDashboard, Accessibility, ListChecks, SlidersHorizontal
+const PreviousWorkPage = () => {
+  const check = <CheckCircle2 className="w-5 h-5 text-green-500 mx-auto" />;
+  const cross = <XCircle className="w-5 h-5 text-red-400 mx-auto" />;
 
-/* ===================== DESIGN PROCESS DATA ===================== */
-const designProcessSteps = [
-  { icon: <Search className="w-6 h-6" />, name: "User Research", desc: "Uncovering real advising pain points before designing anything." },
-  { icon: <Users className="w-6 h-6" />, name: "User Personas", desc: "Grounding decisions in the actual students and advisors who'll use Rafiq." },
-  { icon: <PenTool className="w-6 h-6" />, name: "Wireframing", desc: "Structuring flows and layout before committing to visuals." },
-  { icon: <Palette className="w-6 h-6" />, name: "Visual Design", desc: "Applying color, type, and hierarchy for a trustworthy interface." },
-  { icon: <Layers className="w-6 h-6" />, name: "Prototyping", desc: "Turning static screens into a clickable, testable experience." },
-  { icon: <CheckCircle2 className="w-6 h-6" />, name: "Usability Testing", desc: "Validating the design with real students and advisors." },
-];
-
-/* ===================== DESIGN PROCESS TIMELINE ===================== */
-const DesignProcessTimeline = () => (
-  <div className="bg-white rounded-3xl p-8 shadow-md border border-slate-200/60">
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 relative">
-      <div className="hidden lg:block absolute top-[3.75rem] left-[8%] right-[8%] h-px bg-slate-200" />
-      {designProcessSteps.map((s, i) => (
-        <div key={i} className="flex flex-col items-center text-center relative">
-          <span className="text-[10px] font-mono tracking-wider text-rafiq-primary-500 mb-3">
-            0{i + 1}
-          </span>
-          <div className="w-16 h-16 rounded-full flex items-center justify-center mb-3 relative z-10 bg-rafiq-primary-50 border border-rafiq-primary-100 text-rafiq-primary-500">
-            {s.icon}
-          </div>
-          <h4 className="text-slate-900 font-semibold text-sm mb-1">{s.name}</h4>
-          <p className="text-slate-500 text-[11px] leading-snug px-1">{s.desc}</p>
-        </div>
-      ))}
-    </div>
-  </div>
-);
-
-/* ===================== RESEARCH FINDINGS & DECISIONS DATA ===================== */
-const researchFindings = [
-  "Students often struggle with choosing the right courses.",
-  "Graduation requirements can be difficult to understand.",
-  "Booking appointments with advisors is time-consuming.",
-  "Advisors spend significant time answering repetitive questions.",
-];
-
-const designDecisions = [
-  "Simplify navigation.",
-  "Display academic progress clearly.",
-  "Provide AI-powered course recommendations.",
-  "Allow students to book appointments directly from the system.",
-];
-
-/* ===================== COLOR PALETTE DATA ===================== */
-const colorPalette = [
-  {
-    name: "Blue",
-    hex: "#1564BF",
-    swatch: "bg-rafiq-primary-500",
-    meaning: "Represents trust, professionalism, and education.",
-    usage: "Used for navigation bars, primary buttons, and important actions.",
-  },
-  {
-    name: "White",
-    hex: "#FFFFFF",
-    swatch: "bg-white border border-slate-300",
-    meaning: "Creates a clean and organized interface.",
-    usage: "Improves readability and reduces visual clutter.",
-  },
-  {
-    name: "Green",
-    hex: "#22C55E",
-    swatch: "bg-green-500",
-    meaning: "Represents success and progress.",
-    usage: "Highlights AI recommendations, confirmations, and completed actions.",
-  },
-  {
-    name: "Gray",
-    hex: "#8F91A0",
-    swatch: "bg-slate-400",
-    meaning: "Used for secondary information and inactive elements.",
-    usage: "Maintains balance and supports visual hierarchy.",
-  },
-];
-
-const designPrinciples = [
-  "Strong contrast for readability.",
-  "Consistent colors across all screens.",
-  "Clear visual hierarchy to guide user attention.",
-  "Accessible color combinations for all users.",
-];
-
-const improvementsAfterTesting = [
-  "Simplified navigation.",
-  "Improved dashboard organization.",
-  "Enhanced accessibility.",
-  "Reduced the number of steps needed to complete tasks.",
-  "Refined AI recommendation cards based on user feedback.",
-];
-
-/* ===================== SIMPLE LIST CARD ===================== */
-const ListCard = ({
-  title,
-  items,
-  accent = "bg-rafiq-primary-500",
-  tone = "white",
-}: {
-  title: string;
-  items: string[];
-  accent?: string;
-  tone?: "white" | "tint";
-}) => (
-  <div
-    className={`p-6 rounded-2xl border shadow-sm ${
-      tone === "tint"
-        ? "bg-rafiq-primary-50 border-rafiq-primary-100"
-        : "bg-white border-slate-200/60"
-    }`}
-  >
-    <div className="flex items-center gap-2 mb-4">
-      <span className={`h-2.5 w-2.5 rounded-full ${accent}`} />
-      <h4 className="font-semibold text-slate-900">{title}</h4>
-    </div>
-    <ul className="space-y-2.5 text-sm text-slate-600">
-      {items.map((item, i) => (
-        <li key={i} className="flex gap-2">
-          <span className="text-rafiq-primary-400 mt-0.5">•</span>
-          <span>{item}</span>
-        </li>
-      ))}
-    </ul>
-  </div>
-);
-
-/* ===================== UI / UX PAGE ===================== */
-const UiUxPage = () => (
-  <PremiumSlideTemplate>
-    <div className="max-w-5xl mx-auto">
-      <h2 className="text-5xl font-bold text-slate-900 mb-4 tracking-tight text-center">
-        UI / UX Design
-      </h2>
-      <p className="text-lg text-slate-500 text-center mb-16 max-w-3xl mx-auto">
-        A user-centered design approach grounded in the real needs of students
-        and academic advisors — simplifying registration, clarifying
-        requirements, and improving the overall experience.
-      </p>
-
-      {/* ===================== DESIGN PROCESS ===================== */}
-      <h3 className="text-2xl font-semibold text-slate-800 mb-6 text-center">
-        Design Process
-      </h3>
-      <div className="mb-8">
-        <DesignProcessTimeline />
-      </div>
-
-      {/* KEY OBJECTIVE CALLOUT */}
-      <div className="bg-rafiq-primary-50 p-6 rounded-2xl border border-rafiq-primary-100 shadow-sm max-w-3xl mx-auto text-center mb-16">
-        <span className="text-xs font-semibold tracking-wide text-rafiq-primary-600 uppercase">
-          Key Objective
-        </span>
-        <p className="text-sm text-slate-700 leading-relaxed mt-2">
-          Create an interface that is intuitive, accessible, and efficient —
-          helping students make informed academic decisions with minimal
-          effort.
-        </p>
-      </div>
-
-      {/* ===================== RESEARCH & UX ===================== */}
-      <h3 className="text-2xl font-semibold text-slate-800 mb-2 text-center">
-        Research & User Experience
-      </h3>
-      <p className="text-sm text-slate-600 text-center max-w-2xl mx-auto mb-6">
-        Research was conducted to identify the challenges users face during
-        academic advising, which directly shaped the interface decisions
-        below.
-      </p>
-      <div className="grid md:grid-cols-2 gap-5 mb-16">
-        <ListCard title="Key Findings" items={researchFindings} accent="bg-slate-400" />
-        <ListCard
-          title="Design Decisions"
-          items={designDecisions}
-          accent="bg-rafiq-primary-500"
-          tone="tint"
-        />
-      </div>
-
-      {/* ===================== COLOR THEORY & VISUAL DESIGN ===================== */}
-      <h3 className="text-2xl font-semibold text-slate-800 mb-2 text-center">
-        Color Theory & Visual Design
-      </h3>
-      <p className="text-sm text-slate-600 text-center max-w-2xl mx-auto mb-6">
-        Color choices were based on UI/UX design principles to create an
-        interface that is visually appealing, trustworthy, and easy to use.
-      </p>
-      <div className="grid sm:grid-cols-2 gap-4 mb-8">
-        {colorPalette.map((c, i) => (
-          <div
-            key={i}
-            className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex gap-4"
-          >
-            <div className={`w-12 h-12 rounded-xl shrink-0 ${c.swatch}`} />
-            <div>
-              <div className="flex items-baseline gap-2 mb-1">
-                <h4 className="font-semibold text-slate-900 text-sm">{c.name}</h4>
-                <span className="text-[11px] font-mono text-slate-400">{c.hex}</span>
-              </div>
-              <p className="text-xs text-slate-600 leading-relaxed">{c.meaning}</p>
-              <p className="text-xs text-slate-400 leading-relaxed mt-1">{c.usage}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="bg-white p-6 rounded-2xl border border-slate-200/60 shadow-sm mb-16">
-        <h4 className="font-semibold text-slate-900 mb-3 text-sm text-center">
-          Design Principles Applied
-        </h4>
-        <div className="grid sm:grid-cols-2 gap-x-8 gap-y-2 max-w-2xl mx-auto">
-          {designPrinciples.map((p, i) => (
-            <div key={i} className="flex items-start gap-2 text-sm text-slate-600">
-              <CheckCircle2 className="w-4 h-4 text-rafiq-primary-500 mt-0.5 shrink-0" />
-              <span>{p}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* ===================== FINAL INTERFACE & USABILITY ===================== */}
-      <h3 className="text-2xl font-semibold text-slate-800 mb-6 text-center">
-        Final Interface & Usability
-      </h3>
-      <div className="grid md:grid-cols-2 gap-5 mb-6">
-        <div className="bg-white p-6 rounded-2xl border border-slate-200/60 shadow-sm">
-          <h4 className="font-semibold text-slate-900 mb-2 text-sm">Interface Design</h4>
-          <p className="text-sm text-slate-600 leading-relaxed">
-            The final interface focuses on simplicity and consistency,
-            built from reusable UI components such as cards, buttons,
-            navigation bars, and progress indicators.
-          </p>
-        </div>
-        <div className="bg-white p-6 rounded-2xl border border-slate-200/60 shadow-sm">
-          <h4 className="font-semibold text-slate-900 mb-2 text-sm">Usability Testing</h4>
-          <p className="text-sm text-slate-600 leading-relaxed">
-            The prototype was tested with students and academic advisors to
-            evaluate ease of use, navigation, and overall satisfaction.
-          </p>
-        </div>
-      </div>
-      <ListCard
-        title="Improvements After Testing"
-        items={improvementsAfterTesting}
-        accent="bg-green-500"
-        tone="tint"
-      />
-    </div>
-  </PremiumSlideTemplate>
-);
-
-/* ===================== PLACEHOLDER PAGE (was missing — this is what caused the blank screen) ===================== */
-const PlaceholderPage = ({ title }: { title: string }) => (
-  <PremiumSlideTemplate>
-    <div className="text-center max-w-3xl mx-auto">
-      <h2 className="text-5xl font-bold text-slate-900 mb-6 tracking-tight">{title}</h2>
-      <p className="text-lg text-slate-600 leading-relaxed mb-10">
-        This section is coming soon.
-      </p>
-      <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200/60 h-64 flex items-center justify-center text-slate-400">
-        Content in progress
-      </div>
-    </div>
-  </PremiumSlideTemplate>
-);
-
-
-/* ===================== SCORE RING (Lighthouse) ===================== */
-const ScoreRing = ({ score, label, color }: { score: number; label: string; color: string }) => {
-  const radius = 46;
-  const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (score / 100) * circumference;
   return (
-    <div className="flex flex-col items-center gap-2">
-      <svg width="120" height="120" viewBox="0 0 120 120">
-        <circle cx="60" cy="60" r={radius} fill="none" stroke="#EEEEF0" strokeWidth="9" />
-        <circle
-          cx="60" cy="60" r={radius} fill="none" stroke={color} strokeWidth="9"
-          strokeDasharray={circumference} strokeDashoffset={offset}
-          strokeLinecap="round" transform="rotate(-90 60 60)"
-        />
-        <text x="60" y="68" textAnchor="middle" fontSize="26" fontWeight="700" fill="#09090B">{score}</text>
-      </svg>
-      <span className="text-sm font-medium text-slate-600">{label}</span>
-    </div>
+    <PremiumSlideTemplate>
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-5xl font-bold text-slate-900 mb-6 tracking-tight text-center">Previous Work</h2>
+        <p className="text-lg text-slate-500 text-center mb-12">Comparison between Traditional Systems, Learning Management Systems, and Rafiq.</p>
+        
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden">
+          <table className="w-full text-sm text-center">
+            <thead className="bg-[#0C3C7D] text-white">
+              <tr>
+                <th className="px-6 py-5 font-semibold text-left border-r border-white/10">Features</th>
+                <th className="px-6 py-5 font-semibold border-r border-white/10">MYU</th>
+                <th className="px-6 py-5 font-semibold border-r border-white/10">D2L</th>
+                <th className="px-6 py-5 font-semibold border-r border-white/10">Canvas</th>
+                <th className="px-6 py-5 font-bold text-blue-200">Rafiq</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              <tr className="hover:bg-slate-50/50">
+                <td className="px-6 py-4 font-medium text-slate-700 text-left border-r border-slate-100">Smart Course Registration</td>
+                <td className="px-6 py-4 border-r border-slate-100">{cross}</td><td className="px-6 py-4 border-r border-slate-100">{cross}</td><td className="px-6 py-4 border-r border-slate-100">{cross}</td><td className="px-6 py-4 bg-rafiq-primary-50/30">{check}</td>
+              </tr>
+              <tr className="hover:bg-slate-50/50">
+                <td className="px-6 py-4 font-medium text-slate-700 text-left border-r border-slate-100">AI-Based Course Recommendations</td>
+                <td className="px-6 py-4 border-r border-slate-100">{cross}</td><td className="px-6 py-4 border-r border-slate-100">{cross}</td><td className="px-6 py-4 border-r border-slate-100">{cross}</td><td className="px-6 py-4 bg-rafiq-primary-50/30">{check}</td>
+              </tr>
+              <tr className="hover:bg-slate-50/50">
+                <td className="px-6 py-4 font-medium text-slate-700 text-left border-r border-slate-100">Intelligent Academic Advising (Chatbot)</td>
+                <td className="px-6 py-4 border-r border-slate-100">{cross}</td><td className="px-6 py-4 border-r border-slate-100">{cross}</td><td className="px-6 py-4 border-r border-slate-100">{cross}</td><td className="px-6 py-4 bg-rafiq-primary-50/30">{check}</td>
+              </tr>
+              <tr className="hover:bg-slate-50/50">
+                <td className="px-6 py-4 font-medium text-slate-700 text-left border-r border-slate-100">Academic Information Display</td>
+                <td className="px-6 py-4 border-r border-slate-100">{check}</td><td className="px-6 py-4 border-r border-slate-100">{check}</td><td className="px-6 py-4 border-r border-slate-100">{check}</td><td className="px-6 py-4 bg-rafiq-primary-50/30">{check}</td>
+              </tr>
+              <tr className="hover:bg-slate-50/50">
+                <td className="px-6 py-4 font-medium text-slate-700 text-left border-r border-slate-100">Campus Navigation</td>
+                <td className="px-6 py-4 border-r border-slate-100">{cross}</td><td className="px-6 py-4 border-r border-slate-100">{check}</td><td className="px-6 py-4 border-r border-slate-100">{cross}</td><td className="px-6 py-4 bg-rafiq-primary-50/30">{cross}</td>
+              </tr>
+              <tr className="hover:bg-slate-50/50">
+                <td className="px-6 py-4 font-medium text-slate-700 text-left border-r border-slate-100">Early-Warning & Risk Prediction System</td>
+                <td className="px-6 py-4 border-r border-slate-100">{cross}</td><td className="px-6 py-4 border-r border-slate-100">{cross}</td><td className="px-6 py-4 border-r border-slate-100">{cross}</td><td className="px-6 py-4 bg-rafiq-primary-50/30">{check}</td>
+              </tr>
+              <tr className="hover:bg-slate-50/50">
+                <td className="px-6 py-4 font-medium text-slate-700 text-left border-r border-slate-100">Notifications System</td>
+                <td className="px-6 py-4 border-r border-slate-100">{cross}</td><td className="px-6 py-4 border-r border-slate-100">{check}</td><td className="px-6 py-4 border-r border-slate-100">{check}</td><td className="px-6 py-4 bg-rafiq-primary-50/30">{check}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </PremiumSlideTemplate>
   );
 };
 
-/* ===================== CLIENT-SERVER FLOW DIAGRAM (v3 — CSS relative/absolute) ===================== */
-/* Coordinate space: a 740 x 300 canvas. Boxes and labels are plain HTML,
-   positioned with % (derived from that canvas) so everything scales together.
-   The SVG only draws the connector lines/arrowheads — no text lives in the
-   SVG, so nothing can visually collide with a line's own geometry. */
-
-const CANVAS_W = 740;
-const CANVAS_H = 300;
-const pct = (v: number, total: number) => `${(v / total) * 100}%`;
-
-const FlowBox = ({
-  x, y, w, h, fill, textColor = "white", lines,
-}: {
-  x: number; y: number; w: number; h: number; fill: string; textColor?: string; lines: string[];
-}) => (
-  <div
-    className="absolute rounded-xl flex flex-col items-center justify-center text-center shadow-sm"
-    style={{
-      left: pct(x, CANVAS_W), top: pct(y, CANVAS_H),
-      width: pct(w, CANVAS_W), height: pct(h, CANVAS_H),
-      backgroundColor: fill,
-    }}
-  >
-    {lines.map((line, i) => (
-      <span
-        key={i}
-        className={i === 0 ? "font-semibold text-sm" : "text-xs opacity-90"}
-        style={{ color: textColor }}
-      >
-        {line}
-      </span>
-    ))}
-  </div>
+/* =========================================================================
+   5. Running Project (Live Demo)
+   ========================================================================= */
+const RunningProjectPage = () => (
+  <PremiumSlideTemplate>
+    <div className="max-w-4xl mx-auto text-center flex flex-col justify-center min-h-[60vh]">
+      <div className="inline-block p-6 bg-rafiq-primary-50 text-rafiq-primary-600 rounded-full mx-auto mb-8">
+        <PlayCircle className="w-16 h-16" />
+      </div>
+      <h2 className="text-6xl font-bold text-slate-900 mb-6 tracking-tight">Running Project</h2>
+      <p className="text-xl text-slate-600 mb-4 font-medium">Rafiq: A Smart Academic Guidance System for Enhancing Student Learning Outcomes.</p>
+      <p className="text-slate-400">Live Demonstration (5 Minutes)</p>
+    </div>
+  </PremiumSlideTemplate>
 );
 
-const FlowLabel = ({ x, y, text }: { x: number; y: number; text: string }) => (
-  <div
-    className="absolute z-10 -translate-x-1/2 -translate-y-1/2 bg-[#FAFAFA] text-slate-600 text-[11px] px-2 py-0.5 rounded whitespace-nowrap"
-    style={{ left: pct(x, CANVAS_W), top: pct(y, CANVAS_H) }}
-  >
-    {text}
-  </div>
-);
+/* =========================================================================
+   6. System Design (Custom UML Render Engines)
+   ========================================================================= */
 
-const ClientServerDiagram = () => (
-  <div className="relative w-full max-w-3xl mx-auto" style={{ aspectRatio: `${CANVAS_W} / ${CANVAS_H}` }}>
-    {/* Connector lines only — no text here */}
-    <svg viewBox={`0 0 ${CANVAS_W} ${CANVAS_H}`} className="absolute inset-0 w-full h-full">
-      <line x1="180" y1="115" x2="300" y2="35" stroke="#8F91A0" strokeWidth="1.3" markerEnd="url(#a1)" />
-      <line x1="300" y1="60" x2="180" y2="150" stroke="#8F91A0" strokeWidth="1.3" markerEnd="url(#a1)" />
-      <line x1="180" y1="185" x2="300" y2="225" stroke="#8F91A0" strokeWidth="1.3" markerEnd="url(#a1)" />
-      <line x1="460" y1="215" x2="560" y2="215" stroke="#8F91A0" strokeWidth="1.3" markerEnd="url(#a1)" />
-      <line x1="560" y1="240" x2="460" y2="240" stroke="#8F91A0" strokeWidth="1.3" strokeDasharray="4,3" markerEnd="url(#a1)" />
+const MultiText = ({ x, y, text, fontSize=12, fill="#0F172A", fontWeight="normal" }: any) => {
+  const lines = text.split('\n');
+  return (
+    <text x={x} y={y} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fontWeight={fontWeight} fill={fill}>
+      {lines.map((l: string, i: number) => <tspan x={x} dy={i === 0 ? `-${(lines.length-1)*0.5}em` : "1.2em"} key={i}>{l}</tspan>)}
+    </text>
+  );
+}
+
+// 1. PERFECTLY ALIGNED ARCHITECTURE DIAGRAM (Academic Advisor -> Web Portal Fixed)
+const CodeArchitectureDiagram = () => (
+  <div className="w-full bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200/60 overflow-x-auto mb-16">
+    <h3 className="text-2xl font-semibold text-slate-800 mb-8 text-center">System Architecture</h3>
+    <svg viewBox="0 0 1150 500" className="w-full h-auto min-w-[900px] font-sans">
       <defs>
-        <marker id="a1" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
-          <path d="M0,0 L8,4 L0,8 Z" fill="#8F91A0" />
-        </marker>
+        <marker id="arr-blue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#64748B"/></marker>
+        <marker id="arr-blue-rev" markerWidth="10" markerHeight="10" refX="1" refY="5" orient="auto"><path d="M10,0 L0,5 L10,10 Z" fill="#64748B"/></marker>
       </defs>
-    </svg>
-
-    {/* Boxes */}
-    <FlowBox x={20} y={80} w={160} h={140} fill="#EAF4FF" textColor="#082956" lines={["Client", "(Browser)"]} />
-    <FlowBox x={300} y={15} w={160} h={80} fill="#1564BF" lines={["Server", "(Front-end)"]} />
-    <FlowBox x={300} y={190} w={160} h={80} fill="#0C3C7D" lines={["Server", "(Back-end)"]} />
-    <FlowBox x={560} y={190} w={160} h={80} fill="#3A82F6" lines={["Database"]} />
-
-    {/* Labels — positioned at each line's midpoint, background covers the line beneath it */}
-    <FlowLabel x={240} y={62} text="1. request" />
-    <FlowLabel x={240} y={118} text="2. send HTML/CSS/JS" />
-    <FlowLabel x={240} y={218} text="3. API call" />
-    <FlowLabel x={510} y={205} text="query" />
-    <FlowLabel x={510} y={252} text="data" />
-  </div>
-);
-
-/* ===================== NAVIGATION FLOW DIAGRAM ===================== */
-/* Fixed: each top box owns a distinct, non-overlapping column of children. */
-const NavFlowDiagram = () => {
-  const rootCenter = 450;
-
-  const renderTwoAcross = (children: string[], centerX: number) => {
-    const boxW = 85;
-    const boxH = 32;
-    const gapX = 10;
-    const gapY = 8;
-    const rowWidth = boxW * 2 + gapX;
-    const startX = centerX - rowWidth / 2;
-
-    return children.map((label, i) => {
-      const row = Math.floor(i / 2);
-      const colInRow = i % 2;
-      const x = startX + colInRow * (boxW + gapX);
-      const y = 150 + row * (boxH + gapY);
-      return (
-        <g key={label}>
-          <rect x={x} y={y} width={boxW} height={boxH} rx="6" fill="#EAF4FF" stroke="#1564BF" strokeWidth="1"/>
-          <text x={x + boxW / 2} y={y + 20} textAnchor="middle" fontSize="9.5" fill="#082956">{label}</text>
-        </g>
-      );
-    });
-  };
-
-  const renderSingleRow = (children: string[], centerX: number) => {
-    const boxW = 100;
-    const boxH = 32;
-    const gapX = 10;
-    const rowWidth = children.length * boxW + (children.length - 1) * gapX;
-    const startX = centerX - rowWidth / 2;
-
-    return children.map((label, i) => {
-      const x = startX + i * (boxW + gapX);
-      const y = 150;
-      return (
-        <g key={label}>
-          <rect x={x} y={y} width={boxW} height={boxH} rx="6" fill="#EAF4FF" stroke="#1564BF" strokeWidth="1"/>
-          <text x={x + boxW / 2} y={y + 20} textAnchor="middle" fontSize="9.5" fill="#082956">{label}</text>
-        </g>
-      );
-    });
-  };
-
-  return (
-    <svg viewBox="0 0 900 260" className="w-full max-w-6xl h-auto mx-auto">
-      <rect x={rootCenter - 50} y="10" width="100" height="36" rx="8" fill="#09090B" />
-      <text x={rootCenter} y="33" textAnchor="middle" fontSize="12" fontWeight="700" fill="white">Rafiq</text>
-
-      {/* Column 1: System Config */}
-      <line x1={rootCenter} y1="46" x2="110" y2="80" stroke="#C5C6CE" strokeWidth="1.3" />
-      <rect x="25" y="80" width="170" height="36" rx="8" fill="#3A82F6" />
-      <text x="110" y="103" textAnchor="middle" fontSize="11" fontWeight="600" fill="white">System Config</text>
-      {renderSingleRow(["Notifications", "Settings"], 110)}
-
-      {/* Column 2: Academic Tools */}
-      <line x1={rootCenter} y1="46" x2="340" y2="80" stroke="#C5C6CE" strokeWidth="1.3" />
-      <rect x="255" y="80" width="170" height="36" rx="8" fill="#1564BF" />
-      <text x="340" y="103" textAnchor="middle" fontSize="11" fontWeight="600" fill="white">Academic Tools</text>
-      {renderTwoAcross(["Exam Results", "Schedules", "Study Plan", "Support"], 340)}
-
-      {/* Column 3: Major-Specific */}
-      <line x1={rootCenter} y1="46" x2="570" y2="80" stroke="#C5C6CE" strokeWidth="1.3" />
-      <rect x="485" y="80" width="170" height="36" rx="8" fill="#1564BF" />
-      <text x="570" y="103" textAnchor="middle" fontSize="11" fontWeight="600" fill="white">Major-Specific</text>
-      {renderTwoAcross(["Home", "Courses", "Profile", "Applications"], 570)}
-
-      {/* Column 4: Public Gateway */}
-      <line x1={rootCenter} y1="46" x2="790" y2="80" stroke="#C5C6CE" strokeWidth="1.3" />
-      <rect x="705" y="80" width="170" height="36" rx="8" fill="#0C3C7D" />
-      <text x="790" y="103" textAnchor="middle" fontSize="11" fontWeight="600" fill="white">Public Gateway</text>
-      {renderSingleRow(["Login / Reset"], 790)}
-    </svg>
-  );
-};
-
-/* ===================== ROLE OWNERSHIP DIAGRAM (fixed alignment) ===================== */
-const RoleOwnershipDiagram = () => {
-  const categories = [
-    { x: 40, fill: "#3A82F6", label: "Academic & Teaching Staff", items: ["Students", "Study Plans", "Exam Sched."] },
-    { x: 280, fill: "#1564BF", label: "Global Pages (All Roles)", items: ["Home", "Courses", "Support"] },
-    { x: 520, fill: "#0C3C7D", label: "Administration & Student Affairs", items: ["User Mgmt", "Security", "Reports"] },
-  ];
-  const catWidth = 220;
-  const itemWidth = 68;
-  const itemGap = 8;
-
-  return (
-    <svg viewBox="0 0 780 210" className="w-full max-w-6xl h-auto mx-auto">
-      {/* Root */}
-      <rect x="340" y="10" width="100" height="36" rx="8" fill="#09090B" />
-      <text x="390" y="33" textAnchor="middle" fontSize="12" fontWeight="700" fill="white">Rafiq</text>
-
-      {categories.map((cat, ci) => {
-        const centerX = cat.x + catWidth / 2;
-        return (
-          <g key={ci}>
-            {/* Line from root to category */}
-            <line x1="390" y1="46" x2={centerX} y2="80" stroke="#C5C6CE" strokeWidth="1.3" />
-
-            {/* Category box */}
-            <rect x={cat.x} y="80" width={catWidth} height="36" rx="8" fill={cat.fill} />
-            <text x={centerX} y="103" textAnchor="middle" fontSize="10.5" fontWeight="600" fill="white">
-              {cat.label}
-            </text>
-
-            {/* Child boxes, centered exactly under the category */}
-            {cat.items.map((item, ii) => {
-              const x = cat.x + ii * (itemWidth + itemGap);
-              return (
-                <g key={ii}>
-                  <rect x={x} y="150" width={itemWidth} height="30" rx="6" fill="#EAF4FF" stroke="#1564BF" strokeWidth="1" />
-                  <text x={x + itemWidth / 2} y="169" textAnchor="middle" fontSize="9" fill="#082956">
-                    {item}
-                  </text>
-                </g>
-              );
-            })}
+      
+      {/* COLUMN 1: ACTORS */}
+      <g transform="translate(20, 0)">
+        <text x="70" y="30" textAnchor="middle" dominantBaseline="middle" fontSize="15" fontWeight="bold" fill="#0F172A">Actors</text>
+        {[{ y: 60, label: "Student" }, { y: 160, label: "Academic Advisor" }, { y: 260, label: "Instructor" }, { y: 360, label: "System Admin" }].map((actor, i) => (
+          <g key={i}>
+            <rect x="0" y={actor.y} width="140" height="50" rx="8" fill="#F8FAFC" stroke="#CBD5E1" strokeWidth="1.5" />
+            <text x="70" y={actor.y+25} textAnchor="middle" dominantBaseline="middle" fontSize="13" fontWeight="600" fill="#334155">{actor.label}</text>
           </g>
-        );
-      })}
+        ))}
+      </g>
+      
+      {/* COLUMN 2: FRONTEND */}
+      <g transform="translate(280, 0)">
+        <text x="90" y="30" textAnchor="middle" dominantBaseline="middle" fontSize="15" fontWeight="bold" fill="#0F172A">Client Interface</text>
+        
+        {/* Mobile App */}
+        <rect x="0" y="60" width="180" height="80" rx="12" fill="#EFF6FF" stroke="#3B82F6" strokeWidth="2" />
+        <MultiText x={90} y={100} text="Mobile App\n(Flutter & Dart)" fontSize="13" fontWeight="bold" fill="#1D4ED8" />
+        
+        {/* Web Portal */}
+        <rect x="0" y="200" width="180" height="80" rx="12" fill="#EFF6FF" stroke="#3B82F6" strokeWidth="2" />
+        <MultiText x={90} y={240} text="Web Portal\n(React & Tailwind)" fontSize="13" fontWeight="bold" fill="#1D4ED8" />
+      </g>
+      
+      {/* COLUMN 3: BACKEND */}
+      <g transform="translate(560, 0)">
+        <text x="130" y="30" textAnchor="middle" dominantBaseline="middle" fontSize="15" fontWeight="bold" fill="#0F172A">Backend Server</text>
+        
+        <rect x="0" y="60" width="260" height="260" rx="16" fill="#F0FDF4" stroke="#10B981" strokeWidth="2" />
+        <text x="130" y="90" textAnchor="middle" dominantBaseline="middle" fontSize="15" fontWeight="bold" fill="#047857">ASP.NET Core Web API</text>
+        {[{ y: 120, label: "JWT Auth & Role Security" }, { y: 170, label: "Academic Progress Tracking" }, { y: 220, label: "Notification Hub" }, { y: 270, label: "CQRS & MediatR Pipeline" }].map((mod, i) => (
+          <g key={i}>
+            <rect x="20" y={mod.y} width="220" height="35" rx="6" fill="#D1FAE5" stroke="#34D399" strokeWidth="1" />
+            <text x="130" y={mod.y+17.5} textAnchor="middle" dominantBaseline="middle" fontSize="12" fontWeight="600" fill="#065F46">{mod.label}</text>
+          </g>
+        ))}
+        
+        <rect x="0" y="360" width="260" height="60" rx="12" fill="#FEF2F2" stroke="#EF4444" strokeWidth="2" />
+        <MultiText x={130} y={390} text="University SIS\n(Ibn Al-Haitham)" fontSize="13" fontWeight="bold" fill="#B91C1C" />
+      </g>
+      
+      {/* COLUMN 4: AI & DATABASES */}
+      <g transform="translate(900, 0)">
+        <text x="110" y="30" textAnchor="middle" dominantBaseline="middle" fontSize="15" fontWeight="bold" fill="#0F172A">Data & AI Engine</text>
+        
+        <rect x="0" y="60" width="220" height="150" rx="16" fill="#FAF5FF" stroke="#A855F7" strokeWidth="2" />
+        <text x="110" y="85" textAnchor="middle" dominantBaseline="middle" fontSize="14" fontWeight="bold" fill="#7E22CE">AI & Logic Engine</text>
+        {[{ y: 105, label: "LangChain Orchestrator" }, { y: 140, label: "LLMs (Gemma 2, Llama 3)" }, { y: 175, label: "Google OR-Tools" }].map((mod, i) => (
+          <g key={i}>
+            <rect x="15" y={mod.y} width="190" height="28" rx="6" fill="#F3E8FF" stroke="#D8B4FE" strokeWidth="1" />
+            <text x="110" y={mod.y+14} textAnchor="middle" dominantBaseline="middle" fontSize="11" fontWeight="600" fill="#6B21A8">{mod.label}</text>
+          </g>
+        ))}
+        
+        <rect x="0" y="250" width="220" height="150" rx="16" fill="#FFFBEB" stroke="#D946EF" strokeWidth="2" />
+        <text x="110" y="275" textAnchor="middle" dominantBaseline="middle" fontSize="14" fontWeight="bold" fill="#86198F">Persistence & Cache</text>
+        {[{ y: 295, label: "SQL Server" }, { y: 330, label: "ChromaDB (Vector)" }, { y: 365, label: "Redis (Cache)" }].map((mod, i) => (
+          <g key={i}>
+            <rect x="15" y={mod.y} width="190" height="28" rx="6" fill="#FEF3C7" stroke="#FBBF24" strokeWidth="1" />
+            <text x="110" y={mod.y+14} textAnchor="middle" dominantBaseline="middle" fontSize="11" fontWeight="600" fill="#B45309">{mod.label}</text>
+          </g>
+        ))}
+      </g>
+      
+      {/* SMOOTH CURVED CONNECTIONS */}
+      {/* Student (160, 85) to Mobile App (280, 100) */}
+      <path d="M 160 85 C 220 85, 220 100, 280 100" fill="none" stroke="#64748B" strokeWidth="2" markerEnd="url(#arr-blue)" />
+      {/* Student (160, 85) to Web Portal (280, 240) */}
+      <path d="M 160 85 C 220 85, 220 240, 280 240" fill="none" stroke="#64748B" strokeWidth="2" markerEnd="url(#arr-blue)" />
+      
+      {/* Academic Advisor (160, 185) to Web Portal (280, 240) */}
+      <path d="M 160 185 C 220 185, 220 240, 280 240" fill="none" stroke="#64748B" strokeWidth="2" markerEnd="url(#arr-blue)" />
+      
+      {/* Instructor (160, 285) to Web Portal (280, 240) */}
+      <path d="M 160 285 C 220 285, 220 240, 280 240" fill="none" stroke="#64748B" strokeWidth="2" markerEnd="url(#arr-blue)" />
+      
+      {/* Admin (160, 385) to Web Portal (280, 240) */}
+      <path d="M 160 385 C 220 385, 220 240, 280 240" fill="none" stroke="#64748B" strokeWidth="2" markerEnd="url(#arr-blue)" />
+      
+      {/* Mobile App <-> ASP.NET */}
+      <line x1="460" y1="100" x2="560" y2="100" stroke="#64748B" strokeWidth="2" markerEnd="url(#arr-blue)" markerStart="url(#arr-blue-rev)" />
+      
+      {/* Web Portal <-> ASP.NET */}
+      <line x1="460" y1="240" x2="560" y2="240" stroke="#64748B" strokeWidth="2" markerEnd="url(#arr-blue)" markerStart="url(#arr-blue-rev)" />
+      
+      {/* ASP.NET <-> SIS */}
+      <line x1="690" y1="320" x2="690" y2="360" stroke="#64748B" strokeWidth="2" markerEnd="url(#arr-blue)" markerStart="url(#arr-blue-rev)" />
+      
+      {/* ASP.NET <-> AI Engine */}
+      <line x1="820" y1="135" x2="900" y2="135" stroke="#64748B" strokeWidth="2" markerEnd="url(#arr-blue)" markerStart="url(#arr-blue-rev)" />
+      
+      {/* ASP.NET <-> Persistence */}
+      <path d="M 820 280 C 860 280, 860 325, 900 325" fill="none" stroke="#64748B" strokeWidth="2" markerEnd="url(#arr-blue)" markerStart="url(#arr-blue-rev)" />
     </svg>
-  );
-};
-
-const techStack = [
-  { icon: <Code2 className="w-7 h-7" />, name: "HTML5 & CSS3" },
-  { icon: <Palette className="w-7 h-7" />, name: "Tailwind CSS" },
-  { icon: <Boxes className="w-7 h-7" />, name: "TypeScript" },
-  { icon: <Layers className="w-7 h-7" />, name: "React" },
-  { icon: <Zap className="w-7 h-7" />, name: "Vite" },
-  { icon: <Route className="w-7 h-7" />, name: "React Router" },
-  { icon: <GitBranch className="w-7 h-7" />, name: "Zustand" },
-  { icon: <Send className="w-7 h-7" />, name: "Axios" },
-  { icon: <Heart className="w-7 h-7" />, name: "Nizam (UI Kit)" },
-];
-
-/* Reusable code-line renderer — every token gets an explicit inline color,
-   so nothing falls back to an invisible inherited color */
-const CodeLine = ({ parts }: { parts: { text: string; color?: string }[] }) => (
-  <div style={{ whiteSpace: "pre" }}>
-    {parts.map((p, i) => (
-      <span key={i} style={{ color: p.color || "#E2E8F0" }}>{p.text}</span>
-    ))}
   </div>
 );
 
-const FrontendPage = () => (
-  <PremiumSlideTemplate>
-    <div className="max-w-7xl mx-auto px-6">
-      <h2 className="text-5xl font-bold text-slate-900 mb-4 tracking-tight text-center">
-        Frontend Web Platform
-      </h2>
-      <p className="text-lg text-slate-500 text-center mb-20 max-w-4xl mx-auto">
-        The architecture, stack, roadmap, and engineering decisions behind
-        Rafiq's web experience.
-      </p>
-
-      {/* ===================== FRAMEWORK PARADIGM ===================== */}
-      <h3 className="text-3xl font-semibold text-slate-800 mb-4 text-center">
-        Framework Paradigm: What is Front-End Architecture?
-      </h3>
-      <p className="text-sm text-slate-600 text-center max-w-4xl mx-auto mb-6">
-        The browser (client) requests pages from the front-end server, which
-        renders HTML/CSS/JS. Any data-driven action calls the back-end server,
-        which queries the database and returns results — keeping presentation
-        and data concerns cleanly separated.
-      </p>
-      <div className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200/60 flex justify-center">
-        <ClientServerDiagram />
-      </div>
-
-      {/* ===================== TECH STACK ===================== */}
-      <h3 className="text-3xl font-semibold text-slate-800 mb-6 text-center mt-20">
-        Tech Stack & Frontend Architecture
-      </h3>
-      <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-10">
-        {techStack.map((t, i) => (
-          <div
-            key={i}
-            className="bg-white p-5 rounded-2xl border border-slate-200 shadow-md flex flex-col items-center gap-2 hover:shadow-lg transition-shadow"
-          >
-            <div className="text-rafiq-primary-500">{t.icon}</div>
-            <span className="text-[11px] font-medium text-slate-600 text-center">{t.name}</span>
-          </div>
-        ))}
-      </div>
-
-      {/* Why React */}
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-md mb-20">
-        <h4 className="font-semibold text-slate-900 mb-4 text-center">Why React?</h4>
-        <div className="space-y-2.5 max-w-lg mx-auto">
-          {[
-            { name: "Node.js", pct: 40.8 },
-            { name: "React", pct: 39.5 },
-            { name: "jQuery", pct: 21.4 },
-            { name: "Next.js", pct: 17.9 },
-            { name: "Vue.js", pct: 15.4 },
-          ].map((f, i) => (
-            <div key={i} className="flex items-center gap-3">
-              <span className="w-16 text-xs text-slate-600 shrink-0">{f.name}</span>
-              <div className="flex-1 h-5 bg-slate-100 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-rafiq-primary-500 rounded-full"
-                  style={{ width: `${f.pct}%` }}
-                />
-              </div>
-              <span className="w-10 text-xs text-slate-500 text-right">{f.pct}%</span>
-            </div>
-          ))}
-        </div>
-        <p className="text-xs text-slate-400 text-center mt-4">
-          Most used web frameworks among developers worldwide, 2024
-        </p>
-      </div>
-
-      {/* ===================== ROADMAP & PLANNING ===================== */}
-      <h3 className="text-3xl font-semibold text-slate-800 mb-6 text-center">
-        Frontend Roadmap, Planning & Preparation
-      </h3>
-
-      <h4 className="font-semibold text-slate-800 mb-3">A. Project Roadmap</h4>
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-md mb-10">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {[
-            { label: "Started Now", color: "bg-blue-100 text-blue-700" },
-            { label: "Still Working On It", color: "bg-amber-100 text-amber-700" },
-            { label: "Not Started", color: "bg-slate-100 text-slate-600" },
-            { label: "Completed", color: "bg-green-100 text-green-700" },
-            { label: "Not Completed", color: "bg-red-100 text-red-700" },
-            { label: "Pinned", color: "bg-pink-100 text-pink-700" },
-            { label: "Blocked", color: "bg-slate-200 text-slate-700" },
-          ].map((s, i) => (
-            <div key={i} className={`px-3 py-2 rounded-lg text-xs font-medium text-center ${s.color}`}>
-              {s.label}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <h4 className="font-semibold text-slate-800 mb-3">B. Folder Structure</h4>
-      <div className="bg-[#09090B] p-6 rounded-2xl shadow-md mb-10 overflow-x-auto">
-        <pre className="text-sm font-mono leading-relaxed" style={{ color: "#E2E8F0" }}>
-{`src/
-├─ api/
-├─ assets/
-├─ components/
-├─ features/
-├─ index.css
-├─ layouts/
-├─ main.tsx
-├─ pages/
-├─ router/
-├─ store/
-└─ utils/`}
-        </pre>
-      </div>
-
-      <h4 className="font-semibold text-slate-800 mb-3">C. Page Path Navigation Flow</h4>
-      <div className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200/60 mb-10 flex justify-center">
-        <NavFlowDiagram />
-      </div>
-
-      <h4 className="font-semibold text-slate-800 mb-3">D. Role-Based Page Ownership</h4>
-      <div className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200/60 mb-20 flex justify-center">
-        <RoleOwnershipDiagram />
-      </div>
-
-      {/* ===================== TECHNICAL CHALLENGES ===================== */}
-      <h3 className="text-3xl font-semibold text-slate-800 mb-6 text-center">
-        Technical Challenges & Engineering Solutions
-      </h3>
-
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-md mb-6">
-        <h4 className="font-semibold text-slate-900 mb-2">
-          Challenge 1: Tight Coupling of Filter Controls on Data Tables
-        </h4>
-        <p className="text-sm text-slate-600 mb-4">
-          Filter logic was originally embedded directly inside table components,
-          making tables hard to reuse across pages with different filtering needs.
-        </p>
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
-            <span className="text-xs font-semibold text-red-500">Before</span>
-            <p className="text-xs text-slate-500 mt-1">
-              Filters hardcoded inside each table — duplicated logic, no reuse.
-            </p>
-          </div>
-          <div className="bg-rafiq-primary-50 rounded-xl p-4 border border-rafiq-primary-100">
-            <span className="text-xs font-semibold text-rafiq-primary-600">After</span>
-            <p className="text-xs text-slate-600 mt-1">
-              Extracted into a standalone Filter component that emits query
-              params — any table can plug in independently.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-md mb-20">
-        <h4 className="font-semibold text-slate-900 mb-2">
-          Challenge 2: Loss of Transient UI State & Repetitive Network Hydration
-        </h4>
-        <p className="text-sm text-slate-600 mb-4">
-          Navigating away and back to a page re-fetched data and reset UI
-          state every time. Solved with React Query's cache + mutation
-          invalidation pattern:
-        </p>
-
-        {/* Snippet 1 */}
-        <div className="bg-[#09090B] p-6 rounded-xl overflow-x-auto mb-3 font-mono text-sm">
-          <CodeLine parts={[{ text: "// *setting", color: "#6B7280" }]} />
-          <CodeLine parts={[
-            { text: "useSetting", color: "#60A5FA" },
-            { text: "() {" },
-          ]} />
-          <CodeLine parts={[
-            { text: "  " },
-            { text: "return", color: "#C084FC" },
-            { text: " " },
-            { text: "useQuery", color: "#60A5FA" },
-            { text: "({" },
-          ]} />
-          <CodeLine parts={[
-            { text: "    queryKey: [" },
-            { text: "'setting'", color: "#4ADE80" },
-            { text: ", useUserInfoStore.getState().data.token]," },
-          ]} />
-          <CodeLine parts={[
-            { text: "    queryFn: () => SYSTEM_API.Setting()," },
-          ]} />
-          <CodeLine parts={[{ text: "    retry: 2" }]} />
-          <CodeLine parts={[{ text: "  })" }]} />
-          <CodeLine parts={[{ text: "}," }]} />
-        </div>
-
-        {/* Snippet 2 */}
-        <div className="bg-[#09090B] p-6 rounded-xl overflow-x-auto font-mono text-sm">
-          <CodeLine parts={[
-            { text: "useUpdateSetting", color: "#60A5FA" },
-            { text: "() {" },
-          ]} />
-          <CodeLine parts={[
-            { text: "  " },
-            { text: "const", color: "#C084FC" },
-            { text: " queryClient = " },
-            { text: "useQueryClient", color: "#60A5FA" },
-            { text: "()" },
-          ]} />
-          <CodeLine parts={[
-            { text: "  " },
-            { text: "return", color: "#C084FC" },
-            { text: " " },
-            { text: "useMutation", color: "#60A5FA" },
-            { text: "({" },
-          ]} />
-          <CodeLine parts={[
-            { text: "    mutationFn: (newSettings) => SYSTEM_API.UpdateSetting(newSettings)," },
-          ]} />
-          <CodeLine parts={[{ text: "    onSuccess: () => {" }]} />
-          <CodeLine parts={[{ text: "      queryClient.invalidateQueries({" }]} />
-          <CodeLine parts={[
-            { text: "        queryKey: [" },
-            { text: "'setting'", color: "#4ADE80" },
-            { text: ", useUserInfoStore.getState().data.token]" },
-          ]} />
-          <CodeLine parts={[{ text: "      })" }]} />
-          <CodeLine parts={[{ text: "    }" }]} />
-          <CodeLine parts={[{ text: "  })" }]} />
-          <CodeLine parts={[{ text: "}," }]} />
-        </div>
-      </div>
-
-      {/* ===================== LIGHTHOUSE BENCHMARKS ===================== */}
-      <h3 className="text-3xl font-semibold text-slate-800 mb-4 text-center">
-        Hydration States & Lighthouse Benchmarks
-      </h3>
-      <p className="text-sm text-slate-600 text-center max-w-4xl mx-auto mb-8">
-        After resolving hydration and caching issues, the platform scores
-        consistently high across all Lighthouse categories on desktop.
-      </p>
-      <div className="bg-white p-8 rounded-3xl shadow-md border border-slate-200 flex flex-wrap justify-center gap-8">
-        <ScoreRing score={98} label="Performance" color="#22C55E" />
-        <ScoreRing score={76} label="Accessibility" color="#F59E0B" />
-        <ScoreRing score={96} label="Best Practices" color="#22C55E" />
-        <ScoreRing score={92} label="SEO" color="#22C55E" />
-      </div>
-    </div>
-  </PremiumSlideTemplate>
-);
-
-import { Smartphone, Lock, Bell } from 'lucide-react';
-
-/* ===================== FLUTTER TECH STACK DATA ===================== */
-const flutterStack = [
-  {
-    icon: <Smartphone className="w-7 h-7" />,
-    name: "Flutter",
-    desc: "Cross-platform mobile development (Android & iOS) with a single codebase.",
-  },
-  {
-    icon: <Boxes className="w-7 h-7" />,
-    name: "Dart",
-    desc: "Programming language used to build structured, object-oriented, maintainable code.",
-  },
-  {
-    icon: <Layers className="w-7 h-7" />,
-    name: "Provider",
-    desc: "State management to separate business logic from UI and keep clean architecture.",
-  },
-  {
-    icon: <Send className="w-7 h-7" />,
-    name: "Dio",
-    desc: "RESTful API integration and efficient HTTP request handling.",
-  },
-  {
-    icon: <Lock className="w-7 h-7" />,
-    name: "Flutter Secure Storage",
-    desc: "Securely stores authentication tokens and user session data.",
-  },
-  {
-    icon: <Bell className="w-7 h-7" />,
-    name: "Firebase Cloud Messaging",
-    desc: "Sends push notifications for appointment updates and system alerts.",
-  },
-  {
-    icon: <GitBranch className="w-7 h-7" />,
-    name: "Git & GitHub",
-    desc: "Version control, collaboration, and tracking project changes.",
-  },
-];
-
-const FlutterPage = () => (
-  <PremiumSlideTemplate>
-    <div className="max-w-7xl mx-auto px-6">
-      <h2 className="text-5xl font-bold text-slate-900 mb-4 tracking-tight text-center">
-        Mobile Application — Flutter Stack
-      </h2>
-      <p className="text-lg text-slate-500 text-center mb-16 max-w-4xl mx-auto">
-        As a Flutter developer on the Academic Advisor System project, the
-        mobile application was built using modern cross-platform technologies
-        to ensure high performance, scalability, and maintainability.
-      </p>
-
-      {/* ===================== TECH STACK ===================== */}
-      <h3 className="text-3xl font-semibold text-slate-800 mb-6 text-center">
-        Technologies Used
-      </h3>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
-        {flutterStack.map((t, i) => (
-          <div
-            key={i}
-            className="bg-white p-6 rounded-2xl border border-slate-200 shadow-md flex flex-col gap-3 hover:shadow-lg transition-shadow"
-          >
-            <div className="flex items-center gap-3">
-              <div className="text-rafiq-primary-500 shrink-0">{t.icon}</div>
-              <h4 className="font-semibold text-slate-900">{t.name}</h4>
-            </div>
-            <p className="text-sm text-slate-600 leading-relaxed">{t.desc}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* ===================== CLOSING STATEMENT ===================== */}
-      <div className="bg-rafiq-primary-50 p-6 rounded-2xl border border-rafiq-primary-100 shadow-sm max-w-3xl mx-auto text-center">
-        <p className="text-sm text-slate-700 leading-relaxed">
-          These technologies ensured that the Academic Advisor mobile
-          application is scalable, secure, and efficient — while providing a
-          smooth, reliable user experience.
-        </p>
-      </div>
-    </div>
-  </PremiumSlideTemplate>
-);
-
-import { Server, Filter, Database, ShieldCheck, Repeat, Users2, TestTube2, Package } from 'lucide-react';
-/* Add these to your existing lucide-react import line at the top of App.tsx
-   (alongside Code2, Boxes, etc.) — do NOT create a second import line. */
-
-/* ===================== WHY CLEAN ARCHITECTURE ===================== */
-const whyCleanArchitecture = [
-  {
-    icon: <TestTube2 className="w-6 h-6" />,
-    title: "Highly Testable",
-    desc: "Core logic can be tested in complete isolation.",
-  },
-  {
-    icon: <Repeat className="w-6 h-6" />,
-    title: "Future Adaptability",
-    desc: "Frameworks, UIs, and databases can be swapped without rewriting business rules.",
-  },
-  {
-    icon: <ShieldCheck className="w-6 h-6" />,
-    title: "Easier to Maintain",
-    desc: "Changes in one layer do not cause ripple effects across the entire system.",
-  },
-  {
-    icon: <Users2 className="w-6 h-6" />,
-    title: "Scalable for Teams",
-    desc: "Multiple developers can work on different layers simultaneously without conflict.",
-  },
-];
-
-/* ===================== CLEAN ARCHITECTURE ONION DIAGRAM ===================== */
-const CleanArchitectureDiagram = () => {
-  const rings = [
-    { r: 230, fill: "#0C3C7D", label: "PRESENTATION LAYER", sub: "Rafeek.API" },
-    { r: 180, fill: "#164E8C", label: "INFRASTRUCTURE & PERSISTENCE", sub: "Rafeek.Infrastructure · Rafeek.Persistence" },
-    { r: 130, fill: "#1F60A0", label: "APPLICATION LAYER", sub: "Rafeek.Application (CQRS / MediatR)" },
-    { r: 80, fill: "#3A82F6", label: "DOMAIN", sub: "Entities · Enums · Repository Interfaces" },
-  ];
-  const cx = 380, cy = 280;
-
+// 2. PERFECTLY ORTHOGONAL CLASS DIAGRAM
+const UMLClass = ({ title, data }: any) => {
   return (
-    <svg viewBox="0 0 900 560" className="w-full max-w-4xl h-auto mx-auto">
-     {rings.map((ring, i) => {
-  const offset =
-    i === 0 ? -185 :
-    i === 1 ? -140 :
-    i === 2 ? -95 :
-    0;
-
-  return (
-    <g key={i}>
-      <text
-        x={cx}
-        y={cy + offset}
-        textAnchor="middle"
-        dominantBaseline="middle"
-        fontSize={i === 3 ? "15" : "14"}
-        fontWeight="700"
-        fill="#FFFFFF"
-        letterSpacing="0.8"
-      >
-        {ring.label}
-      </text>
-
-      <text
-        x={cx}
-        y={cy + offset + 18}
-        textAnchor="middle"
-        dominantBaseline="middle"
-        fontSize="10"
-        fontStyle="italic"
-        fill="#D6E4F5"
-      >
-        {ring.sub}
-      </text>
-    </g>
-  );
-})}
-
-      {/* Callouts */}
-      <line x1={cx + 160} y1={cy - 165} x2="700" y2="110" stroke="#8FB4DE" strokeWidth="1" />
-      <rect x="700" y="80" width="180" height="60" rx="6" fill="none" stroke="#8FB4DE" strokeWidth="1" />
-      <text x="710" y="98" fontSize="9" fill="#1F2937">Controllers, Routes,</text>
-      <text x="710" y="112" fontSize="9" fill="#1F2937">Filters, Program.cs,</text>
-      <text x="710" y="126" fontSize="9" fill="#1F2937">Swagger, Options</text>
-
-      <line x1={cx + 120} y1={cy - 100} x2="700" y2="220" stroke="#8FB4DE" strokeWidth="1" />
-      <rect x="700" y="190" width="190" height="70" rx="6" fill="none" stroke="#8FB4DE" strokeWidth="1" />
-      <text x="710" y="208" fontSize="9" fill="#1F2937">Repository implementations,</text>
-      <text x="710" y="222" fontSize="9" fill="#1F2937">Identity, AI services,</text>
-      <text x="710" y="236" fontSize="9" fill="#1F2937">Notifications, OAuth,</text>
-      <text x="710" y="250" fontSize="9" fill="#1F2937">EF Core DbContext, Seed</text>
-
-      <line x1={cx - 70} y1={cy - 55} x2="60" y2="330" stroke="#8FB4DE" strokeWidth="1" />
-      <rect x="20" y="300" width="220" height="60" rx="6" fill="none" stroke="#8FB4DE" strokeWidth="1" />
-      <text x="30" y="318" fontSize="9" fill="#1F2937">Handlers (Commands & Queries),</text>
-      <text x="30" y="332" fontSize="9" fill="#1F2937">DTOs, AutoMapper Mappings,</text>
-      <text x="30" y="346" fontSize="9" fill="#1F2937">Validators, Pipeline Behaviours</text>
-
-      <line x1={cx - 30} y1={cy + 10} x2="60" y2="440" stroke="#8FB4DE" strokeWidth="1" />
-      <rect x="20" y="410" width="240" height="60" rx="6" fill="none" stroke="#8FB4DE" strokeWidth="1" />
-      <text x="30" y="428" fontSize="9" fill="#1F2937">Entities, Enums, Domain Models,</text>
-      <text x="30" y="442" fontSize="9" fill="#1F2937">Repository Interfaces</text>
-      <text x="30" y="456" fontSize="8.5" fill="#64748B">(no external dependencies — pure core)</text>
-
-      {/* Dependency rule */}
-      <line x1={cx} y1="530" x2={cx} y2="512" stroke="#F59E0B" strokeWidth="2" markerEnd="url(#depArrow)" />
-      <text x={cx} y="550" textAnchor="middle" fontSize="11" fontWeight="600" fill="#B45309">
-        Dependency Rule: outer layers depend on inner layers — never the reverse
-      </text>
-      <defs>
-        <marker id="depArrow" markerWidth="8" markerHeight="8" refX="4" refY="7" orient="auto">
-          <path d="M0,8 L4,0 L8,8 Z" fill="#F59E0B" />
-        </marker>
-      </defs>
-    </svg>
+    <div className="w-full bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200/60 overflow-x-auto mb-16">
+      <h3 className="text-2xl font-semibold text-slate-800 mb-6 text-center">{title}</h3>
+      <svg viewBox="0 0 1600 1100" className="w-full h-auto min-w-[1200px] font-sans">
+        <defs>
+          <marker id="arr-class" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#000"/></marker>
+          <marker id="arr-hollow" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto"><polygon points="0,0 12,6 0,12" fill="#fff" stroke="#000" strokeWidth="1.5"/></marker>
+        </defs>
+        
+        {/* Draw the geometric paths connecting the boxes */}
+        {data.links.map((l:any, i:number) => (
+          <g key={`l${i}`}>
+            <path d={l.path} fill="none" stroke="#000" strokeWidth="1.5" strokeDasharray={l.d ? "6,6" : "none"} markerEnd={l.type === 'inherit' ? "url(#arr-hollow)" : (l.type === 'assoc' ? "url(#arr-class)" : "none")} />
+            {l.l1 && <text x={l.tx1} y={l.ty1} fontSize="12" dominantBaseline="middle" fill="#000" fontWeight="bold">{l.l1}</text>}
+            {l.l2 && <text x={l.tx2} y={l.ty2} fontSize="12" dominantBaseline="middle" fill="#000" fontWeight="bold">{l.l2}</text>}
+          </g>
+        ))}
+        
+        {/* Draw the class boxes precisely on the grid */}
+        {data.classes.map((c:any, i:number) => {
+          const w = 150;
+          const h = 30 + (c.a.length * 15) + 10 + (c.m.length * 15) + 10;
+          return (
+            <g key={`c${i}`} transform={`translate(${c.x - w/2}, ${c.y})`}>
+              <rect x="0" y="0" width={w} height={h} fill="#fff" stroke="#000" strokeWidth="1.5" />
+              <text x={w/2} y="15" textAnchor="middle" dominantBaseline="middle" fontSize="13" fontWeight="bold" fill="#000">{c.n}</text>
+              <line x1="0" y1="30" x2={w} y2="30" stroke="#000" strokeWidth="1.5" />
+              {c.a.map((attr:string, j:number) => <text key={`a${j}`} x="8" y={45 + j*15} dominantBaseline="middle" fontSize="10" fill="#000">{attr}</text>)}
+              <line x1="0" y1={30 + c.a.length*15 + 10} x2={w} y2={30 + c.a.length*15 + 10} stroke="#000" strokeWidth="1.5" />
+              {c.m.map((meth:string, j:number) => <text key={`m${j}`} x="8" y={30 + c.a.length*15 + 25 + j*15} dominantBaseline="middle" fontSize="10" fill="#000">{meth}</text>)}
+            </g>
+          );
+        })}
+      </svg>
+    </div>
   );
 };
 
-/* ===================== FIVE LAYERS DATA ===================== */
-const layers = [
-  {
-    number: "1",
-    name: "Presentation Layer",
-    project: "Rafeek.API",
-    items: [
-      ["Controllers/Version1, /External", "Versioned REST endpoints; external-facing endpoints"],
-      ["Routes", "Endpoint route constants / grouping"],
-      ["Filters", "Action & exception filters (cross-cutting request handling)"],
-      ["Options", "Strongly-typed configuration binding"],
-      ["Services", "API-level helper services"],
-      ["Program.cs", "App bootstrap, DI wiring, middleware pipeline"],
-      ["wwwroot/swagger, appsettings.*.json", "Static assets & environment configuration"],
-    ],
-    goal: "Expose the system to the outside world over HTTP. Receives requests, delegates to the Application layer via MediatR, returns responses. Contains no business logic.",
-  },
-  {
-    number: "2",
-    name: "Application Layer",
-    project: "Rafeek.Application",
-    items: [
-      ["Handlers/<Feature>Handlers", "One folder per feature (Student, Course, GPA, Auth, AI, ...) each with Commands, Query, DTOs, Mappings"],
-      ["Common/Behaviours", "MediatR pipeline behaviours (validation, logging, etc.)"],
-      ["Common/Exceptions, /Models, /Extensions, /Options", "Shared application-level building blocks"],
-      ["Common/Interfaces", "Abstractions Infrastructure/Persistence must implement"],
-      ["Mappings", "AutoMapper profiles"],
-      ["Localization", "Multi-language resource strings"],
-      ["HealthCheck", "Application health-check logic"],
-    ],
-    goal: "Orchestrate use cases with CQRS (Commands & Queries via MediatR). Holds business workflow logic while depending only on Domain — kept independent of frameworks/DB/UI.",
-  },
-  {
-    number: "3",
-    name: "Domain Layer",
-    project: "Rafeek.Domain",
-    items: [
-      ["Entities", "Core business entities (Student, Course, Staff, Department, ...)"],
-      ["Enums", "Domain enumerations"],
-      ["Models", "Domain value objects / plain models"],
-      ["Repositories/Interfaces", "Repository contracts (no implementation)"],
-      ["Common/Interfaces", "Cross-entity domain abstractions (e.g. IAuditable)"],
-    ],
-    goal: "The pure, framework-free core of the system — business rules and entities that everything else depends on. Has zero outward dependencies (the center of the architecture).",
-  },
-  {
-    number: "4",
-    name: "Infrastructure Layer",
-    project: "Rafeek.Infrastructure",
-    items: [
-      ["Repositories/Implementations", "Concrete implementations of Domain repository interfaces"],
-      ["Identity", "ASP.NET Core Identity integration (users, roles, auth)"],
-      ["AI/Prompts", "AI service integration & prompt templates"],
-      ["Notifications/Emails, /Sms", "Email & SMS delivery providers"],
-      ["OAuth", "External OAuth provider integration"],
-      ["DataProtection", "Data protection / encryption services"],
-      ["Services, Extensions", "Misc external-service integrations & helper extensions"],
-    ],
-    goal: "Implement the technical/external concerns (identity, notifications, AI, OAuth) that the Application layer defines interfaces for, without leaking details upward.",
-  },
-  {
-    number: "5",
-    name: "Persistence Layer",
-    project: "Rafeek.Persistence",
-    items: [
-      ["RafeekDbContext / RafeekIdentityDbContext", "EF Core database contexts (domain data + identity)"],
-      ["Configurations/RafeekConfiguration, /IdentityConfiguration", "Fluent-API entity configurations"],
-      ["Migrations/Rafeek, /Identity", "EF Core migration history"],
-      ["Seed", "Database seed data"],
-    ],
-    goal: "Handle all database access and schema concerns via Entity Framework Core, translating Domain entities to/from relational storage.",
-  },
-];
+// 3. PERFECTLY ORTHOGONAL ACTIVITY DIAGRAM
+const UMLActivityAuth = () => (
+  <div className="w-full bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200/60 overflow-x-auto mb-16">
+    <h3 className="text-2xl font-semibold text-slate-800 mb-6 text-center">Activity Diagram: User Authentication & Flow</h3>
+    <svg viewBox="0 0 1200 1100" className="w-full h-auto min-w-[1000px] font-sans bg-[#ffffe0]">
+      <defs><marker id="arr-red" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ff0000"/></marker></defs>
+      
+      {/* Node Helper */}
+      <circle cx="600" cy="40" r="14" fill="#000" />
+      <path d="M 600 54 V 80" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+      
+      <rect x="520" y="80" width="160" height="46" rx="23" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
+      <MultiText x={600} y={103} text="Authentication\nPhase" fontSize="12" />
+      <path d="M 600 126 V 160" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
 
-const LayerCard = ({ layer }: { layer: typeof layers[number] }) => (
-  <div className="bg-white rounded-2xl border border-slate-200 shadow-md overflow-hidden flex flex-col">
-    <div className="flex items-center justify-between px-5 py-3 bg-[#0C3C7D]">
-      <h4 className="text-sm font-bold text-white">
-        {layer.number}. {layer.name.toUpperCase()}
-      </h4>
-      <span className="text-xs italic text-blue-200">{layer.project}</span>
-    </div>
-    <div className="p-5 flex-1">
-      <div className="space-y-2 mb-4">
-        {layer.items.map((item, i) => (
-          <div key={i} className="grid grid-cols-2 gap-3 text-xs border-b border-slate-100 pb-2 last:border-none">
-            <span className="font-semibold text-slate-800">{item[0]}</span>
-            <span className="text-slate-500">{item[1]}</span>
-          </div>
-        ))}
-      </div>
-      <div className="bg-rafiq-primary-50 border border-rafiq-primary-100 rounded-xl p-3">
-        <p className="text-xs italic text-slate-600 leading-relaxed">{layer.goal}</p>
-      </div>
-    </div>
-  </div>
-);
+      <rect x="520" y="160" width="160" height="46" rx="23" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
+      <MultiText x={600} y={183} text="Enter Login\nCredentials" fontSize="12" />
+      <path d="M 600 206 V 240" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
 
-/* ===================== TECH STACK TIMELINE ===================== */
-const techTimeline = [
-  { icon: <Server className="w-6 h-6" />, step: "01 · Entry Point", name: "ASP.NET Core API", desc: "Handles incoming HTTP requests and routes them to controllers.", badge: ".NET 8 · Web API", color: "#3A82F6" },
-  { icon: <Code2 className="w-6 h-6" />, step: "02 · Language", name: "C#", desc: "Strongly-typed language powering controllers, services & models.", badge: "C# 12", color: "#1564BF" },
-  { icon: <Filter className="w-6 h-6" />, step: "03 · Querying", name: "LINQ", desc: "Filters, joins & projects in-memory or IQueryable data with C# syntax.", badge: "Language-Integrated Query", color: "#7C3AED" },
-  { icon: <Boxes className="w-6 h-6" />, step: "04 · ORM", name: "EF Core", desc: "Translates C# LINQ queries into SQL and maps rows back to objects.", badge: "Entity Framework Core 8", color: "#DB2777" },
-  { icon: <Database className="w-6 h-6" />, step: "05 · Storage", name: "SQL Server", desc: "Persists application data in a relational, transactional database.", badge: "T-SQL · Relational", color: "#DC2626" },
-];
+      <polygon points="600,240 640,265 600,290 560,265" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
+      <text x="600" y="265" textAnchor="middle" dominantBaseline="middle" fontSize="13" fontWeight="bold">Valid</text>
+      
+      {/* STRICT 90-DEGREE FEEDBACK LOOP FOR 'NO' */}
+      <text x="655" y="255" dominantBaseline="middle" fontSize="12" fill="#000">no</text>
+      <path d="M 640 265 H 720 V 103 H 680" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+      
+      <text x="610" y="305" dominantBaseline="middle" fontSize="12" fill="#000">yes</text>
+      <path d="M 600 290 V 330" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
 
-const TechTimeline = () => (
-  <div className="bg-[#09090B] rounded-3xl p-8 shadow-lg">
-    <div className="grid grid-cols-5 gap-2 relative">
-      <div className="absolute top-8 left-[10%] right-[10%] h-px bg-slate-700" />
-      {techTimeline.map((t, i) => (
-        <div key={i} className="flex flex-col items-center text-center relative">
-          <span className="text-[10px] font-mono tracking-wider mb-3" style={{ color: t.color }}>
-            {t.step}
-          </span>
-          <div
-            className="w-16 h-16 rounded-full flex items-center justify-center mb-3 relative z-10 border"
-            style={{ backgroundColor: `${t.color}22`, borderColor: `${t.color}55`, color: t.color }}
-          >
-            {t.icon}
-          </div>
-          <h4 className="text-white font-bold text-sm mb-1">{t.name}</h4>
-          <p className="text-slate-400 text-[10px] leading-snug mb-2 px-1">{t.desc}</p>
-          <span
-            className="text-[9px] px-2 py-1 rounded-full border"
-            style={{ borderColor: `${t.color}55`, color: t.color }}
-          >
-            {t.badge}
-          </span>
-        </div>
+      <rect x="530" y="330" width="140" height="46" rx="23" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
+      <text x="600" y="353" textAnchor="middle" dominantBaseline="middle" fontSize="13">Home Page</text>
+      <path d="M 600 376 V 410" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+
+      {/* Fork 1 */}
+      <rect x="50" y="410" width="1100" height="8" fill="#ff0000" />
+      
+      {[
+        { x: 150, l: "Smart assistants" }, { x: 330, l: "Academic calender" }, { x: 510, l: "Chatbot" },
+        { x: 690, l: "Dashboard" }, { x: 870, l: "Course Mgt" }, { x: 1050, l: "Student Profile" }
+      ].map((b, i) => (
+        <g key={i}>
+          <path d={`M ${b.x} 418 V 450`} fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+          <rect x={b.x-70} y="450" width="140" height="46" rx="23" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
+          <MultiText x={b.x} y={473} text={b.l.replace(' ', '\n')} fontSize="12" />
+          <path d={`M ${b.x} 496 V 530`} fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+        </g>
       ))}
+
+      {/* Col 1 */}
+      <rect x="30" y="530" width="240" height="8" fill="#ff0000" />
+      {[{x:70, l:"Path suggestions"},{x:150, l:"Improve study\nplan"},{x:230, l:"Learning\nresourses"}].map((b,i)=>(
+        <g key={`c1${i}`}>
+           <path d={`M ${b.x} 538 V 570`} fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+           <rect x={b.x-35} y="570" width="70" height="46" rx="15" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
+           <MultiText x={b.x} y={593} text={b.l} fontSize="10" />
+           <path d={`M ${b.x} 616 V 980`} fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+        </g>
+      ))}
+
+      {/* Col 2 */}
+      <rect x="270" y="530" width="120" height="46" rx="23" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
+      <MultiText x={330} y={553} text="Reminder of\nimportant events" fontSize="11" />
+      <path d="M 330 576 V 980" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+
+      {/* Col 3 */}
+      <rect x="450" y="530" width="120" height="46" rx="23" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
+      <MultiText x={510} y={553} text="Analyze question" fontSize="12" />
+      <path d="M 510 576 V 600" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+      
+      <polygon points="510,600 540,625 510,650 480,625" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
+      <text x="510" y="625" textAnchor="middle" dominantBaseline="middle" fontSize="12" fontWeight="bold">Valid</text>
+      
+      <text x="555" y="615" dominantBaseline="middle" fontSize="12" fill="#000">no</text>
+      <path d="M 540 625 H 580" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+      
+      <rect x="580" y="602" width="100" height="46" rx="23" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
+      <MultiText x={630} y={625} text="Only academic\nquestion" fontSize="10" />
+      
+      <text x="520" y="665" dominantBaseline="middle" fontSize="12" fill="#000">yes</text>
+      <path d="M 510 650 V 680" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+      
+      <rect x="450" y="680" width="120" height="46" rx="23" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
+      <MultiText x={510} y={703} text="Answer question" fontSize="12" />
+      <path d="M 510 726 V 980" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+
+      {/* Col 4 */}
+      <rect x="630" y="530" width="120" height="46" rx="23" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
+      <MultiText x={690} y={553} text="Performance\ntracker" fontSize="12" />
+      <path d="M 690 576 V 980" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+
+      {/* Col 5 */}
+      <rect x="740" y="580" width="90" height="46" rx="20" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
+      <MultiText x={785} y={603} text="View courses\ndetails" fontSize="11" />
+      <path d="M 785 626 V 980" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+      
+      <path d="M 870 530 V 555 H 910 V 580" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+      <path d="M 870 530 V 555 H 785 V 580" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+
+      <rect x="860" y="580" width="100" height="46" rx="20" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
+      <MultiText x={910} y={603} text="Enroll in\ncourses" fontSize="11" />
+      <path d="M 910 626 V 650" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+      
+      <rect x="860" y="650" width="100" height="46" rx="20" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
+      <MultiText x={910} y={673} text="Recommend\ncourses" fontSize="11" />
+      <path d="M 910 696 V 720" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+      
+      <rect x="860" y="720" width="100" height="46" rx="20" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
+      <MultiText x={910} y={743} text="Generate smart\ntable" fontSize="11" />
+      <path d="M 910 766 V 790" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+
+      <polygon points="910,790 940,815 910,840 880,815" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
+      <text x="910" y="815" textAnchor="middle" dominantBaseline="middle" fontSize="12" fontWeight="bold">suitable</text>
+      
+      {/* STRICT 90-DEGREE FEEDBACK LOOP FOR NO */}
+      <text x="955" y="805" dominantBaseline="middle" fontSize="12" fill="#000">no</text>
+      <path d="M 940 815 H 980 V 565 H 910 V 580" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+      
+      <text x="920" y="855" dominantBaseline="middle" fontSize="12" fill="#000">yes</text>
+      <path d="M 910 840 V 870" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+
+      <rect x="860" y="870" width="100" height="46" rx="20" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
+      <MultiText x={910} y={893} text="Save\nregistration" fontSize="11" />
+      <path d="M 910 916 V 980" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+
+      {/* C6 */}
+      <rect x="990" y="530" width="190" height="8" fill="#ff0000" />
+      {[{x:1015, l:"Completed\ncourses"},{x:1065, l:"com/rem\nhours"},{x:1115, l:"Student\nInfo"},{x:1165, l:"What if\ngpa"}].map((b,i)=>(
+        <g key={`c6${i}`}>
+           <path d={`M ${b.x} 538 V 570`} fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+           <rect x={b.x-22.5} y="570" width="45" height="46" rx="10" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
+           <MultiText x={b.x} y={593} text={b.l} fontSize="9" />
+           <path d={`M ${b.x} 616 V 980`} fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+        </g>
+      ))}
+
+      {/* Join & End */}
+      <rect x="0" y="980" width="1200" height="8" fill="#ff0000" />
+      <path d="M 600 988 V 1020" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
+      
+      <circle cx="600" cy="1040" r="14" fill="none" stroke="#000" strokeWidth="2" />
+      <circle cx="600" cy="1040" r="8" fill="#000" />
+    </svg>
+  </div>
+);
+
+// 4. USE CASE DIAGRAM RENDERER
+const UMLUseCase = ({ title, data, w=1000, h=950 }: any) => (
+  <div className="w-full bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200/60 overflow-x-auto mb-16">
+    <h3 className="text-2xl font-semibold text-slate-800 mb-6 text-center">{title}</h3>
+    <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-auto min-w-[800px] font-sans">
+      <defs><marker id="arr-uc" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#000"/></marker></defs>
+      
+      {/* System Boundary */}
+      {data.boxes?.map((b:any, i:number) => (
+        <g key={`b${i}`}>
+          <rect x={b.x} y={b.y} width={b.w} height={b.h} fill="none" stroke="#000" strokeWidth="1.5" />
+          <text x={b.x + b.w/2} y={b.y + 20} textAnchor="middle" dominantBaseline="middle" fontSize="14" fontWeight="bold" fill="#000">{b.l}</text>
+        </g>
+      ))}
+
+      {/* Links snapped precisely */}
+      {data.links?.map((l:any, i:number) => (
+         <g key={`l${i}`}>
+           <line x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke="#000" strokeWidth="1.5" strokeDasharray={l.d ? "6,6" : "none"} markerEnd={l.arr ? "url(#arr-uc)" : "none"} />
+           {l.l && <text x={(l.x1+l.x2)/2} y={(l.y1+l.y2)/2 - 10} textAnchor="middle" dominantBaseline="middle" fontSize="12" fill="#000" transform={l.rot ? `rotate(${l.rot} ${(l.x1+l.x2)/2} ${(l.y1+l.y2)/2})` : ""}>{l.l}</text>}
+         </g>
+      ))}
+
+      {/* Actors */}
+      {data.actors?.map((a:any, i:number) => (
+        <g key={`a${i}`} transform={`translate(${a.x}, ${a.y})`}>
+          <circle cx="0" cy="-20" r="12" fill="#fff" stroke="#000" strokeWidth="2" />
+          <line x1="0" y1="-8" x2="0" y2="15" stroke="#000" strokeWidth="2" />
+          <line x1="-18" y1="2" x2="18" y2="2" stroke="#000" strokeWidth="2" />
+          <line x1="0" y1="15" x2="-12" y2="40" stroke="#000" strokeWidth="2" />
+          <line x1="0" y1="15" x2="12" y2="40" stroke="#000" strokeWidth="2" />
+          <text x="0" y="60" textAnchor="middle" dominantBaseline="middle" fontSize="13" fontWeight="bold" fill="#000">{a.l}</text>
+        </g>
+      ))}
+
+      {/* Use Cases constrained to box width */}
+      {data.cases?.map((c:any, i:number) => (
+        <g key={`c${i}`} transform={`translate(${c.x}, ${c.y})`}>
+          <ellipse cx="0" cy="0" rx={c.rx||80} ry={c.ry||30} fill="#fff" stroke="#000" strokeWidth="1.5" />
+          <MultiText x={0} y={0} text={c.l} fontSize="12" fontWeight="500" />
+        </g>
+      ))}
+    </svg>
+  </div>
+);
+
+// 5. SEQUENCE DIAGRAM RENDERER
+const UMLSequence = ({ title, data }: any) => {
+  const w = 1000, h = 100 + data.msgs.length * 50;
+  const colW = w / data.lifelines.length;
+  return (
+    <div className="w-full bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200/60 overflow-x-auto mb-16">
+      <h3 className="text-2xl font-semibold text-slate-800 mb-6 text-center">{title}</h3>
+      <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-auto min-w-[800px] font-sans">
+        <defs><marker id="arr-seq" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#000"/></marker></defs>
+        {data.lifelines.map((l: string, i: number) => {
+          const cx = i * colW + colW/2;
+          return (
+            <g key={i}>
+              {l.includes("User") || l.includes("Actor") ? (
+                <g transform={`translate(${cx}, 30)`}>
+                  <circle cx="0" cy="-15" r="7" fill="none" stroke="#000" strokeWidth="2" />
+                  <line x1="0" y1="-8" x2="0" y2="10" stroke="#000" strokeWidth="2" />
+                  <line x1="-12" y1="-2" x2="12" y2="-2" stroke="#000" strokeWidth="2" />
+                  <line x1="0" y1="10" x2="-10" y2="25" stroke="#000" strokeWidth="2" />
+                  <line x1="0" y1="10" x2="10" y2="25" stroke="#000" strokeWidth="2" />
+                  <text x="0" y="45" textAnchor="middle" dominantBaseline="middle" fontSize="13" fontWeight="bold" fill="#000">{l}</text>
+                </g>
+              ) : (
+                <g transform={`translate(${cx}, 30)`}>
+                  <rect x="-60" y="-10" width="120" height="40" fill="#fff" stroke="#000" strokeWidth="1.5" rx="6" />
+                  <MultiText x={0} y={10} text={l} fontSize="12" fontWeight="bold" />
+                </g>
+              )}
+              <line x1={cx} y1="80" x2={cx} y2={h-20} stroke="#000" strokeDasharray="6,6" strokeWidth="1.5" />
+              <rect x={cx - 6} y="95" width="12" height={h-130} fill="#fff" stroke="#000" strokeWidth="1.5" />
+            </g>
+          );
+        })}
+        {data.msgs.map((m: any, i: number) => {
+          const y = 120 + i * 50;
+          const x1 = m.f * colW + colW/2 + (m.f < m.t ? 6 : -6);
+          const x2 = m.t * colW + colW/2 + (m.f < m.t ? -6 : 6);
+          if (m.self) return (
+            <g key={i}>
+              <path d={`M ${x1} ${y} h 40 v 20 h -40`} fill="none" stroke="#000" strokeWidth="1.5" markerEnd="url(#arr-seq)" />
+              <text x={x1 + 45} y={y + 10} dominantBaseline="middle" fontSize="12" fill="#000">{m.l}</text>
+            </g>
+          );
+          return (
+            <g key={i}>
+              <line x1={x1} y1={y} x2={x2} y2={y} stroke="#000" strokeWidth="1.5" strokeDasharray={m.d ? "6,6" : "none"} markerEnd="url(#arr-seq)" />
+              <text x={(x1+x2)/2} y={y - 10} textAnchor="middle" dominantBaseline="middle" fontSize="12" fill="#000">{m.l}</text>
+            </g>
+          );
+        })}
+      </svg>
     </div>
-  </div>
-);
-
-/* ===================== KEY TOOLS & PACKAGES ===================== */
-const keyTools = [
-  "MediatR", "FluentValidation", "AutoMapper", "Entity Framework Core",
-  "ASP.NET Core Identity", "JWT Bearer Auth", "Swagger / OpenAPI",
-  "IStringLocalizer", "Serilog", "IP Rate Limiting",
-];
-
-const KeyToolsGrid = () => (
-  <div className="flex flex-wrap justify-center gap-3">
-    {keyTools.map((tool, i) => (
-      <span
-        key={i}
-        className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm text-sm font-medium text-slate-700"
-      >
-        <Package className="w-4 h-4 text-rafiq-primary-500" />
-        {tool}
-      </span>
-    ))}
-  </div>
-);
-
-/* ===================== HTTP REQUEST LIFECYCLE (safe HTML version) ===================== */
-const lifecycleSteps = [
-  { label: "Client", sub: "Sends HTTP request", cat: "entry" },
-  { label: "Server", sub: "Accepts connection", cat: "entry" },
-  { label: "Rate Limiting → Security Headers → CORS → Static Files → Routing", sub: "Gateway & middleware pipeline", cat: "gateway" },
-  { label: "Authentication", sub: "Verifies identity — checks JWT expiry, refreshes via JWT service if needed", cat: "auth" },
-  { label: "Role Filter", sub: "Checks permissions", cat: "auth" },
-  { label: "Map to Controller", sub: "Routes to Query, Command, or File Uploader action", cat: "dispatch" },
-  { label: "Validator", sub: "Validates payload — invalid requests throw an exception and short-circuit here", cat: "decision" },
-  { label: "Handler", sub: "Executes the use case via MediatR", cat: "business" },
-  { label: "Unit of Work → Repositories → DB", sub: "Persists / retrieves data, logged by DB interceptor", cat: "business" },
-  { label: "Map to DTO", sub: "Formats the response, hiding internal DB structures", cat: "business" },
-  { label: "Return API Response", sub: "Sends the final HTTP status + payload to the client", cat: "final" },
-];
-
-const categoryStyles: Record<string, string> = {
-  entry: "bg-slate-100 border-slate-300 text-slate-800",
-  gateway: "bg-green-50 border-green-300 text-green-800",
-  auth: "bg-purple-50 border-purple-300 text-purple-800",
-  dispatch: "bg-blue-50 border-blue-300 text-blue-800",
-  decision: "bg-amber-50 border-amber-300 text-amber-800",
-  business: "bg-emerald-50 border-emerald-300 text-emerald-800",
-  final: "bg-slate-100 border-slate-300 text-slate-800",
+  );
 };
 
-const HttpLifecycleFlow = () => (
-  <div className="max-w-2xl mx-auto">
-    {lifecycleSteps.map((step, i) => (
-      <div key={i}>
-        <div className={`rounded-xl border px-5 py-3 text-center ${categoryStyles[step.cat]}`}>
-          <p className="font-semibold text-sm">{step.label}</p>
-          <p className="text-xs opacity-80 mt-0.5">{step.sub}</p>
-        </div>
-        {i < lifecycleSteps.length - 1 && (
-          <div className="flex justify-center py-1">
-            <span className="text-slate-400 text-lg">↓</span>
-          </div>
-        )}
-      </div>
-    ))}
-  </div>
-);
+// DATA FOR THE ENGINES (Meticulously calculated for exact intersections)
+const dataClassDiagram = {
+  classes: [
+    { id: 'u', n: 'User', x: 800, y: 50, a: ['+ userId: String', '+ name: String', '+ email: String', '+ password: string', '+ role: String', 'status: Boolean'], m: ['+ login()', '+ logout()', '+ resetPassword()'] },
+    { id: 'n', n: 'Notification', x: 1150, y: 100, a: ['+ notificationId: String', '+ message: String', '+ type: String', '+ sentDate: Date'], m: ['+ sendApp()'] },
+    
+    { id: 'st', n: 'Student', x: 300, y: 350, a: ['+ nationalId: String', '+ departement: String', '+ academicLevel: int', '+ term: int', '+ cumulativeGPA: douple', '+ academicStatus: String'], m: ['+ viewAcademicProfile()', '+ enrollCourse()', '+ dropCourse()', '+ simulateGPA()', '+ viewStudyPlan()', '+ bookAppointment()', '+ interactWithChatbot()', '+ viewRecommendations()'] },
+    { id: 'ad', n: 'Admin', x: 600, y: 350, a: ['+ AdminType: String'], m: ['+ addStudent()', '+ editStudent()', '+ deleteStudent()', '+ addCourse()', '+ editCourse()', '+ deleteCourse()', '+ createAnnouncement()', '+ manageRoles()', '+ activeAccount()', '+ deactiveAccount()'] },
+    { id: 'aa', n: 'AcademicAdvisor', x: 900, y: 350, a: ['+ department: String'], m: ['+ viewStudentProfile()', '+ reviewAcademicPlan()', '+ registerCourses()'] },
+    { id: 'in', n: 'Instructor', x: 1200, y: 350, a: ['+ Specialization: String'], m: ['+ enterGrades()', '+ editGrades()', '+ viewClassList()', '+ createAnnouncement()'] },
+    
+    { id: 'en', n: 'Enrollment', x: 150, y: 650, w: 140, a: ['+ enrollmentId: String', '+ grade: String', '+ status: String'], m: ['+ calculateGrade()', '+ updateStatus()'] },
+    { id: 'sp', n: 'StudyPlan', x: 330, y: 650, w: 140, a: ['+ PlanId: String'], m: ['+ generatePlan()', '+ checkGraduationEligibility()', '+ optimizePlan()'] },
+    { id: 're', n: 'RecommendationEngine', x: 510, y: 650, w: 140, a: ['+ modelVersion: String'], m: ['+ recommendCourse()', '+ predictAcademicRisk()', '+ suggestCareerPath()'] },
+    { id: 'cb', n: 'Chatbot', x: 690, y: 650, w: 140, a: ['+ knowledgeBase: String'], m: ['+ answerQuestion()', '+ explainAcademicRules()'] },
+    { id: 'gs', n: 'GPAServices', x: 870, y: 650, w: 140, a: [], m: ['+ calculateTermGPA()', '+ calculateCumulativeGPA()', '+ simulateGPA()'] },
+    { id: 'sg', n: 'ScheduleGenerator', x: 1050, y: 650, w: 140, a: [], m: ['+ generateSchedule()', '+ detectConflict()', '+ optimizeSchedule()'] },
+    { id: 'ap', n: 'Appointment', x: 1230, y: 650, w: 140, a: ['+ appointmentId: String', '+ date: Date', '+ status: String'], m: ['+ book()', '+ cancel()', '+ sendReminder()'] },
+    { id: 'an', n: 'Announcement', x: 1410, y: 650, w: 140, a: ['+ announcementId: string', '+ title: String', '+ content: String', 'dateCreated: Date'], m: ['+ publish()', '+ scheduleRelease()'] },
 
-/* ===================== BACKEND PAGE ===================== */
-const BackendPage = () => (
-  <PremiumSlideTemplate>
-    <div className="max-w-7xl mx-auto px-6">
-      <h2 className="text-5xl font-bold text-slate-900 mb-4 tracking-tight text-center">
-        Backend Architecture
-      </h2>
-      <p className="text-lg text-slate-500 text-center mb-10 max-w-4xl mx-auto">
-        Project Architecture · HTTP Request Lifecycle · Key Tools & Packages
-      </p>
+    { id: 'se', n: 'Section', x: 150, y: 850, w: 140, a: ['+ sectionId: String', '+ schedule: String', '+ capacity: int'], m: ['+ addStudent()', '+ removeStudent()', '+ isFull()'] },
+    { id: 'co', n: 'Course', x: 330, y: 850, w: 140, a: ['+ courseId: String', '+ title: String', '+ description: String', '+ creditHours: int', '+ department: String', '+ category: String'], m: ['+ addPrerequisite()', '+ removePrerequisite()', '+ updateCourseDetails()', '+ checkEligibility()'] },
+  ],
+  links: [
+    // Inheritance
+    { path: 'M 300 350 V 300 H 800 V 230', type: 'inherit' }, { path: 'M 600 350 V 300 H 800 V 230', type: 'inherit' }, { path: 'M 900 350 V 300 H 800 V 230', type: 'inherit' }, { path: 'M 1200 350 V 300 H 800 V 230', type: 'inherit' },
+    // User -> Notification
+    { path: 'M 875 125 H 1075', type: 'assoc' },
+    // Student -> Tools
+    { path: 'M 300 580 V 610 H 150 V 650', type: 'assoc', l1: '1', l2: '*', tx1: 310, ty1: 595, tx2: 160, ty2: 635 }, 
+    { path: 'M 300 580 V 610 H 330 V 650', type: 'assoc', l1: '1', l2: '1', tx1: 310, ty1: 595, tx2: 340, ty2: 635 },
+    { path: 'M 300 580 V 610 H 510 V 650', d: true }, { path: 'M 300 580 V 610 H 690 V 650', d: true }, { path: 'M 300 580 V 610 H 870 V 650', d: true }, { path: 'M 300 580 V 610 H 1050 V 650', d: true }, { path: 'M 300 580 V 610 H 1230 V 650', d: true },
+    // Admin, Instructor, Advisor -> Announcement
+    { path: 'M 600 535 V 600 H 1410 V 650', type: 'assoc', l1: '1', l2: '*', tx1: 610, ty1: 550, tx2: 1420, ty2: 635 },
+    { path: 'M 1200 490 V 600 H 1410 V 650', type: 'assoc', l1: '1', l2: '1', tx1: 1210, ty1: 505, tx2: 1390, ty2: 635 },
+    { path: 'M 900 460 V 600 H 1410 V 650', type: 'assoc' },
+    // Section -> Course
+    { path: 'M 220 900 H 260', type: 'assoc', l1: '*', l2: '1', tx1: 230, ty1: 890, tx2: 250, ty2: 890 },
+    // Enrollment -> Section
+    { path: 'M 150 725 V 850', type: 'assoc', l1: '*', l2: '1', tx1: 160, ty1: 740, tx2: 160, ty2: 835 },
+  ]
+};
 
-      {/* ===================== WHY CLEAN ARCHITECTURE ===================== */}
-      <h3 className="text-3xl font-semibold text-slate-800 mb-6 text-center">
-        Why Clean Architecture?
-      </h3>
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 mb-20">
-        {whyCleanArchitecture.map((w, i) => (
-          <div key={i} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-md">
-            <div className="text-rafiq-primary-500 mb-3">{w.icon}</div>
-            <h4 className="font-semibold text-slate-900 mb-2 text-sm">{w.title}</h4>
-            <p className="text-xs text-slate-600 leading-relaxed">{w.desc}</p>
-          </div>
-        ))}
-      </div>
+const dataUC1 = {
+  actors: [{ l: 'Student', x: 80, y: 500 }, { l: 'Instructor', x: 920, y: 500 }],
+  boxes: [{ l: 'System', x: 200, y: 10, w: 600, h: 960 }],
+  cases: [
+    { l: 'Logout', x: 420, y: 60, rx: 50 }, { l: 'Login', x: 580, y: 60, rx: 50 },
+    { l: 'reset password', x: 420, y: 120, rx: 60 }, { l: 'forgot password', x: 580, y: 120, rx: 60 },
+    { l: 'View Profile', x: 300, y: 220, rx: 65 }, { l: 'View grades', x: 550, y: 180, rx: 65 }, { l: 'view info', x: 550, y: 260, rx: 60 },
+    { l: 'Enroll In Courses', x: 300, y: 340, rx: 75 }, { l: 'generate table', x: 550, y: 340, rx: 65 },
+    { l: 'View Courses', x: 300, y: 440, rx: 65 }, { l: 'view course details', x: 550, y: 440, rx: 75 },
+    { l: 'Edit/Add/Delete Complaint', x: 300, y: 540, rx: 90 }, { l: 'Attach file', x: 550, y: 540, rx: 60 },
+    { l: 'Check Academic Calender', x: 300, y: 640, rx: 85 }, { l: 'recieve calender notification', x: 550, y: 640, rx: 95 },
+    { l: 'Book an Appointment', x: 300, y: 740, rx: 80 }, { l: 'Interact with Chatbot', x: 300, y: 840, rx: 80 },
+    { l: 'view assigned courses', x: 750, y: 250, rx: 80 }, { l: 'manage courses matrials', x: 750, y: 350, rx: 85 },
+    { l: 'grade students', x: 750, y: 450, rx: 65 }, { l: 'view class list', x: 750, y: 550, rx: 65 },
+    { l: 'upload assignments', x: 750, y: 650, rx: 75 }, { l: 'create announcement', x: 750, y: 750, rx: 80 }
+  ],
+  links: [
+    // Include & Extend Arrows
+    { x1: 365, y1: 210, x2: 485, y2: 185, d: true, arr: true, l: '<<include>>' },
+    { x1: 365, y1: 230, x2: 490, y2: 255, d: true, arr: true, l: '<<include>>' },
+    { x1: 485, y1: 340, x2: 375, y2: 340, d: true, arr: true, l: '<<extend>>' },
+    { x1: 475, y1: 440, x2: 365, y2: 440, d: true, arr: true, l: '<<extend>>' },
+    { x1: 490, y1: 540, x2: 390, y2: 540, d: true, arr: true, l: '<<extend>>' },
+    { x1: 455, y1: 640, x2: 385, y2: 640, d: true, arr: true, l: '<<extend>>' },
+    // Student Links
+    { x1: 100, y1: 480, x2: 370, y2: 65 }, { x1: 100, y1: 480, x2: 530, y2: 65 }, { x1: 100, y1: 480, x2: 360, y2: 125 }, { x1: 100, y1: 480, x2: 520, y2: 125 },
+    { x1: 100, y1: 500, x2: 235, y2: 220 }, { x1: 100, y1: 500, x2: 225, y2: 340 }, { x1: 100, y1: 500, x2: 235, y2: 440 }, { x1: 100, y1: 500, x2: 210, y2: 540 },
+    { x1: 100, y1: 500, x2: 215, y2: 640 }, { x1: 100, y1: 500, x2: 220, y2: 740 }, { x1: 100, y1: 500, x2: 220, y2: 840 },
+    // Instructor Links
+    { x1: 900, y1: 480, x2: 470, y2: 65 }, { x1: 900, y1: 480, x2: 630, y2: 65 }, { x1: 900, y1: 480, x2: 480, y2: 125 }, { x1: 900, y1: 480, x2: 640, y2: 125 },
+    { x1: 900, y1: 500, x2: 830, y2: 250 }, { x1: 900, y1: 500, x2: 835, y2: 350 }, { x1: 900, y1: 500, x2: 815, y2: 450 }, { x1: 900, y1: 500, x2: 815, y2: 550 },
+    { x1: 900, y1: 500, x2: 825, y2: 650 }, { x1: 900, y1: 500, x2: 830, y2: 750 }
+  ]
+};
 
-      {/* ===================== ONION DIAGRAM ===================== */}
-      <h3 className="text-3xl font-semibold text-slate-800 mb-6 text-center">
-        Clean Architecture — .NET Solution Structure
-      </h3>
-      <div className="bg-[#0A0E1A] p-8 rounded-3xl shadow-lg mb-20 flex justify-center">
-  <img
-    src="public\clean-architecture.jpeg"
-    alt="Clean Architecture Diagram"
-    className="w-full max-w-5xl h-auto object-contain"
-  />
-</div>
+const dataUC2 = {
+  actors: [{ l: 'Admin', x: 80, y: 500 }, { l: 'Academic Advisor', x: 920, y: 250 }, { l: 'Smart Agent', x: 920, y: 800 }],
+  boxes: [{ l: 'System', x: 200, y: 10, w: 620, h: 960 }],
+  cases: [
+    { l: 'Add/Edit/Delete student', x: 320, y: 150, rx: 80 }, { l: 'view student profile', x: 320, y: 260, rx: 70 },
+    { l: 'Activate/Deactivate Account', x: 320, y: 370, rx: 95 }, { l: 'Instructor Assignment', x: 320, y: 480, rx: 80 },
+    { l: 'Create Announcement', x: 320, y: 590, rx: 80 }, { l: 'Targeted notifications', x: 580, y: 590, rx: 80 },
+    { l: 'recieve appointment request', x: 320, y: 700, rx: 95 },
+    
+    { l: 'view student profile', x: 680, y: 120, rx: 70 }, { l: 'view assigned student', x: 680, y: 220, rx: 75 },
+    { l: 'review study plan', x: 680, y: 320, rx: 70 }, { l: 'recieve advising request', x: 680, y: 420, rx: 80 },
+    
+    { l: 'track academiv status', x: 440, y: 50, rx: 75 }, { l: 'review graduation progress', x: 440, y: 150, rx: 90 },
+    { l: 'sending advising notes', x: 440, y: 420, rx: 80 },
+    
+    { l: 'Generate course recommendation', x: 660, y: 650, rx: 110 }, { l: 'Learning recourses suggestions', x: 660, y: 750, rx: 100 },
+    { l: 'Provide student assistant', x: 660, y: 850, rx: 85 }, { l: 'Generate smart schedule', x: 660, y: 950, rx: 85 }
+  ],
+  links: [
+    // Include & Extend Arrows
+    { x1: 400, y1: 590, x2: 500, y2: 590, d: true, arr: true, l: '<<include>>' },
+    { x1: 515, y1: 65, x2: 615, y2: 105, d: true, arr: true, l: '<<extend>>' },
+    { x1: 530, y1: 145, x2: 610, y2: 125, d: true, arr: true, l: '<<extend>>' },
+    { x1: 520, y1: 420, x2: 600, y2: 420, d: true, arr: true, l: '<<extend>>' },
+    // Admin Links
+    { x1: 100, y1: 500, x2: 240, y2: 150 }, { x1: 100, y1: 500, x2: 250, y2: 260 }, { x1: 100, y1: 500, x2: 225, y2: 370 },
+    { x1: 100, y1: 500, x2: 240, y2: 480 }, { x1: 100, y1: 500, x2: 240, y2: 590 }, { x1: 100, y1: 500, x2: 225, y2: 700 },
+    // Advisor Links
+    { x1: 900, y1: 250, x2: 750, y2: 120 }, { x1: 900, y1: 250, x2: 755, y2: 220 },
+    { x1: 900, y1: 250, x2: 750, y2: 320 }, { x1: 900, y1: 250, x2: 760, y2: 420 },
+    // Agent Links
+    { x1: 900, y1: 800, x2: 770, y2: 650 }, { x1: 900, y1: 800, x2: 760, y2: 750 },
+    { x1: 900, y1: 800, x2: 745, y2: 850 }, { x1: 900, y1: 800, x2: 745, y2: 950 }
+  ]
+};
 
-      {/* ===================== THE FIVE LAYERS ===================== */}
-      <h3 className="text-3xl font-semibold text-slate-800 mb-6 text-center">
-        The Five Layers
-      </h3>
-      <div className="grid md:grid-cols-2 gap-5 mb-6">
-        <LayerCard layer={layers[0]} />
-        <LayerCard layer={layers[1]} />
-      </div>
-      <div className="grid md:grid-cols-2 gap-5 mb-6">
-        <LayerCard layer={layers[2]} />
-        <LayerCard layer={layers[3]} />
-      </div>
-      <div className="mb-20">
-        <LayerCard layer={layers[4]} />
-      </div>
+const dataSeqChatbot = {
+  lifelines: ["User", "UI", "Controller", "Nlp", "KB", "AI response"],
+  msgs: [
+    { f: 0, t: 1, l: "Type question" }, { f: 1, t: 2, l: "send user message" },
+    { f: 2, t: 3, l: "Analyze intent" }, { f: 3, t: 2, l: "return intent", d: true },
+    { f: 2, t: 4, l: "fetch regulation data" }, { f: 4, t: 2, l: "return related rules", d: true },
+    { f: 2, t: 5, l: "generate structured respone" }, { f: 5, t: 2, l: "return formatted answer", d: true },
+    { f: 2, t: 1, l: "send final response", d: true }, { f: 1, t: 0, l: "display answer", d: true }
+  ]
+};
 
-      {/* ===================== TECH STACK TIMELINE ===================== */}
-      <h3 className="text-3xl font-semibold text-slate-800 mb-6 text-center">
-        Core Backend Technologies
-      </h3>
-      <p className="text-sm text-slate-600 text-center max-w-3xl mx-auto mb-8">
-        How a request moves through the stack — from <strong>ASP.NET Core</strong> down to <strong>SQL Server</strong>.
-      </p>
-      <div className="bg-[#0A0E1A] p-8 rounded-3xl shadow-lg mb-20 flex justify-center">
-  <div className="bg-[#09090B] p-8 rounded-3xl shadow-lg mb-20 flex justify-center">
-  <img
-    src="public\backend-technologies.jpeg"
-    alt="Core Backend Technologies"
-    className="w-full max-w-6xl h-auto object-contain"
-  />
-</div>
-</div>
+const dataSeqAlerts = {
+  lifelines: ["Actor", "Student Dashboard", "AlertService", "NotificationService", "EvenMonitor", "GradSystem"],
+  msgs: [
+    { f: 5, t: 4, l: "Student grad drops below threshold" }, { f: 4, t: 2, l: "Trigger Grade drop Alert" },
+    { f: 2, t: 2, l: "generate drop alert", self: true }, { f: 2, t: 3, l: "send grade drop notification" },
+    { f: 3, t: 1, l: "display grade drop alert", d: true }, { f: 1, t: 0, l: "Show Grade Alert", d: true }
+  ]
+};
 
-      {/* ===================== KEY TOOLS & PACKAGES ===================== */}
-      <h3 className="text-3xl font-semibold text-slate-800 mb-6 text-center">
-        Key Tools & Packages
-      </h3>
-      <div className="mb-20">
-        <KeyToolsGrid />
+const SystemDesignPage = () => {
+  return (
+    <PremiumSlideTemplate>
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-5xl font-bold text-slate-900 mb-4 tracking-tight text-center">System Design</h2>
+        <p className="text-lg text-slate-500 text-center mb-12">System architecture and meticulously aligned UML diagrams detailing system interaction and structure.</p>
+        
+        <CodeArchitectureDiagram />
+        <UMLClass title="Class Diagram" data={dataClassDiagram} />
+        <UMLUseCase title="Global Use Case Diagram (Student & Instructor)" data={dataUC1} h={1000} />
+        <UMLUseCase title="Global Use Case Diagram (Admin, Advisor, Agent)" data={dataUC2} h={1000} />
+        <UMLActivityAuth />
+        <UMLSequence title="Sequence Diagram (Chatbot)" data={dataSeqChatbot} />
+        <UMLSequence title="Sequence Diagram (Alerts)" data={dataSeqAlerts} />
       </div>
-
-      {/* ===================== REQUEST WALKTHROUGH ===================== */}
-      <h3 className="text-3xl font-semibold text-slate-800 mb-6 text-center">
-        Anatomy of a Request: Get Student Study Plan
-      </h3>
-
-      {/* Step 1: Presentation */}
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-md mb-6">
-        <h4 className="font-semibold text-slate-900 mb-2">1. Presentation Layer</h4>
-        <p className="text-sm text-slate-600 mb-4">
-          The server receives the HTTP request and filters it through middleware first: Security Headers
-          (prevents XSS & clickjacking), IP Rate Limiting (blocks DoS / API abuse), CORS (verifies trusted
-          origins), and Authentication & Authorization (validates the JWT and applies role filters). Once
-          secured, the controller binds the incoming JSON into a structured request object.
-        </p>
-        <div className="bg-[#09090B] p-6 rounded-xl overflow-x-auto font-mono text-sm">
-          <CodeLine parts={[
-            { text: "public", color: "#C084FC" }, { text: " class " },
-            { text: "GetStudyPlanByStudentQueryPaginated", color: "#60A5FA" },
-            { text: " : IRequest<PaginatedResult<StudyPlanDto>>" },
-          ]} />
-          <CodeLine parts={[{ text: "{" }]} />
-          <CodeLine parts={[
-            { text: "    public", color: "#C084FC" }, { text: " int PageNumber { get; set; } = 1;" },
-          ]} />
-          <CodeLine parts={[
-            { text: "    public", color: "#C084FC" }, { text: " int PageSize { get; set; } = 20;" },
-          ]} />
-          <CodeLine parts={[
-            { text: "    public", color: "#C084FC" }, { text: " Guid StudentId { get; set; }" },
-          ]} />
-          <CodeLine parts={[{ text: "}" }]} />
-        </div>
-      </div>
-
-      {/* Step 2: Application */}
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-md mb-6">
-        <h4 className="font-semibold text-slate-900 mb-2">2. Application Layer</h4>
-        <p className="text-sm text-slate-600 mb-4">
-          The request passes through a validation pipeline first — checking that a Student ID is provided
-          and exists. If validation fails, the process short-circuits and returns an error immediately. If it
-          passes, MediatR routes it to the Handler, which coordinates the business workflow.
-        </p>
-        <div className="bg-[#09090B] p-6 rounded-xl overflow-x-auto mb-4 font-mono text-sm">
-          <CodeLine parts={[{ text: "// Validator", color: "#6B7280" }]} />
-          <CodeLine parts={[
-            { text: "RuleFor", color: "#60A5FA" }, { text: "(x => x.StudentId)" },
-          ]} />
-          <CodeLine parts={[
-            { text: "    .NotEmpty().WithMessage(_localizer[LocalizationKeys.Student.StudentIdRequired.Value])" },
-          ]} />
-          <CodeLine parts={[
-            { text: "    .MustAsync(StudentExists).WithMessage(_localizer[LocalizationKeys.Student.StudentsNotFound.Value]);" },
-          ]} />
-        </div>
-        <div className="bg-[#09090B] p-6 rounded-xl overflow-x-auto font-mono text-sm">
-          <CodeLine parts={[{ text: "// Handler", color: "#6B7280" }]} />
-          <CodeLine parts={[
-            { text: "var plans = " }, { text: "await", color: "#C084FC" }, { text: " _ctx.StudyPlanRepository.GetAll()" },
-          ]} />
-          <CodeLine parts={[{ text: "    .AsNoTracking()" }]} />
-          <CodeLine parts={[{ text: "    .Where(x => x.StudentId == request.StudentId)" }]} />
-          <CodeLine parts={[{ text: "    .OrderByDescending(x => x.CreatedAt)" }]} />
-          <CodeLine parts={[{ text: "    .ProjectTo<StudyPlanDto>(_mapper.ConfigurationProvider)" }]} />
-          <CodeLine parts={[{ text: "    .PaginatedListAsync(request.PageNumber, request.PageSize);" }]} />
-        </div>
-      </div>
-
-      {/* Step 3: Infrastructure & Persistence */}
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-md mb-6">
-        <h4 className="font-semibold text-slate-900 mb-2">3. Data Access & Persistence</h4>
-        <p className="text-sm text-slate-600 mb-4">
-          The Application layer calls a repository interface (<code className="text-xs bg-slate-100 px-1 rounded">IStudyPlanRepository</code>)
-          defined in Domain. Infrastructure implements this interface, translating the request into EF Core /
-          SQL queries against the database.
-        </p>
-        <div className="bg-[#09090B] p-6 rounded-xl overflow-x-auto mb-4 font-mono text-sm">
-          <CodeLine parts={[{ text: "// Domain — contract only", color: "#6B7280" }]} />
-          <CodeLine parts={[
-            { text: "public", color: "#C084FC" }, { text: " interface " },
-            { text: "IStudyPlanRepository", color: "#60A5FA" },
-            { text: " : IGenericRepository<StudyPlan, Guid> { }" },
-          ]} />
-        </div>
-        <div className="bg-[#09090B] p-6 rounded-xl overflow-x-auto font-mono text-sm">
-          <CodeLine parts={[{ text: "// Infrastructure — implementation", color: "#6B7280" }]} />
-          <CodeLine parts={[
-            { text: "public", color: "#C084FC" }, { text: " class " },
-            { text: "StudyPlanRepository", color: "#60A5FA" },
-            { text: " : BaseEntityRepository<StudyPlan, Guid>, IStudyPlanRepository" },
-          ]} />
-          <CodeLine parts={[{ text: "{" }]} />
-          <CodeLine parts={[
-            { text: "    public StudyPlanRepository(IRafeekDbContext dbContext) : base(dbContext) { }" },
-          ]} />
-          <CodeLine parts={[{ text: "}" }]} />
-        </div>
-      </div>
-
-      {/* Step 4: Standardized Response */}
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-md mb-6">
-        <h4 className="font-semibold text-slate-900 mb-2">4. Standardized Response (Result Pattern)</h4>
-        <p className="text-sm text-slate-600 mb-4">
-          Retrieved data is mapped to a DTO to hide internal database structures, then wrapped in a generic
-          <code className="text-xs bg-slate-100 px-1 rounded mx-1">ApiResponse&lt;TData&gt;</code>
-          object to standardize how successes and errors are formatted across every endpoint.
-        </p>
-        <div className="bg-[#09090B] p-6 rounded-xl overflow-x-auto font-mono text-sm">
-          <CodeLine parts={[
-            { text: "public", color: "#C084FC" }, { text: " record " },
-            { text: "ApiResponse", color: "#60A5FA" }, { text: "<TData>" },
-          ]} />
-          <CodeLine parts={[{ text: "{" }]} />
-          <CodeLine parts={[{ text: "    public bool Success { get; set; }" }]} />
-          <CodeLine parts={[{ text: "    public IDictionary<string, string[]> Errors { get; set; } = new();" }]} />
-          <CodeLine parts={[{ text: "    public TData? Data { get; set; }" }]} />
-          <CodeLine parts={[{ text: "    public string? Message { get; set; }" }]} />
-          <CodeLine parts={[{ text: "    public int StatusCode { get; set; }" }]} />
-          <CodeLine parts={[{ text: "" }]} />
-          <CodeLine parts={[
-            { text: "    public", color: "#C084FC" },
-            { text: " static ApiResponse<TData> Ok(TData? data, string? message = null, int statusCode = 200) => ..." },
-          ]} />
-          <CodeLine parts={[
-            { text: "    public", color: "#C084FC" },
-            { text: " static ApiResponse<TData> Error(string? message = null, int statusCode = 400) => ..." },
-          ]} />
-          <CodeLine parts={[{ text: "}" }]} />
-        </div>
-      </div>
-
-      {/* Step 5: Sending the response */}
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-md mb-20">
-        <h4 className="font-semibold text-slate-900 mb-2">5. Sending the HTTP Response</h4>
-        <p className="text-sm text-slate-600 mb-4">
-          The controller inspects the result. If successful, it translates it into a <strong>200 OK</strong>{" "}
-          containing the study plan data. If a validation or business rule failed, it returns a{" "}
-          <strong>400</strong> or <strong>404</strong> instead.
-        </p>
-        <div className="bg-[#09090B] p-6 rounded-xl overflow-x-auto font-mono text-sm">
-          <CodeLine parts={[{ text: "[HttpGet]" }]} />
-          <CodeLine parts={[{ text: "[RoleAuthorize(nameof(UserType.Student))]" }]} />
-          <CodeLine parts={[{ text: "[Route(ApiRoutes.StudyPlan.GetByStudent)]" }]} />
-          <CodeLine parts={[{ text: "[ProducesResponseType(StatusCodes.Status200OK)]" }]} />
-          <CodeLine parts={[{ text: "[ProducesResponseType(StatusCodes.Status400BadRequest)]" }]} />
-          <CodeLine parts={[
-            { text: "public", color: "#C084FC" }, { text: " async Task<IActionResult> GetStudyPlansByStudent(Guid studentId)" },
-          ]} />
-          <CodeLine parts={[{ text: "{" }]} />
-          <CodeLine parts={[
-            { text: "    var result = " }, { text: "await", color: "#C084FC" },
-            { text: " _mediator.Send(new GetStudyPlanByStudentQueryPaginated { StudentId = studentId });" },
-          ]} />
-          <CodeLine parts={[{ text: "    return Ok(result);" }]} />
-          <CodeLine parts={[{ text: "}" }]} />
-        </div>
-      </div>
-
-      {/* ===================== HTTP REQUEST LIFECYCLE ===================== */}
-      <h3 className="text-3xl font-semibold text-slate-800 mb-4 text-center">
-        HTTP Request Lifecycle
-      </h3>
-      <p className="text-sm text-slate-600 text-center max-w-3xl mx-auto mb-8">
-        End-to-end path of a request — from the client, through middleware and security, into the
-        Application layer, down to the database, and back out as a formatted response.
-      </p>
-      <div className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200 mb-6">
-        <HttpLifecycleFlow />
-      </div>
-      <div className="flex flex-wrap justify-center gap-4 text-xs text-slate-500 mb-4">
-        <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-slate-200 border border-slate-300" /> Entry / exit</span>
-        <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-green-50 border border-green-300" /> Gateway & middleware</span>
-        <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-purple-50 border border-purple-300" /> Auth & security</span>
-        <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-blue-50 border border-blue-300" /> Controller dispatch</span>
-        <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-amber-50 border border-amber-300" /> Decision point</span>
-        <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-emerald-50 border border-emerald-300" /> Business logic</span>
-      </div>
-    </div>
-  </PremiumSlideTemplate>
-);
+    </PremiumSlideTemplate>
+  );
+};
 
 /* =========================================================================
-   ADD THESE ICONS to your existing lucide-react import line at the top of
-   App.tsx (alongside Code2, Layers, Zap, ... Search, Users, PenTool,
-   CheckCircle2). Do NOT create a second import line for lucide-react.
+   7. Used Technologies, Tools and Algorithms
    ========================================================================= */
-// GraduationCap, Award, Sparkles, Target, TrendingUp
-
-/* ===================== CONCLUSION HIGHLIGHTS DATA ===================== */
-const conclusionHighlights = [
-  {
-    icon: <Target className="w-6 h-6" />,
-    title: "A Real Problem, Clearly Defined",
-    desc: "85% of surveyed students reported confusion around regulations and a clear need for a smart system — the exact gap Rafiq was built to close.",
-  },
-  {
-    icon: <Sparkles className="w-6 h-6" />,
-    title: "Intelligence, Not Just Information",
-    desc: "Unlike MYU, D2L, or Canvas, Rafiq doesn't just display data — it validates prerequisites, predicts risk, and recommends the next right step.",
-  },
-  {
-    icon: <TrendingUp className="w-6 h-6" />,
-    title: "Built for the Whole Journey",
-    desc: "From first login to graduation eligibility, every actor — student, advisor, instructor, and admin — has a dedicated, purpose-built experience.",
-  },
-];
-
-/* ===================== TEAM DATA ===================== */
-const teamMembers = [
-  "Fatma Mohamed Abu Elfadl",
-  "Shahd Mekkawy Ibrahim",
-  "Habiba Mohamed Mamdouh",
-  "Ahmed Abdelaleem Tawfiq",
-  "Mariam Mohamed Khalil",
-  "Kamel Mohamed Kamel",
-  "Nour Ahmed Elsayed",
-  "Moaz Mostafa Ibrahim",
-  "Nouran Mohamed Amin",
-  "Mohamed Saber Ahmed",
-];
-
-const getInitials = (name: string) =>
-  name
-    .split(" ")
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase();
-
-/* Deterministic color from name so avatars stay stable across renders */
-const avatarPalette = ["#1564BF", "#0C3C7D", "#3A82F6", "#164E8C", "#2563EB"];
-const colorForName = (name: string) => {
-  const sum = name.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0);
-  return avatarPalette[sum % avatarPalette.length];
+const TechStackPage = () => {
+  const categories = [
+    { title: "System Analysis & Design", items: ["X-Mind", "Draw IO"] },
+    { title: "UI/UX & Prototyping", items: ["Figma"] },
+    { title: "Mobile Development", items: ["Flutter", "Dart", "Bloc (State Mgmt)", "Dio (API)", "Shared Preference"] },
+    { title: "Artificial Intelligence", items: ["Model Provider: Open Router", "LLM Model: Google Gemma 2, Llama 3", "Orchestration: LangChain", "Vector DB: ChromaDB", "Scheduling Logic: Google OR-Tools"] },
+    { title: "Back-End Architecture", items: ["SQL Server", "C#", "EF Core", "ASP.NET CORE", "Redis", "Visual Studio Community"] },
+    { title: "Front-End Web", items: ["HTML / CSS / TypeScript", "Tailwind CSS", "React JS + Vite", "React Router + Data Router", "Zustand", "Axios"] },
+  ];
+  return (
+    <PremiumSlideTemplate>
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-5xl font-bold text-slate-900 mb-6 tracking-tight text-center">Technologies, Tools & Algorithms</h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {categories.map((cat, i) => (
+            <div key={i} className="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-sm">
+              <div className="flex items-center gap-3 mb-4 pb-4 border-b border-slate-100">
+                <div className="w-8 h-8 rounded-full bg-rafiq-primary-50 text-rafiq-primary-600 flex items-center justify-center shrink-0"><Cpu className="w-4 h-4"/></div>
+                <h4 className="font-bold text-slate-900">{cat.title}</h4>
+              </div>
+              <ul className="space-y-2">
+                {cat.items.map((item, j) => (
+                  <li key={j} className="text-sm text-slate-600 flex items-start gap-2">
+                    <span className="text-rafiq-primary-400 mt-1">•</span> <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </PremiumSlideTemplate>
+  );
 };
 
-/* ===================== TEAM MEMBER CARD ===================== */
-const TeamMemberCard = ({ name }: { name: string }) => (
-  <div className="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col items-center text-center gap-2 hover:shadow-md transition-shadow">
-    <div
-      className="w-14 h-14 rounded-full flex items-center justify-center text-white font-semibold text-sm shrink-0"
-      style={{ backgroundColor: colorForName(name) }}
-    >
-      {getInitials(name)}
-    </div>
-    <span className="text-xs font-medium text-slate-700 leading-snug">{name}</span>
-  </div>
-);
-
-/* ===================== MENTOR CARD ===================== */
-const MentorCard = ({
-  name,
-  role,
-  icon,
-}: {
-  name: string;
-  role: string;
-  icon: React.ReactNode;
-}) => (
-  <div className="bg-white p-6 rounded-2xl border border-slate-200/60 shadow-sm flex items-center gap-4">
-    <div className="w-14 h-14 rounded-2xl bg-rafiq-primary-50 border border-rafiq-primary-100 text-rafiq-primary-500 flex items-center justify-center shrink-0">
-      {icon}
-    </div>
-    <div>
-      <p className="text-xs font-semibold tracking-wide text-rafiq-primary-600 uppercase mb-1">
-        {role}
-      </p>
-      <h4 className="font-semibold text-slate-900">{name}</h4>
-    </div>
-  </div>
-);
-
-/* ===================== CONCLUSION & TEAM PAGE ===================== */
-const ConclusionPage = () => (
-  <PremiumSlideTemplate>
-    <div className="max-w-5xl mx-auto">
-      <h2 className="text-5xl font-bold text-slate-900 mb-4 tracking-tight text-center">
-        Conclusion & Team
-      </h2>
-      <p className="text-lg text-slate-500 text-center mb-16 max-w-3xl mx-auto">
-        Rafiq turns academic advising from a once-a-semester bottleneck into a
-        24/7 companion — helping students graduate on time, with less
-        confusion and more confidence.
-      </p>
-
-      {/* ===================== CONCLUSION SUMMARY ===================== */}
-      <div className="bg-white p-8 rounded-3xl border border-slate-200/60 shadow-sm mb-8">
-        <p className="text-sm text-slate-600 leading-relaxed">
-          Traditional university systems and even modern LMS platforms like
-          D2L and Canvas were never designed to guide students — only to
-          record and deliver. Rafiq closes that gap. By combining a unified
-          academic profile, conflict-free smart scheduling, AI-driven course
-          recommendations, and a 24/7 advising chatbot, it replaces guesswork
-          with clarity at every stage of the academic journey. The result is a
-          platform that doesn't just show students where they stand — it
-          actively helps them get where they're going, while giving advisors
-          and administrators the tools to support students before problems
-          become setbacks.
-        </p>
+/* =========================================================================
+   8. Time Plan
+   ========================================================================= */
+const TimePlanPage = () => {
+  const plan = [
+    { month: "October", tasks: "Problem Definition, Literature Review (Competitors' Study), Initial System Analysis." },
+    { month: "November", tasks: "System Design formulation, UML Diagrams generation (Use Case, Sequence, Class, Activity)." },
+    { month: "December", tasks: "UI/UX Prototyping (Figma), Database Schema Design, Technical Stack Setup." },
+    { month: "January", tasks: "Backend (ASP.NET Core) API Development, Initial Mobile & Frontend Environment structuring." },
+    { month: "February", tasks: "AI Algorithms Implementation (RAG Chatbot setup, Google OR-Tools Scheduling Logic)." },
+    { month: "March", tasks: "Frontend Web (React/Zustand) and Mobile (Flutter/Bloc) components building." },
+    { month: "April", tasks: "System Integration (Connecting APIs, AI Models, Web, and Mobile environments)." },
+    { month: "May", tasks: "Quality Assurance, Bug Fixing, System Performance Audits (Lighthouse)." },
+    { month: "June", tasks: "Final Presentation Preparation, Documentation finalization, Delivery of Running Project." },
+  ];
+  return (
+    <PremiumSlideTemplate>
+      <div className="max-w-5xl mx-auto">
+        <h2 className="text-5xl font-bold text-slate-900 mb-6 tracking-tight text-center">Time Plan</h2>
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden">
+          <table className="w-full text-sm text-left">
+            <thead className="bg-[#0C3C7D] text-white">
+              <tr>
+                <th className="px-6 py-5 font-semibold border-r border-white/10 w-1/4">Month</th>
+                <th className="px-6 py-5 font-semibold">Tasks</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {plan.map((row, i) => (
+                <tr key={i} className="hover:bg-slate-50/50">
+                  <td className="px-6 py-4 font-bold text-rafiq-primary-600 border-r border-slate-100 bg-slate-50/30">{row.month}</td>
+                  <td className="px-6 py-4 text-slate-700 leading-relaxed">{row.tasks}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
+    </PremiumSlideTemplate>
+  );
+};
 
-      {/* Highlight cards */}
-      <div className="grid md:grid-cols-3 gap-5 mb-16">
-        {conclusionHighlights.map((h, i) => (
-          <div key={i} className="bg-white p-6 rounded-2xl border border-slate-200/60 shadow-sm">
-            <div className="text-rafiq-primary-500 mb-3">{h.icon}</div>
-            <h4 className="font-semibold text-slate-900 mb-2 text-sm">{h.title}</h4>
-            <p className="text-xs text-slate-600 leading-relaxed">{h.desc}</p>
-          </div>
-        ))}
+/* =========================================================================
+   9. Team Roles
+   ========================================================================= */
+const TeamRolesPage = () => {
+  const teamRoles = [
+    { member: "Fatma Mohamed Abu Elfadl", tasks: "Frontend Web Implementation & Semantic Layouts" },
+    { member: "Habiba Mohamed Mamdouh", tasks: "Mobile App Implementation (Flutter & Provider)" },
+    { member: "Mariam Mohamed Khalil", tasks: "System Analysis, Requirements Definition & Documentation" },
+    { member: "Nour Ahmed Zewita", tasks: "Backend Implementation (ASP.NET Core & Auth)" },
+    { member: "Nouran Mohamed Amin", tasks: "UI/UX Design, Wireframing & Prototyping (Figma)" },
+    { member: "Shahd Makkawy Ibrahim", tasks: "Frontend Web Optimization & API Integration" },
+    { member: "Ahmed Abd Alalim Tawfiq", tasks: "Mobile App State Management & HTTP Communication" },
+    { member: "Kamel Mohamed Abdulla", tasks: "AI Integrations (RAG, Recommendation Engine) & Core Backend" },
+    { member: "Moaz Mostafa Zehry", tasks: "Database Schema Management & Unit of Work Layer" },
+    { member: "Mohamed Saber Ahmed", tasks: "Quality Assurance, Security Architecture & Testing" },
+  ];
+  return (
+    <PremiumSlideTemplate>
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-5xl font-bold text-slate-900 mb-6 tracking-tight text-center">Team Roles</h2>
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden">
+          <table className="w-full text-sm text-left">
+            <thead className="bg-[#0C3C7D] text-white">
+              <tr>
+                <th className="px-6 py-5 font-semibold border-r border-white/10 w-1/3">Team Member</th>
+                <th className="px-6 py-5 font-semibold">Tasks / Responsibilities</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {teamRoles.map((row, i) => (
+                <tr key={i} className="hover:bg-slate-50/50">
+                  <td className="px-6 py-4 font-semibold text-slate-800 border-r border-slate-100">{row.member}</td>
+                  <td className="px-6 py-4 text-slate-600">{row.tasks}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
+    </PremiumSlideTemplate>
+  );
+};
 
-      {/* ===================== SUPERVISION ===================== */}
-      <h3 className="text-2xl font-semibold text-slate-800 mb-6 text-center">
-        With Thanks To
-      </h3>
-      <div className="grid md:grid-cols-2 gap-5 mb-16 max-w-3xl mx-auto">
-        <MentorCard
-          name="Assoc. Prof. Rasha Sakr"
-          role="Supervisor"
-          icon={<GraduationCap className="w-6 h-6" />}
-        />
-        <MentorCard
-          name="Eng. Mahmoud Abbas"
-          role="Teaching Assistant"
-          icon={<Award className="w-6 h-6" />}
-        />
+/* =========================================================================
+   10. References
+   ========================================================================= */
+const ReferencesPage = () => {
+  const references = [
+    "I. Sommerville, Software Engineering, 10th ed. Boston, MA, USA: Pearson, 2016.",
+    "S. Russell and P. Norvig, Artificial Intelligence: A Modern Approach, 4th ed. Hoboken, NJ, USA: Pearson, 2021.",
+    "M. Fowler, Patterns of Enterprise Application Architecture. Boston, MA, USA: Addison-Wesley, 2002.",
+    "LangChain Documentation. Available: https://python.langchain.com/.",
+    "ChromaDB Documentation. Available: https://www.trychroma.com/.",
+    "OpenRouter Documentation. Available: https://openrouter.ai/docs.",
+    "Google Gemma Documentation. Available: https://ai.google.dev/gemma.",
+    "ASP.NET Core Documentation. Available: https://learn.microsoft.com/aspnet/core.",
+    "Flutter Documentation. Available: https://docs.flutter.dev/.",
+    "Microsoft Entity Framework Core Documentation. Available: https://learn.microsoft.com/ef/core."
+  ];
+  return (
+    <PremiumSlideTemplate>
+      <div className="max-w-4xl mx-auto">
+        <h2 className="text-5xl font-bold text-slate-900 mb-6 tracking-tight text-center">References</h2>
+        <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200/60">
+          <ul className="space-y-4 text-sm text-slate-700 leading-relaxed">
+            {references.map((ref, i) => (
+              <li key={i} className="flex gap-3 items-start">
+                <span className="text-rafiq-primary-500 font-bold mt-0.5">•</span><span>{ref}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-
-      {/* ===================== TEAM ===================== */}
-      <h3 className="text-2xl font-semibold text-slate-800 mb-2 text-center">
-        The Team Behind Rafiq
-      </h3>
-      <p className="text-sm text-slate-600 text-center max-w-2xl mx-auto mb-8">
-        A graduation project by the SWE & AI Department, Faculty of Computers
-        and Information Sciences, Mansoura University.
-      </p>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-16">
-        {teamMembers.map((name, i) => (
-          <TeamMemberCard key={i} name={name} />
-        ))}
-      </div>
-
-      {/* ===================== CLOSING STATEMENT ===================== */}
-      <div className="bg-rafiq-primary-50 p-6 rounded-2xl border border-rafiq-primary-100 shadow-sm max-w-3xl mx-auto text-center">
-        <p className="text-sm text-slate-700 leading-relaxed">
-          Thank you for following Rafiq's journey — from a survey of
-          frustrated students to a working, intelligent academic companion.
-          We're ready for your questions.
-        </p>
-      </div>
-    </div>
-  </PremiumSlideTemplate>
-);
-
+    </PremiumSlideTemplate>
+  );
+};
 
 /* =========================================================================
    THE MASTER APP CONTROLLER
-   This decides whether to show the Landing Mode OR the Presentation Mode
    ========================================================================= */
 export default function App() {
   const [currentPage, setCurrentPage] = useState('landing');
 
-  // SCENARIO 1: LANDING MODE
-  // Only the Hero is visible. No menu. No mode pages.
   if (currentPage === 'landing') {
     return (
       <main className="min-h-screen w-full bg-white">
-        <HeroSection onStartPresentation={() => setCurrentPage('business')} />
+        <HeroSection onStartPresentation={() => setCurrentPage('problem')} />
       </main>
     );
   }
 
-  // SCENARIO 2: PRESENTATION MODE
-  // The Hero is completely gone. The Menu appears, and the slides begin.
   return (
     <div className="relative min-h-screen w-full bg-white text-slate-900 font-sans">
-      
-      {/* The Floating Navigation Controller */}
       <Navbar 
         currentPage={currentPage} 
         setCurrentPage={setCurrentPage} 
         onRevert={() => setCurrentPage('landing')} 
       />
-      
-      {/* The Slide Router */}
-      {currentPage === 'business' && <BusinessPage />}
-      {currentPage === 'ui-ux' && <UiUxPage />}
-      {currentPage === 'frontend' && <FrontendPage />}
-      {currentPage === 'flutter' && <FlutterPage />}
-      {currentPage === 'backend' && <BackendPage />}
-      {currentPage === 'ai' && <PlaceholderPage title="AI Intelligence" />}
-      {currentPage === 'conclusion' && <ConclusionPage />}
-      
+      {currentPage === 'problem' && <ProblemOverviewPage />}
+      {currentPage === 'goals' && <ProjectGoalsPage />}
+      {currentPage === 'bmc' && <BusinessModelCanvasPage />}
+      {currentPage === 'previous-work' && <PreviousWorkPage />}
+      {currentPage === 'running-project' && <RunningProjectPage />}
+      {currentPage === 'system-design' && <SystemDesignPage />}
+      {currentPage === 'tech-stack' && <TechStackPage />}
+      {currentPage === 'time-plan' && <TimePlanPage />}
+      {currentPage === 'team-roles' && <TeamRolesPage />}
+      {currentPage === 'references' && <ReferencesPage />}
     </div>
   );
 }
