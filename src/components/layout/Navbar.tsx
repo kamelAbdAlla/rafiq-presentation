@@ -1,13 +1,16 @@
 import { motion } from 'framer-motion';
 
 const navItems = [
-  { id: 'business', name: 'Business' },
-  { id: 'ui-ux', name: 'UI/UX' },
-  { id: 'frontend', name: 'Frontend' },
-  { id: 'flutter', name: 'Flutter' },
-  { id: 'backend', name: 'Backend' },
-  { id: 'ai', name: 'AI' },
-  { id: 'conclusion', name: 'Conclusion' },
+  { id: 'problem', name: 'Problem Overview' },
+  { id: 'goals', name: 'Project Goals' },
+  { id: 'bmc', name: 'BMC' },
+  { id: 'previous-work', name: 'Previous Work' },
+  { id: 'running-project', name: 'Running Project' },
+  { id: 'system-design', name: 'System Design' },
+  { id: 'tech-stack', name: 'Technologies & Tools' },
+  { id: 'time-plan', name: 'Time Plan' },
+  { id: 'team-roles', name: 'Team Roles' },
+  { id: 'references', name: 'References' },
 ];
 
 interface NavbarProps {
@@ -19,38 +22,32 @@ interface NavbarProps {
 export default function Navbar({ currentPage, setCurrentPage, onRevert }: NavbarProps) {
   return (
     <>
-      {/* 1. THE INDEPENDENT TOP-LEFT LOGO (يختفي في الموبايل عشان ما يغطيش على المنيو) */}
       <motion.div 
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
-        className="fixed top-6 left-6 z-[60] hidden md:block"
+        className="fixed top-6 left-6 z-[60] hidden xl:block"
       >
-        <motion.div
-          animate={{ y: [-8, 8, -8] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        >
+        <motion.div animate={{ y: [-8, 8, -8] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}>
           <img 
             src={`${import.meta.env.BASE_URL}logo.png`} 
             alt="Rafiq Logo" 
-            className="h-16 w-auto object-contain cursor-pointer drop-shadow-xl"
-            onClick={() => setCurrentPage('business')} 
+            className="h-14 w-auto object-contain cursor-pointer drop-shadow-xl"
+            onClick={() => setCurrentPage('problem')} 
           />
         </motion.div>
       </motion.div>
 
-      {/* 2. THE CENTERED NAVIGATION PILL */}
       <motion.nav 
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="fixed top-4 md:top-6 left-0 right-0 mx-auto z-50 w-fit max-w-[95%] sm:max-w-[90%]"
+        className="fixed top-4 md:top-6 left-0 right-0 mx-auto z-50 w-fit max-w-[95%] lg:max-w-[90%]"
       >
-        <div className="flex items-center gap-2 p-1.5 md:p-2 pl-2 md:pl-4 pr-1.5 md:pr-2 bg-white/80 backdrop-blur-lg border border-slate-200/80 shadow-[0_8px_30px_rgb(0,0,0,0.06)] rounded-full">
+        <div className="flex items-center gap-2 p-1.5 md:p-2 pl-2 md:pl-4 pr-1.5 md:pr-2 bg-white/90 backdrop-blur-lg border border-slate-200/80 shadow-[0_8px_30px_rgb(0,0,0,0.06)] rounded-full">
           
-          {/* Interactive Links - قابلة للسحب على الموبايل */}
           <div 
-            className="flex items-center gap-1 overflow-x-auto max-w-[65vw] md:max-w-none" 
+            className="flex items-center gap-1 overflow-x-auto max-w-[65vw] lg:max-w-none" 
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {navItems.map((item) => {
@@ -71,10 +68,8 @@ export default function Navbar({ currentPage, setCurrentPage, onRevert }: Navbar
             })}
           </div>
 
-          {/* Elegant Divider Line */}
           <div className="w-px h-5 md:h-6 bg-slate-200 mx-1 shrink-0"></div>
 
-          {/* Clean Exit Button */}
           <div className="shrink-0">
             <button 
               onClick={onRevert}
@@ -83,16 +78,9 @@ export default function Navbar({ currentPage, setCurrentPage, onRevert }: Navbar
               Exit
             </button>
           </div>
-
         </div>
       </motion.nav>
-      
-      {/* ستايل سريع لإخفاء شريط التمرير (Scrollbar) المزعج في الموبايل */}
-      <style>{`
-        ::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
+      <style>{`::-webkit-scrollbar { display: none; }`}</style>
     </>
   );
 }
