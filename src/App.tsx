@@ -930,7 +930,7 @@ const TeamRolesPage = () => {
     { member: "Moaz Mostafa Zehry", tasks: "Backend Development" },
     { member: "Mohamed Saber Ahmed", tasks: "Backend Development" },
     { member: "Ahmed Abd Alalim Tawfiq", tasks: "Frontend Web Development" },
-    { member: "Fatma Mohamed Abu Elfadl", tasks: "Frontend Web Development" },
+    { member: "Fatma Mohamed Abu Elfadl", tasks: "Business Analyst" },
     { member: "Nour Ahmed Zewita", tasks: "Mobile App Development (Flutter)" },
     { member: "Mariam Mohamed Khalil", tasks: "Mobile App Development (Flutter)" },
     { member: "Habiba Mohamed Mamdouh", tasks: "UI/UX Design" },
