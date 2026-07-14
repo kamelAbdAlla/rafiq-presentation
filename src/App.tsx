@@ -1122,33 +1122,6 @@ const FrontendPage = () => {
           
         </div>
 
-        {/* Section 2: Lighthouse Benchmarks */}
-        <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200/60">
-          <div className="flex items-center justify-center gap-3 mb-8 pb-4 border-b border-slate-100">
-            <Search className="w-5 h-5 text-emerald-500" />
-            <h3 className="text-2xl font-bold text-slate-800">Diagnose performance issues</h3>
-          </div>
-          
-          <div className="flex flex-wrap justify-center gap-12 sm:gap-20">
-            <CircularGauge score={98} label="Performance" />
-            <CircularGauge score={76} label="Accessibility" />
-            <CircularGauge score={96} label="Best Practices" />
-            <CircularGauge score={92} label="SEO" />
-          </div>
-
-          <div className="mt-12 text-center max-w-md mx-auto">
-            <div className="relative inline-block">
-              <svg width="140" height="140" viewBox="0 0 80 80" className="transform -rotate-90">
-                <circle cx="40" cy="40" r="34" stroke="#F1F5F9" strokeWidth="6" fill="none" />
-                <circle cx="40" cy="40" r="34" stroke="#0CCE6B" strokeWidth="6" fill="none" strokeDasharray={213} strokeDashoffset={213 - (98/100)*213} strokeLinecap="round" />
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center text-4xl font-bold text-emerald-500">98</div>
-            </div>
-            <h4 className="text-xl font-bold text-slate-800 mt-2">Performance</h4>
-            <p className="text-xs text-slate-400 mt-2">Values are estimated and may vary. The performance score is calculated directly from these metrics.</p>
-          </div>
-        </div>
-
         {/* Section 3: UI Dashboards */}
         <div>
           <h3 className="text-3xl font-bold text-slate-800 mb-8 text-center">Responsive User Interface</h3>
