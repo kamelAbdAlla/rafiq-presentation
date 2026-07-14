@@ -972,12 +972,7 @@ const BackendPage = () => {
             <line x1="330" y1="322" x2="640" y2="497" stroke="#5390E5" strokeWidth="1.5" />
             <line x1="330" y1="380" x2="640" y2="615" stroke="#84C15A" strokeWidth="1.5" />
 
-            {/* Black Inward Dependency Arrows (Straight Vertical Chain at x=330) */}
-            <line x1="330" y1="80"  x2="330" y2="135" stroke="#2C3338" strokeWidth="3" markerEnd="url(#black-arrow)" />
-            <line x1="330" y1="141" x2="330" y2="195" stroke="#2C3338" strokeWidth="3" markerEnd="url(#black-arrow)" />
-            <line x1="330" y1="201" x2="330" y2="255" stroke="#2C3338" strokeWidth="3" markerEnd="url(#black-arrow)" />
-            <line x1="330" y1="261" x2="330" y2="316" stroke="#2C3338" strokeWidth="3" markerEnd="url(#black-arrow)" />
-            <line x1="330" y1="322" x2="330" y2="374" stroke="#2C3338" strokeWidth="3" markerEnd="url(#black-arrow)" />
+
 
             {/* Information Cards (Legend/Details) */}
             <OnionCard y={120} color="#D75A65" title="Rafeek.API" l1="Controllers, middleware" l2="JWT auth, routing" />
