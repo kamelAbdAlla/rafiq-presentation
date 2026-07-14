@@ -1150,7 +1150,7 @@ const FrontendPage = () => {
 
         {/* Section 4: Hydration Error Handling */}
         <div>
-          <h3 className="text-3xl font-bold text-slate-800 mb-8 text-center">Hydration State Management with Lighthouse</h3>
+          <h3 className="text-3xl font-bold text-slate-800 mb-8 text-center">Hydration State Management with Google Lighthouse</h3>
           <div className="max-w-4xl mx-auto rounded-[2rem] overflow-hidden border border-slate-200 shadow-xl bg-white p-2">
             {/* Browser Header Mockup */}
             <div className="w-full bg-slate-100 rounded-t-xl h-8 flex items-center px-4 gap-2 mb-2">
