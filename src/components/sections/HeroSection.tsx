@@ -85,7 +85,7 @@ export default function HeroSection({ onStartPresentation }: HeroSectionProps) {
         >
           {/* 1. External Link: Opens actual website in a new tab */}
           <a 
-            href="https://your-actual-website.com" 
+            href="https://rafiq-dashboard.pages.dev/dashboard" 
             target="_blank" 
             rel="noopener noreferrer"
             className="group w-full sm:w-auto px-8 py-4 bg-gradient-to-b from-rafiq-primary-500 to-rafiq-primary-600 text-white font-semibold rounded-full transition-all duration-300 ease-out hover:from-rafiq-primary-400 hover:to-rafiq-primary-500 border border-rafiq-primary-700 shadow-[inset_0px_1px_0px_rgba(255,255,255,0.2),_0_8px_20px_rgba(21,100,191,0.25)] hover:shadow-[inset_0px_1px_0px_rgba(255,255,255,0.4),_0_12px_30px_rgba(21,100,191,0.4)] hover:-translate-y-0.5 active:scale-[0.98] flex items-center justify-center gap-2"

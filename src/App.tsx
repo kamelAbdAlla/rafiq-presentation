@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import Navbar from './components/layout/Navbar';
 import HeroSection from './components/sections/HeroSection';
@@ -11,7 +11,7 @@ import {
   ShieldCheck, Repeat, Users2, TestTube2, Package, AlertTriangle, BookOpen, 
   Wifi, Building2, UserX, Rocket, Check, X, PlayCircle, Cpu, Wrench, 
   Brain, Calendar, ClipboardList, BookMarked, XCircle, FileImage,
-  Monitor, BrainCircuit, ArrowRightLeft, ArrowRight 
+  Monitor, BrainCircuit, ArrowRightLeft, ArrowRight, Clock, Maximize, Minimize
 } from 'lucide-react';
 
 /* =========================================================================
@@ -28,32 +28,61 @@ const PremiumSlideTemplate = ({ children }: { children: ReactNode }) => (
 );
 
 /* =========================================================================
-   1. Problem Overview
+   1. Problem Overview (Bar Chart)
    ========================================================================= */
 const ProblemOverviewPage = () => {
-  const problems = [
-    { title: "Course Planning Complexity", desc: "As academic requirements become more complex, students increasingly struggle with manual course planning, understanding academic regulations, and tracking GPA." },
-    { title: "Inadequate Academic Advising", desc: "Traditional advising relies heavily on limited faculty availability, leading to rushed decisions, delayed graduation, and a high burden on human advisors." },
-    { title: "Lack of Centralized Tracking", desc: "The absence of an integrated platform makes it difficult for students to monitor their academic performance and progression in real-time." },
-    { title: "Manual Registration Conflicts", desc: "Manual scheduling often leads to time conflicts, invalid prerequisite selections, and inefficient academic loads for students." },
-    { title: "Absence of Proactive Guidance", desc: "Students frequently fail to foresee academic risks, falling below required GPA levels without early warnings or smart intervention." },
-    { title: "Fragmented Educational Ecosystem", desc: "Existing platforms focus only on course delivery (LMS) or basic registration (SIS) without providing unified, intelligent academic guidance." }
+  const data = [
+    { label: "Regulation Confusion", value: 85 },
+    { label: "Prerequisite Confusion", value: 25 },
+    { label: "Lack of Advising", value: 50 },
+    { label: "Need For Smart System", value: 85 }
   ];
 
   return (
     <PremiumSlideTemplate>
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <h2 className="text-5xl font-bold text-slate-900 mb-6 tracking-tight text-center">Problem Overview</h2>
-        <p className="text-lg text-slate-500 text-center mb-12 max-w-3xl mx-auto">Addressing the growing need for an intelligent and centralized academic management platform.</p>
+        <p className="text-lg text-slate-500 text-center mb-12">Statistical insights highlighting the growing need for an intelligent academic management platform.</p>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {problems.map((p, i) => (
-            <div key={i} className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/60 hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 rounded-full bg-red-50 text-red-500 flex items-center justify-center mb-4"><AlertTriangle className="w-5 h-5" /></div>
-              <h4 className="font-bold text-slate-900 mb-2">{p.title}</h4>
-              <p className="text-sm text-slate-600 leading-relaxed">{p.desc}</p>
-            </div>
-          ))}
+        <div className="bg-white p-8 pt-12 rounded-3xl shadow-sm border border-slate-200/60 w-full overflow-x-auto">
+          <svg viewBox="0 0 1000 600" className="w-full h-auto font-sans">
+            {/* Grid lines and Y-axis labels */}
+            {[0, 10, 20, 30, 40, 50, 60, 70, 80, 90].map((val, i) => {
+              const y = 500 - (val * 5); // 1 unit = 5px height
+              return (
+                <g key={i}>
+                  <line x1="60" y1={y} x2="960" y2={y} stroke={val === 0 ? "#94A3B8" : "#E2E8F0"} strokeWidth={val === 0 ? "2" : "1"} />
+                  <text x="45" y={y + 5} textAnchor="end" fontSize="15" fill="#64748B">{val}</text>
+                </g>
+              );
+            })}
+
+            {/* Bars */}
+            {data.map((bar, i) => {
+              const barWidth = 170;
+              const spacing = (900 - (4 * barWidth)) / 5; // dynamically space out the 4 bars
+              const startX = 60;
+              const x = startX + spacing + (i * (barWidth + spacing));
+              const height = bar.value * 5;
+              const y = 500 - height;
+              
+              return (
+                <g key={i}>
+                  {/* Bar shape with slight rounded top corners */}
+                  <path 
+                    d={`M ${x} 500 V ${y + 8} Q ${x} ${y} ${x + 8} ${y} H ${x + barWidth - 8} Q ${x + barWidth} ${y} ${x + barWidth} ${y + 8} V 500 Z`} 
+                    fill="#0B2A4A" 
+                  />
+                  
+                  {/* Value Text */}
+                  <text x={x + barWidth / 2} y={y + 45} textAnchor="middle" fontSize="34" fontWeight="bold" fill="#FFFFFF">{bar.value}</text>
+                  
+                  {/* X-Axis Label */}
+                  <text x={x + barWidth / 2} y="535" textAnchor="middle" fontSize="14" fontWeight="500" fill="#334155">{bar.label}</text>
+                </g>
+              );
+            })}
+          </svg>
         </div>
       </div>
     </PremiumSlideTemplate>
@@ -61,24 +90,24 @@ const ProblemOverviewPage = () => {
 };
 
 /* =========================================================================
-   2. Project Goals
+   2. Project Goals (Solutions)
    ========================================================================= */
 const ProjectGoalsPage = () => {
   const goals = [
-    "Develop a smart Academic Management System powered by data analytics and AI-driven recommendations.",
-    "Provide an integrated platform to monitor academic performance and track GPA progression accurately.",
-    "Enable seamless course enrollment while automatically validating prerequisites and scheduling conflicts.",
-    "Introduce an intelligent chatbot (Rafiq) to serve as a 24/7 academic advising companion.",
-    "Support early-warning and risk detection to alert students of potential academic standing issues.",
-    "Provide a dedicated Smart Advisor Portal for human advisors to monitor and assist at-risk students.",
-    "Ensure secure integration and data exchange with existing university systems (e.g., Ibn Al-Haitham).",
-    "Enhance overall student learning outcomes and improve the institutional graduation rate.",
+    <>Develop a <strong>Smart Academic Management System</strong> powered by data analytics and <strong>AI-driven recommendations</strong>.</>,
+    <>Provide an integrated platform to <strong>monitor academic performance</strong> and <strong>track GPA progression</strong> accurately.</>,
+    <>Enable <strong>seamless course enrollment</strong> while automatically <strong>validating prerequisites</strong> and <strong>scheduling conflicts</strong>.</>,
+    <>Introduce an <strong>intelligent chatbot (Rafiq)</strong> to serve as a <strong>24/7 academic advising companion</strong>.</>,
+    <>Support <strong>early-warning and risk detection</strong> to alert students of potential academic standing issues.</>,
+    <>Provide a dedicated <strong>Smart Advisor Portal</strong> for human advisors to monitor and <strong>assist at-risk students</strong>.</>,
+    <>Ensure <strong>secure integration</strong> and data exchange with existing <strong>university systems (e.g., Ibn Al-Haitham)</strong>.</>,
+    <>Enhance overall <strong>student learning outcomes</strong> and improve the <strong>institutional graduation rate</strong>.</>,
   ];
 
   return (
     <PremiumSlideTemplate>
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-5xl font-bold text-slate-900 mb-6 tracking-tight text-center">Project Goals</h2>
+        <h2 className="text-5xl font-bold text-slate-900 mb-6 tracking-tight text-center">Solutions</h2>
         <p className="text-lg text-slate-500 text-center mb-12">The strategic objectives of the Rafiq Academic Guidance System.</p>
         
         <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200/60">
@@ -204,7 +233,7 @@ const BusinessModelCanvasPage = () => (
 );
 
 /* =========================================================================
-   4. Previous Work (Competitors' Study)
+   4. Related Work (Competitors' Study)
    ========================================================================= */
 const PreviousWorkPage = () => {
   const check = <CheckCircle2 className="w-5 h-5 text-green-500 mx-auto" />;
@@ -213,7 +242,7 @@ const PreviousWorkPage = () => {
   return (
     <PremiumSlideTemplate>
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-5xl font-bold text-slate-900 mb-6 tracking-tight text-center">Previous Work</h2>
+        <h2 className="text-5xl font-bold text-slate-900 mb-6 tracking-tight text-center">Related Work</h2>
         <p className="text-lg text-slate-500 text-center mb-12">Comparison between Traditional Systems, Learning Management Systems, and Rafiq.</p>
         
         <div className="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden">
@@ -265,7 +294,918 @@ const PreviousWorkPage = () => {
 };
 
 /* =========================================================================
-   5. Running Project (Live Demo)
+   UNIVERSAL MULTI-TEXT COMPONENT
+   ========================================================================= */
+const MultiText = ({ x, y, text, fontSize=12, fill="#0F172A", fontWeight="normal" }: any) => {
+  const lines = typeof text === 'string' ? text.split(/\\n|\n/) : [];
+  return (
+    <text x={x} y={y} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fontWeight={fontWeight} fill={fill}>
+      {lines.map((l: string, i: number) => (
+        <tspan x={x} dy={i === 0 ? `-${(lines.length - 1) * 0.5}em` : "1.2em"} key={i}>{l}</tspan>
+      ))}
+    </text>
+  );
+};
+
+/* =========================================================================
+   5. Chatbot Page (Detailed Chatbot Architecture & Flow)
+   ========================================================================= */
+const ChatbotPage = () => {
+  const FlowNode = ({x, y, text, w=120, h=46, fontSize=11}:any) => (
+    <g transform={`translate(${x}, ${y})`}>
+      <rect width={w} height={h} rx="6" fill="#ffffff" stroke="#CBD5E1" strokeWidth="1.5" filter="url(#shadow-sm)" />
+      <MultiText x={w/2} y={h/2} text={text} fontSize={fontSize} fill="#334155" fontWeight="bold" />
+    </g>
+  );
+
+  return (
+    <PremiumSlideTemplate>
+      <div className="max-w-7xl mx-auto space-y-24">
+        
+        {/* Section 1: Intro */}
+        <div>
+          <div className="text-center mb-10">
+            <h2 className="text-5xl font-bold text-slate-900 mb-4 tracking-tight">AI Chatbot (Rafiq)</h2>
+            <p className="text-xl text-slate-500 font-medium">RAG-Based Academic Regulations Assistant</p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200/60">
+              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
+                <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shrink-0"><Target className="w-5 h-5"/></div>
+                <h3 className="text-2xl font-bold text-slate-800">Objective</h3>
+              </div>
+              <ul className="space-y-4">
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-blue-400 shrink-0 mt-0.5"/>
+                  <span className="text-slate-600">Answer students' questions about AI program regulations.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-blue-400 shrink-0 mt-0.5"/>
+                  <span className="text-slate-600">Reduce hallucinations using Retrieval-Augmented Generation (RAG).</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200/60">
+              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
+                <div className="w-10 h-10 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center shrink-0"><Sparkles className="w-5 h-5"/></div>
+                <h3 className="text-2xl font-bold text-slate-800">Key Features</h3>
+              </div>
+              <ul className="space-y-4">
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-amber-500 shrink-0 mt-0.5"/>
+                  <span className="text-slate-600">Official regulations as the knowledge source.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-amber-500 shrink-0 mt-0.5"/>
+                  <span className="text-slate-600">Supports Egyptian Arabic.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-amber-500 shrink-0 mt-0.5"/>
+                  <span className="text-slate-600">Article-based answers.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-amber-500 shrink-0 mt-0.5"/>
+                  <span className="text-slate-600">Multi-turn conversations.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Section 2: Architecture & Tools */}
+        <div>
+          <h3 className="text-3xl font-bold text-slate-800 mb-8 text-center">Chatbot System Architecture</h3>
+          <div className="flex flex-col xl:flex-row gap-8 items-stretch justify-center">
+            
+            <div className="flex-1 max-w-[1000px] flex items-center justify-center bg-white rounded-3xl p-6 shadow-sm border border-slate-200/60 overflow-x-auto">
+              <svg viewBox="0 0 1300 320" className="w-full h-auto font-sans">
+                <defs>
+                  <filter id="shadow-sm" x="-10%" y="-10%" width="120%" height="120%">
+                    <feDropShadow dx="0" dy="2" stdDeviation="3" floodOpacity="0.05" floodColor="#000000" />
+                  </filter>
+                  <marker id="arrow-chatbot" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                    <path d="M0,0 L10,5 L0,10 Z" fill="#475569" />
+                  </marker>
+                </defs>
+
+                {/* Offline Phase Box */}
+                <rect x="20" y="190" width="540" height="120" fill="#F0F9FF" stroke="#BAE6FD" strokeWidth="2" rx="12" />
+                <text x="40" y="215" fontSize="13" fill="#0369A1" fontWeight="bold">Offline Indexing Phase</text>
+                
+                {/* Online Phase Box */}
+                <rect x="250" y="10" width="1040" height="160" fill="#FFFBEB" stroke="#FDE68A" strokeWidth="2" rx="12" />
+                <text x="270" y="30" fontSize="13" fill="#B45309" fontWeight="bold">Online Query Phase</text>
+
+                {/* Offline Connectors */}
+                <line x1="150" y1="263" x2="180" y2="263" stroke="#475569" strokeWidth="1.5" markerEnd="url(#arrow-chatbot)" />
+                <line x1="300" y1="263" x2="330" y2="263" stroke="#475569" strokeWidth="1.5" markerEnd="url(#arrow-chatbot)" />
+                <line x1="450" y1="263" x2="480" y2="263" stroke="#475569" strokeWidth="1.5" markerEnd="url(#arrow-chatbot)" />
+
+                {/* Offline Nodes */}
+                <FlowNode x={30} y={240} text="AI Regulations JSON" fontSize={10} />
+                <FlowNode x={180} y={240} text="LangChain Documents" fontSize={10} />
+                <FlowNode x={330} y={240} text="BAAI/bge-m3\nEmbeddings" fontSize={10} />
+                
+                {/* Chroma DB Custom Node */}
+                <g transform="translate(480, 233)">
+                  <path d="M 0 15 C 0 5, 70 5, 70 15 V 45 C 70 55, 0 55, 0 45 Z" fill="#ffffff" stroke="#CBD5E1" strokeWidth="1.5" filter="url(#shadow-sm)" />
+                  <ellipse cx="35" cy="15" rx="35" ry="10" fill="#ffffff" stroke="#CBD5E1" strokeWidth="1.5" />
+                  <text x="35" y="35" textAnchor="middle" dominantBaseline="middle" fontSize="11" fontWeight="bold" fill="#334155">ChromaDB</text>
+                </g>
+
+                {/* Online Connectors */}
+                <line x1="400" y1="58" x2="430" y2="58" stroke="#475569" strokeWidth="1.5" markerEnd="url(#arrow-chatbot)" />
+                <line x1="550" y1="58" x2="580" y2="58" stroke="#475569" strokeWidth="1.5" markerEnd="url(#arrow-chatbot)" />
+                <line x1="700" y1="58" x2="730" y2="58" stroke="#475569" strokeWidth="1.5" markerEnd="url(#arrow-chatbot)" />
+                <line x1="850" y1="58" x2="880" y2="58" stroke="#475569" strokeWidth="1.5" markerEnd="url(#arrow-chatbot)" />
+                
+                {/* Only ONE straight connector to Gemma */}
+                <line x1="1000" y1="58" x2="1030" y2="58" stroke="#475569" strokeWidth="1.5" markerEnd="url(#arrow-chatbot)" />
+                
+                {/* API Failure Branch (Gemma -> Groq) */}
+                <line x1="1090" y1="81" x2="1090" y2="115" stroke="#475569" strokeWidth="1.5" markerEnd="url(#arrow-chatbot)" />
+                <rect x="1060" y="89" width="60" height="18" fill="#F1F5F9" rx="4" />
+                <text x="1090" y="98" textAnchor="middle" dominantBaseline="middle" fontSize="9" fill="#EF4444" fontWeight="bold">API Failure</text>
+
+                {/* Branching from Gemma/Groq to Final AI Response */}
+                <path d="M 1150 58 C 1170 58, 1170 98, 1190 98" fill="none" stroke="#475569" strokeWidth="1.5" markerEnd="url(#arrow-chatbot)" />
+                <path d="M 1150 138 C 1170 138, 1170 98, 1190 98" fill="none" stroke="#475569" strokeWidth="1.5" markerEnd="url(#arrow-chatbot)" />
+
+                {/* Cross-phase Connector (ChromaDB to Similarity Search) */}
+                <path d="M 515 233 C 515 150, 640 150, 640 81" fill="none" stroke="#0369A1" strokeWidth="2" markerEnd="url(#arrow-chatbot)" strokeDasharray="4,4" />
+
+                {/* Online Nodes */}
+                <FlowNode x={280} y={35} text="Student Question" fontSize={10} />
+                <FlowNode x={430} y={35} text="Query Embedding" fontSize={10} />
+                <FlowNode x={580} y={35} text="Top-3 Similarity\nSearch" fontSize={10} />
+                <FlowNode x={730} y={35} text="Retrieved Articles" fontSize={10} />
+                <FlowNode x={880} y={35} text="Prompt + Context\n+ History" fontSize={10} />
+                
+                <FlowNode x={1030} y={35} text="Gemma (OpenRouter)" fontSize={10} />
+                <FlowNode x={1030} y={115} text="Groq (Fallback)" fontSize={10} />
+                
+                {/* Final Response Bubble */}
+                <g transform="translate(1190, 75)">
+                  <rect width="90" height="46" rx="23" fill="#ffffff" stroke="#10B981" strokeWidth="2" filter="url(#shadow-sm)" />
+                  <MultiText x={45} y={23} text="AI Response" fontSize={11} fill="#047857" fontWeight="bold" />
+                </g>
+              </svg>
+            </div>
+
+            <div className="w-full xl:w-72 shrink-0 bg-white rounded-3xl p-6 shadow-sm border border-slate-200/60 self-center">
+              <h4 className="text-lg font-bold text-slate-800 mb-4 pb-2 border-b border-slate-100">Tech Stack</h4>
+              <div className="flex flex-col gap-3">
+                {['LangChain', 'BAAI/bge-m3', 'ChromaDB', 'Gemma', 'OpenRouter', 'Groq'].map((tool, i) => (
+                  <div key={i} className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl border border-slate-100">
+                    <div className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-slate-600">
+                      <Layers className="w-4 h-4"/>
+                    </div>
+                    <span className="font-semibold text-sm text-slate-700">{tool}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Section 3: Why This Architecture */}
+        <div>
+          <h3 className="text-3xl font-bold text-slate-800 mb-8 text-center">Why This Architecture?</h3>
+          <div className="grid md:grid-cols-5 gap-8">
+            
+            <div className="md:col-span-3 bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden">
+              <table className="w-full text-sm text-center">
+                <thead className="bg-[#0C3C7D] text-white">
+                  <tr>
+                    <th className="px-6 py-4 font-semibold text-right border-r border-white/10 w-1/2">Challenge</th>
+                    <th className="px-6 py-4 font-semibold text-left">Solution</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 text-base">
+                  <tr className="hover:bg-slate-50/50">
+                    <td className="px-6 py-4 font-medium text-slate-500 text-right border-r border-slate-100">Hallucination</td>
+                    <td className="px-6 py-4 font-bold text-slate-800 text-left">RAG</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/50">
+                    <td className="px-6 py-4 font-medium text-slate-500 text-right border-r border-slate-100">Arabic & English</td>
+                    <td className="px-6 py-4 font-bold text-slate-800 text-left">BAAI/bge-m3</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/50">
+                    <td className="px-6 py-4 font-medium text-slate-500 text-right border-r border-slate-100">Fast Search</td>
+                    <td className="px-6 py-4 font-bold text-slate-800 text-left">ChromaDB</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/50">
+                    <td className="px-6 py-4 font-medium text-slate-500 text-right border-r border-slate-100">API Failure</td>
+                    <td className="px-6 py-4 font-bold text-slate-800 text-left">OpenRouter + Groq</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/50">
+                    <td className="px-6 py-4 font-medium text-slate-500 text-right border-r border-slate-100">Follow-up Questions</td>
+                    <td className="px-6 py-4 font-bold text-slate-800 text-left">Conversation Memory</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="md:col-span-2 bg-white rounded-3xl shadow-sm border border-slate-200/60 p-8 flex flex-col justify-center">
+              <h4 className="text-2xl font-bold text-slate-800 mb-6 text-center">Advantages</h4>
+              <ul className="space-y-4 max-w-sm mx-auto w-full">
+                {['Accurate Responses', 'Grounded on Official Regulations', 'Article Citation', 'Fast Retrieval', 'Reliable System'].map((adv, i) => (
+                  <li key={i} className="flex items-center justify-between border-b border-slate-100 pb-3 last:border-0 last:pb-0">
+                    <span className="text-slate-700 font-medium">{adv}</span>
+                    <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0"/>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </PremiumSlideTemplate>
+  );
+};
+
+/* =========================================================================
+   6. Smart Timetable Generator Page
+   ========================================================================= */
+const SmartTimetablePage = () => {
+  return (
+    <PremiumSlideTemplate>
+      <div className="max-w-6xl mx-auto space-y-12">
+        
+        {/* Header & CSP Intro */}
+        <div className="text-center mb-10">
+          <h2 className="text-5xl font-bold text-slate-900 mb-6 tracking-tight">Smart Timetable Generator</h2>
+          <div className="bg-blue-50 border border-blue-100 p-6 rounded-3xl inline-block max-w-4xl mx-auto shadow-sm">
+            <p className="text-lg text-blue-900 leading-relaxed">
+              Modeling schedule generation as a <strong>Constraint Satisfaction Problem (CSP)</strong>. Using Google OR-Tools, the engine efficiently searches through all possible combinations to find the <strong>optimal timetable</strong> while satisfying all academic rules.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-8">
+          
+          {/* Left Column: Constraints */}
+          <div className="space-y-6">
+            <h3 className="text-2xl font-bold text-slate-800 flex items-center gap-3">
+              <ShieldCheck className="w-6 h-6 text-rafiq-primary-500" />
+              Key Constraints Applied
+            </h3>
+            
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm">
+                <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center mb-3">
+                  <Target className="w-4 h-4 text-slate-600" />
+                </div>
+                <h4 className="font-bold text-slate-900 mb-1">Single Section</h4>
+                <p className="text-sm text-slate-600">Selecting <strong>exactly one section</strong> for each enrolled course.</p>
+              </div>
+
+              <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm">
+                <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center mb-3">
+                  <Code2 className="w-4 h-4 text-slate-600" />
+                </div>
+                <h4 className="font-bold text-slate-900 mb-1">Conflict Prevention</h4>
+                <p className="text-sm text-slate-600">Preventing <strong>any time conflicts</strong> between lectures and sections.</p>
+              </div>
+
+              <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm">
+                <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center mb-3">
+                  <Users2 className="w-4 h-4 text-slate-600" />
+                </div>
+                <h4 className="font-bold text-slate-900 mb-1">Capacity Check</h4>
+                <p className="text-sm text-slate-600">Ignoring <strong>full sections</strong> that have no available seats.</p>
+              </div>
+
+              <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm">
+                <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center mb-3">
+                  <Clock className="w-4 h-4 text-slate-600" />
+                </div>
+                <h4 className="font-bold text-slate-900 mb-1">Buffer Time</h4>
+                <p className="text-sm text-slate-600">Supporting a preferred <strong>buffer time</strong> between consecutive classes.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Modes & Delivery */}
+          <div className="space-y-6 flex flex-col">
+            <h3 className="text-2xl font-bold text-slate-800 flex items-center gap-3">
+              <Zap className="w-6 h-6 text-amber-500" />
+              Optimization Modes
+            </h3>
+
+            <div className="flex-1 bg-white p-6 rounded-3xl border border-slate-200/60 shadow-sm space-y-6">
+              
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center shrink-0 mt-1">
+                  <Maximize className="w-5 h-5 text-indigo-600" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-lg text-slate-900">Balance Mode</h4>
+                  <p className="text-slate-600 text-sm mt-1">Distributes the academic workload more <strong>evenly across the week</strong>, avoiding overwhelmingly heavy days.</p>
+                </div>
+              </div>
+
+              <div className="w-full h-px bg-slate-100"></div>
+
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center shrink-0 mt-1">
+                  <Minimize className="w-5 h-5 text-orange-600" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-lg text-slate-900">Compact Mode</h4>
+                  <p className="text-slate-600 text-sm mt-1">Groups classes together to <strong>minimize the number of study days</strong> on campus.</p>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Delivery Banner */}
+            <div className="bg-slate-900 p-5 rounded-2xl flex items-center gap-4 text-white shadow-lg">
+              <Server className="w-8 h-8 text-emerald-400 shrink-0" />
+              <p className="text-sm font-medium leading-relaxed text-slate-300">
+                The optimal schedule is generated and returned as structured <strong className="text-white">JSON</strong> through a <strong className="text-emerald-400">FastAPI</strong> endpoint for seamless mobile integration.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </PremiumSlideTemplate>
+  );
+};
+
+/* =========================================================================
+   7. Recommendation System Page 
+   ========================================================================= */
+const RecommendationSystemPage = () => {
+  return (
+    <PremiumSlideTemplate>
+      <div className="max-w-7xl mx-auto space-y-16">
+        
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-5xl font-bold text-slate-900 mb-4 tracking-tight">Wanees Engine</h2>
+          <p className="text-xl text-slate-500 font-medium">Recommendation System Architecture</p>
+        </div>
+
+        {/* Overview */}
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="bg-white p-8 rounded-3xl border border-slate-200/60 shadow-sm flex flex-col items-start">
+            <div className="w-10 h-10 rounded-full bg-red-50 text-red-500 flex items-center justify-center mb-4"><AlertTriangle className="w-5 h-5" /></div>
+            <h3 className="text-2xl font-bold text-slate-800 mb-3">The Problem</h3>
+            <p className="text-slate-600 leading-relaxed">
+              Students struggle to select elective courses that align with their demonstrated strengths and academic progression.
+            </p>
+          </div>
+          <div className="bg-white p-8 rounded-3xl border border-slate-200/60 shadow-sm flex flex-col items-start">
+            <div className="w-10 h-10 rounded-full bg-green-50 text-green-600 flex items-center justify-center mb-4"><Sparkles className="w-5 h-5" /></div>
+            <h3 className="text-2xl font-bold text-slate-800 mb-3">The Solution</h3>
+            <p className="text-slate-600 leading-relaxed">
+              A "Hybrid Decision Engine" providing personalized, constraint-guided course recommendations — hybrid similarity plus hard academic rules.
+            </p>
+          </div>
+        </div>
+
+        {/* Core Stack */}
+        <div>
+          <h3 className="text-3xl font-bold text-slate-800 mb-8 text-center">Core Stack</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/60 text-center flex flex-col items-center">
+              <div className="w-14 h-14 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center mb-4">
+                <Brain className="w-7 h-7" />
+              </div>
+              <h4 className="font-bold text-slate-900 mb-2">Scikit-Learn</h4>
+              <p className="text-xs text-slate-500">StandardScaler + NearestNeighbors (Cosine)</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/60 text-center flex flex-col items-center">
+              <div className="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
+                <Zap className="w-7 h-7" />
+              </div>
+              <h4 className="font-bold text-slate-900 mb-2">FastAPI</h4>
+              <p className="text-xs text-slate-500">Async endpoints, TTLCache, /retrain hook</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/60 text-center flex flex-col items-center">
+              <div className="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-4">
+                <Database className="w-7 h-7" />
+              </div>
+              <h4 className="font-bold text-slate-900 mb-2">Pandas / NumPy</h4>
+              <p className="text-xs text-slate-500">Track feature engineering and statistical preprocessing</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/60 text-center flex flex-col items-center">
+              <div className="w-14 h-14 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center mb-4">
+                <Package className="w-7 h-7" />
+              </div>
+              <h4 className="font-bold text-slate-900 mb-2">joblib</h4>
+              <p className="text-xs text-slate-500">Model artifact serialization (.pkl)</p>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Hybrid Architecture Weights */}
+        <div>
+          <h3 className="text-3xl font-bold text-slate-800 mb-8 text-center">Hybrid Architecture</h3>
+          <div className="flex flex-col md:flex-row justify-center gap-6">
+            <div className="flex-1 bg-white p-8 rounded-3xl border-t-4 border-t-blue-500 shadow-sm flex flex-col items-center justify-center">
+              <span className="text-5xl font-bold text-blue-500 mb-2">45%</span>
+              <span className="text-sm font-bold text-slate-600 tracking-wider">CONTENT SIMILARITY</span>
+            </div>
+            <div className="flex-1 bg-white p-8 rounded-3xl border-t-4 border-t-indigo-500 shadow-sm flex flex-col items-center justify-center">
+              <span className="text-5xl font-bold text-indigo-500 mb-2">30%</span>
+              <span className="text-sm font-bold text-slate-600 tracking-wider">COLLABORATIVE FILTERING</span>
+            </div>
+            <div className="flex-1 bg-white p-8 rounded-3xl border-t-4 border-t-teal-500 shadow-sm flex flex-col items-center justify-center">
+              <span className="text-5xl font-bold text-teal-500 mb-2">25%</span>
+              <span className="text-sm font-bold text-slate-600 tracking-wider">STUDENT GPA FACTOR</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Layered Inference Pipeline & Weights */}
+        <div className="grid lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-3">
+             <h3 className="text-3xl font-bold text-slate-800 mb-8 text-center">Layered Inference Pipeline</h3>
+          </div>
+          
+          <div className="bg-slate-50 p-6 rounded-3xl border border-slate-200 relative">
+            <div className="absolute -top-4 -left-4 w-10 h-10 bg-slate-800 text-white font-bold rounded-xl flex items-center justify-center">01</div>
+            <h4 className="font-bold text-slate-900 text-lg mb-3 mt-2">Track Prediction</h4>
+            <p className="text-sm text-slate-600">Softmax (T=2.0) probabilities across 6 tracks, with Sigmoid-calibrated confidence capped at 96.5% to avoid overconfidence.</p>
+          </div>
+
+          <div className="bg-slate-50 p-6 rounded-3xl border border-slate-200 relative">
+            <div className="absolute -top-4 -left-4 w-10 h-10 bg-slate-800 text-white font-bold rounded-xl flex items-center justify-center">02</div>
+            <h4 className="font-bold text-slate-900 text-lg mb-3 mt-2">Neighborhood Matching</h4>
+            <p className="text-sm text-slate-600">K-Nearest Neighbors (K ≤ 6, adaptive to cohort size) with Cosine metric on scaled track vectors.</p>
+          </div>
+
+          <div className="bg-slate-50 p-6 rounded-3xl border border-slate-200 relative">
+            <div className="absolute -top-4 -left-4 w-10 h-10 bg-slate-800 text-white font-bold rounded-xl flex items-center justify-center">03</div>
+            <h4 className="font-bold text-slate-900 text-lg mb-3 mt-2">Hybrid Scoring</h4>
+            <p className="text-sm text-slate-600">Weighted fusion of content alignment, collaborative insight, and academic performance.</p>
+          </div>
+          
+          <div className="lg:col-span-3 flex flex-wrap justify-center gap-4 mt-2">
+            <div className="bg-green-50 px-6 py-3 rounded-full border border-green-200 flex items-center gap-3">
+              <TrendingUp className="w-5 h-5 text-green-600" />
+              <span className="text-sm font-bold text-slate-700">IN-TRACK WEIGHT ADJUSTMENT</span>
+              <span className="bg-green-600 text-white px-3 py-1 rounded-full text-xs font-bold">×1.3</span>
+            </div>
+            <div className="bg-red-50 px-6 py-3 rounded-full border border-red-200 flex items-center gap-3">
+              <TrendingUp className="w-5 h-5 text-red-600 transform scale-y-[-1]" />
+              <span className="text-sm font-bold text-slate-700">OFF-TRACK WEIGHT ADJUSTMENT</span>
+              <span className="bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold">×0.7</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Processing Pipeline */}
+        <div className="grid lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-3">
+             <h3 className="text-3xl font-bold text-slate-800 mb-8 text-center">Processing Pipeline</h3>
+          </div>
+          
+          <div className="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-sm flex flex-col items-center text-center">
+            <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center font-bold text-xl text-slate-400 mb-4">01</div>
+            <h4 className="font-bold text-slate-900 mb-3 uppercase tracking-wide">Data Ingestion</h4>
+            <p className="text-sm text-slate-600">Asynchronous fetching of student grades and catalog data from University APIs using FastAPI.</p>
+          </div>
+
+          <div className="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-sm flex flex-col items-center text-center">
+            <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center font-bold text-xl text-slate-400 mb-4">02</div>
+            <h4 className="font-bold text-slate-900 mb-3 uppercase tracking-wide">Vectorization</h4>
+            <p className="text-sm text-slate-600">Real-time scaling of student performance metrics using the pre-trained StandardScaler for feature alignment.</p>
+          </div>
+
+          <div className="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-sm flex flex-col items-center text-center">
+            <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center font-bold text-xl text-slate-400 mb-4">03</div>
+            <h4 className="font-bold text-slate-900 mb-3 uppercase tracking-wide">Confidence Calibration</h4>
+            <p className="text-sm text-slate-600">Sigmoid layer converts the confidence gap between top tracks into a calibrated, capped confidence score.</p>
+          </div>
+        </div>
+
+        {/* Track-Closeness Diversity Selection */}
+        <div className="bg-[#0B2A4A] p-8 rounded-3xl shadow-lg flex items-center gap-6 text-white">
+          <div className="bg-white/10 p-4 rounded-2xl shrink-0">
+            <Route className="w-10 h-10 text-blue-200" />
+          </div>
+          <div>
+            <h4 className="font-bold text-xl mb-2 text-white">TRACK-CLOSENESS DIVERSITY SELECTION</h4>
+            <p className="text-blue-100/80 leading-relaxed text-sm">
+              Traverses a per-track priority list (RELATED_TRACKS) outward from the dominant track, selecting the highest-ranked eligible course — academic closeness now outranks raw score for picks #2 and #3.
+            </p>
+          </div>
+        </div>
+
+        {/* Evaluation & Dataset Grid */}
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="space-y-6">
+            <div className="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-sm flex items-center justify-between">
+              <div>
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">EVALUATION & RELIABILITY</p>
+                <h4 className="font-bold text-slate-900">MAX CALIBRATED CONFIDENCE</h4>
+              </div>
+              <span className="text-4xl font-bold text-emerald-500">96.5%</span>
+            </div>
+            
+            <div className="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-sm flex items-center justify-between">
+              <div>
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">EVALUATION & RELIABILITY</p>
+                <h4 className="font-bold text-slate-900">TRAIN / INFERENCE FEATURE MATCH</h4>
+              </div>
+              <span className="text-4xl font-bold text-emerald-500">100%</span>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <div className="bg-slate-50 p-6 rounded-3xl border border-slate-200">
+              <h4 className="font-bold text-slate-900 mb-2 text-sm flex items-center gap-2"><Database className="w-4 h-4 text-slate-400"/> DATASET OVERVIEW</h4>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Track vectors are built from student profiles ingested via the live University API — the current model artifact is fit on 1,000 student records across 6 academic tracks and diverse course categories.
+              </p>
+            </div>
+            <div className="bg-slate-50 p-6 rounded-3xl border border-slate-200">
+              <h4 className="font-bold text-slate-900 mb-2 text-sm flex items-center gap-2"><TestTube2 className="w-4 h-4 text-slate-400"/> EVALUATION APPROACH</h4>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Wanees is a ranking engine, not a classifier — evaluated on latency, calibration, and train/inference consistency rather than accuracy or recall.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Latency Section */}
+        <div>
+          <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">RESPONSE LATENCY BY SCENARIO (MS)</h3>
+          <div className="grid md:grid-cols-2 gap-6">
+            
+            <div className="bg-emerald-50 border border-emerald-200 p-6 rounded-3xl">
+              <div className="flex items-center gap-3 mb-4 border-b border-emerald-100 pb-3">
+                <Check className="w-6 h-6 text-emerald-600" />
+                <h4 className="font-bold text-emerald-900 text-lg">Cache Hit</h4>
+              </div>
+              <ul className="space-y-3">
+                <li className="flex items-center gap-2 text-sm text-emerald-700 font-medium">
+                  <CheckCircle2 className="w-4 h-4" /> Served directly from TTL Cache
+                </li>
+              </ul>
+            </div>
+
+            <div className="bg-amber-50 border border-amber-200 p-6 rounded-3xl">
+              <div className="flex items-center gap-3 mb-4 border-b border-amber-100 pb-3">
+                <X className="w-6 h-6 text-amber-600" />
+                <h4 className="font-bold text-amber-900 text-lg">Cache Miss</h4>
+              </div>
+              <ul className="space-y-3">
+                <li className="flex items-center gap-2 text-sm text-amber-700 font-medium">
+                  <CheckCircle2 className="w-4 h-4" /> Fetch student data
+                </li>
+                <li className="flex items-center gap-2 text-sm text-amber-700 font-medium">
+                  <CheckCircle2 className="w-4 h-4" /> Hybrid recommendation
+                </li>
+                <li className="flex items-center gap-2 text-sm text-amber-700 font-medium">
+                  <CheckCircle2 className="w-4 h-4" /> Store in TTL Cache
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </PremiumSlideTemplate>
+  );
+};
+
+/* =========================================================================
+   8. Backend Page (Clean Architecture Onion Diagram)
+   ========================================================================= */
+const BackendPage = () => {
+  const OnionCard = ({ y, color, title, l1, l2, l3 }: any) => (
+    <g transform={`translate(640, ${y})`}>
+      <rect x="0" y="0" width="280" height={l3 ? 85 : 70} rx="8" fill="#FFFFFF" filter="url(#card-shadow)" />
+      <rect x="0" y="0" width="8" height={l3 ? 85 : 70} rx="4" fill={color} />
+      <rect x="4" y="0" width="4" height={l3 ? 85 : 70} fill={color} /> {/* Sharp inner corner */}
+      <text x="22" y="26" fontFamily="Georgia, serif" fontSize="20" fontWeight="bold" fill="#2C3338">{title}</text>
+      <text x="22" y="46" fontFamily="sans-serif" fontSize="12" fill="#6B7280">{l1}</text>
+      <text x="22" y="62" fontFamily="sans-serif" fontSize="12" fill="#6B7280">{l2}</text>
+      {l3 && <text x="22" y="78" fontFamily="sans-serif" fontSize="12" fill="#6B7280">{l3}</text>}
+    </g>
+  );
+
+  return (
+    <PremiumSlideTemplate>
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-5xl font-bold text-slate-900 mb-6 tracking-tight text-center">Backend Architecture</h2>
+        <p className="text-lg text-slate-500 text-center mb-10 max-w-3xl mx-auto">
+          Built on .NET 8 using standard Clean Architecture principles ensuring separation of concerns, scalability, and independent testing.
+        </p>
+        
+        <div className="w-full bg-[#F4F1EA] rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-slate-200/60 p-4">
+          <svg viewBox="0 0 1000 800" className="w-full h-auto font-sans">
+            <defs>
+              <filter id="card-shadow" x="-10%" y="-10%" width="120%" height="120%">
+                <feDropShadow dx="0" dy="4" stdDeviation="6" floodOpacity="0.06" floodColor="#000000" />
+              </filter>
+              <marker id="black-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M0,0 L10,5 L0,10 Z" fill="#2C3338" />
+              </marker>
+              {/* Radial Gradients to match the rich 3D onion effect */}
+              <radialGradient id="gradRed" cx="30%" cy="30%" r="70%">
+                <stop offset="0%" stopColor="#DE646F"/>
+                <stop offset="100%" stopColor="#C64A53"/>
+              </radialGradient>
+              <radialGradient id="gradOrange" cx="30%" cy="30%" r="70%">
+                <stop offset="0%" stopColor="#EAB058"/>
+                <stop offset="100%" stopColor="#D48E33"/>
+              </radialGradient>
+              <radialGradient id="gradYellow" cx="30%" cy="30%" r="70%">
+                <stop offset="0%" stopColor="#E6CA5B"/>
+                <stop offset="100%" stopColor="#CFAB36"/>
+              </radialGradient>
+              <radialGradient id="gradBlue" cx="30%" cy="30%" r="70%">
+                <stop offset="0%" stopColor="#75AFFF"/>
+                <stop offset="100%" stopColor="#4A88D9"/>
+              </radialGradient>
+              <radialGradient id="gradGreen" cx="30%" cy="30%" r="70%">
+                <stop offset="0%" stopColor="#A2D679"/>
+                <stop offset="100%" stopColor="#74B445"/>
+              </radialGradient>
+              <radialGradient id="gradCore" cx="30%" cy="30%" r="70%">
+                <stop offset="0%" stopColor="#96353B"/>
+                <stop offset="100%" stopColor="#6C1E21"/>
+              </radialGradient>
+            </defs>
+
+            {/* Background & Header */}
+            <rect width="100%" height="100%" fill="#F4F1EA" rx="16" />
+            <text x="40" y="65" fontFamily="Georgia, serif" fontSize="34" fontWeight="bold" fill="#2C3439">Rafeek — clean architecture</text>
+            <text x="40" y="90" fontFamily="sans-serif" fontSize="13" fill="#888C90">.NET 8 academic management system · onion layers, dependencies flow inward</text>
+            <line x1="40" y1="110" x2="960" y2="110" stroke="#E2DCD0" strokeWidth="1.5" />
+
+            {/* Circles (Center: 350, 420) */}
+            <circle cx="350" cy="420" r="280" fill="url(#gradRed)" stroke="#B9454E" strokeWidth="1" />
+            <circle cx="350" cy="420" r="220" fill="url(#gradOrange)" stroke="#C3812E" strokeWidth="1" />
+            <circle cx="350" cy="420" r="160" fill="url(#gradYellow)" stroke="#BC9B2E" strokeWidth="1" />
+            <circle cx="350" cy="420" r="100" fill="url(#gradBlue)" stroke="#3E7BCA" strokeWidth="1" />
+            <circle cx="350" cy="420" r="45" fill="url(#gradGreen)" stroke="#67A53A" strokeWidth="1" />
+            <circle cx="350" cy="420" r="14" fill="url(#gradCore)" />
+
+            {/* Glossy Reflection Sweeps (White Overlays) */}
+            <path d="M 120 280 C 180 160, 290 140, 450 180" fill="none" stroke="#FFFFFF" strokeWidth="10" strokeLinecap="round" opacity="0.15" />
+            <path d="M 140 300 C 190 180, 280 160, 420 200" fill="none" stroke="#FFFFFF" strokeWidth="4" strokeLinecap="round" opacity="0.3" />
+            <path d="M 160 320 C 200 200, 270 180, 390 220" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" opacity="0.4" />
+
+            {/* Colored Connector Lines (Straight) */}
+            <line x1="330" y1="141" x2="640" y2="155" stroke="#D75A65" strokeWidth="1.5" />
+            <line x1="330" y1="201" x2="640" y2="275" stroke="#DF9E46" strokeWidth="1.5" />
+            <line x1="330" y1="261" x2="640" y2="385" stroke="#D5B345" strokeWidth="1.5" />
+            <line x1="330" y1="322" x2="640" y2="497" stroke="#5390E5" strokeWidth="1.5" />
+            <line x1="330" y1="380" x2="640" y2="615" stroke="#84C15A" strokeWidth="1.5" />
+
+            {/* Black Inward Dependency Arrows (Straight Vertical Chain at x=330) */}
+            <line x1="330" y1="80"  x2="330" y2="135" stroke="#2C3338" strokeWidth="3" markerEnd="url(#black-arrow)" />
+            <line x1="330" y1="141" x2="330" y2="195" stroke="#2C3338" strokeWidth="3" markerEnd="url(#black-arrow)" />
+            <line x1="330" y1="201" x2="330" y2="255" stroke="#2C3338" strokeWidth="3" markerEnd="url(#black-arrow)" />
+            <line x1="330" y1="261" x2="330" y2="316" stroke="#2C3338" strokeWidth="3" markerEnd="url(#black-arrow)" />
+            <line x1="330" y1="322" x2="330" y2="374" stroke="#2C3338" strokeWidth="3" markerEnd="url(#black-arrow)" />
+
+            {/* Information Cards (Legend/Details) */}
+            <OnionCard y={120} color="#D75A65" title="Rafeek.API" l1="Controllers, middleware" l2="JWT auth, routing" />
+            <OnionCard y={240} color="#DF9E46" title="Rafeek.Infrastructure" l1="Repositories, Identity" l2="Email, AI client, validators" />
+            <OnionCard y={350} color="#D5B345" title="Rafeek.Persistence" l1="DbContexts, migrations" l2="Seeder (Bogus, idempotent)" />
+            <OnionCard y={455} color="#5390E5" title="Rafeek.Application" l1="CQRS/MediatR, DTOs" l2="Validators, AutoMapper" l3="Localization (ar/en)" />
+            <OnionCard y={580} color="#84C15A" title="Rafeek.Domain" l1="Entities, enums" l2="BaseEntity, repo interfaces" />
+
+            {/* Footer Elements */}
+            <line x1="40" y1="740" x2="960" y2="740" stroke="#E2DCD0" strokeWidth="1.5" />
+            
+            <g transform="translate(40, 765)" fontFamily="sans-serif" fontSize="12" fill="#6B7280">
+              <circle cx="10" cy="-4" r="7" fill="#D75A65" />
+              <text x="25" y="0">API — outermost</text>
+              
+              <circle cx="150" cy="-4" r="7" fill="#DF9E46" />
+              <text x="165" y="0">Infrastructure</text>
+              
+              <circle cx="280" cy="-4" r="7" fill="#D5B345" />
+              <text x="295" y="0">Persistence</text>
+              
+              <circle cx="390" cy="-4" r="7" fill="#5390E5" />
+              <text x="405" y="0">Application</text>
+              
+              <circle cx="510" cy="-4" r="7" fill="#84C15A" />
+              <text x="525" y="0">Domain — innermost</text>
+            </g>
+
+            <text x="40" y="790" fontFamily="Georgia, serif" fontStyle="italic" fontSize="13" fill="#888C90">
+              Dependencies flow inward, ring by ring, toward Domain at the center.
+            </text>
+          </svg>
+        </div>
+      </div>
+    </PremiumSlideTemplate>
+  );
+};
+
+/* =========================================================================
+   9. Frontend & Dashboard UI Page
+   ========================================================================= */
+const FrontendPage = () => {
+  // Chart Data for Framework Popularity (Updated to exactly match the provided image)
+  const frameworks = [
+    { name: 'Node.js', value: 40.8 },
+    { name: 'React', value: 39.5, highlight: true },
+    { name: 'jQuery', value: 21.4 },
+    { name: 'Next.js', value: 17.9 },
+    { name: 'Express', value: 17.8 },
+    { name: 'Angular', value: 17.1 },
+    { name: 'ASP.NET CORE', value: 16.9 },
+    { name: 'Vue.js', value: 15.4 },
+    { name: 'ASP.NET', value: 12.9 },
+    { name: 'Flask', value: 12.9 },
+    { name: 'Spring Boot', value: 12.7 },
+    { name: 'Django', value: 12.0 },
+    { name: 'WordPress', value: 11.8 },
+  ];
+
+  // Circular Gauge Component for Lighthouse
+  const CircularGauge = ({ score, label, colorClass }: any) => {
+    const radius = 32;
+    const circumference = 2 * Math.PI * radius;
+    const strokeDashoffset = circumference - (score / 100) * circumference;
+    const isGreen = score >= 90;
+    const color = isGreen ? '#0CCE6B' : '#FFA400';
+
+    return (
+      <div className="flex flex-col items-center">
+        <div className="relative w-20 h-20">
+          <svg className="w-full h-full transform -rotate-90">
+            <circle cx="40" cy="40" r={radius} stroke="#F1F5F9" strokeWidth="6" fill="none" />
+            <circle 
+              cx="40" cy="40" r={radius} 
+              stroke={color} 
+              strokeWidth="6" 
+              fill="none" 
+              strokeDasharray={circumference} 
+              strokeDashoffset={strokeDashoffset} 
+              strokeLinecap="round" 
+              className="transition-all duration-1000 ease-out"
+            />
+          </svg>
+          <div className={`absolute inset-0 flex items-center justify-center font-bold text-xl ${isGreen ? 'text-emerald-500' : 'text-amber-500'}`}>
+            {score}
+          </div>
+        </div>
+        <span className="text-xs text-slate-600 mt-2 font-medium">{label}</span>
+      </div>
+    );
+  };
+
+  return (
+    <PremiumSlideTemplate>
+      <div className="max-w-7xl mx-auto space-y-20">
+        
+        <div className="text-center">
+          <h2 className="text-5xl font-bold text-slate-900 mb-4 tracking-tight">Frontend Architecture & UI</h2>
+          <p className="text-xl text-slate-500 font-medium">Cross-platform integration, responsive dashboards, and modern web frameworks.</p>
+        </div>
+
+        {/* Section 1: Tech Stack Logos & Framework Popularity */}
+        <div className="grid lg:grid-cols-2 gap-8 items-stretch">
+          
+          <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200/60 flex flex-col justify-center">
+            <h3 className="text-2xl font-bold text-slate-800 mb-8 text-center flex items-center justify-center gap-3">
+              <Layers className="w-6 h-6 text-indigo-500" />
+              Core Technologies
+            </h3>
+            <div className="flex flex-wrap gap-4 justify-center">
+              {/* Tech Badges to simulate logos */}
+              <span className="px-5 py-2.5 bg-orange-100 text-orange-700 font-bold rounded-xl border border-orange-200 shadow-sm text-sm">HTML5</span>
+              <span className="px-5 py-2.5 bg-blue-100 text-blue-700 font-bold rounded-xl border border-blue-200 shadow-sm text-sm">CSS3</span>
+              <span className="px-5 py-2.5 bg-teal-100 text-teal-700 font-bold rounded-xl border border-teal-200 shadow-sm text-sm">Tailwind CSS</span>
+              <span className="px-5 py-2.5 bg-blue-50 text-blue-800 font-bold rounded-xl border border-blue-300 shadow-sm text-sm">TypeScript</span>
+              <span className="px-5 py-2.5 bg-cyan-100 text-cyan-700 font-bold rounded-xl border border-cyan-200 shadow-sm text-sm">React</span>
+              <span className="px-5 py-2.5 bg-purple-100 text-purple-700 font-bold rounded-xl border border-purple-200 shadow-sm text-sm">Vite</span>
+              <span className="px-5 py-2.5 bg-red-50 text-red-700 font-bold rounded-xl border border-red-200 shadow-sm text-sm">React Router</span>
+              <span className="px-5 py-2.5 bg-amber-100 text-amber-800 font-bold rounded-xl border border-amber-300 shadow-sm text-sm">🐻 Zustand</span>
+              <span className="px-5 py-2.5 bg-indigo-50 text-indigo-700 font-bold rounded-xl border border-indigo-200 shadow-sm text-sm">Axios</span>
+            </div>
+          </div>
+
+          <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200/60 flex flex-col justify-center relative overflow-hidden">
+            {/* Background pattern matching the slide */}
+            <div className="absolute -right-10 -bottom-10 opacity-5">
+              <svg width="200" height="200" viewBox="0 0 100 100"><path d="M50 0 A50 50 0 1 1 50 100 A50 50 0 1 1 50 0" stroke="#000" strokeWidth="2" fill="none"/></svg>
+            </div>
+            
+            <h3 className="text-sm font-bold text-slate-800 mb-6 text-center">Most used web frameworks among developers worldwide, as of 2024</h3>
+            <div className="space-y-1.5 z-10 relative">
+              {frameworks.map((f, i) => (
+                <div key={i} className="flex items-center text-xs">
+                  <span className={`w-32 text-right pr-3 ${f.highlight ? 'font-bold text-blue-600' : 'text-slate-600'}`}>{f.name}</span>
+                  <div className="flex-1 bg-slate-100 h-5 rounded-r-md overflow-hidden flex items-center relative">
+                    <div 
+                      className={`h-full flex items-center justify-end pr-2 text-white text-[10px] font-bold ${f.highlight ? 'bg-blue-600' : 'bg-blue-400'}`} 
+                      style={{width: `${f.value * 2.2}%`}} // scaled up for visual balance
+                    >
+                      {f.value}%
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+        </div>
+
+        {/* Section 2: Lighthouse Benchmarks */}
+        <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200/60">
+          <div className="flex items-center justify-center gap-3 mb-8 pb-4 border-b border-slate-100">
+            <Search className="w-5 h-5 text-emerald-500" />
+            <h3 className="text-2xl font-bold text-slate-800">Diagnose performance issues</h3>
+          </div>
+          
+          <div className="flex flex-wrap justify-center gap-12 sm:gap-20">
+            <CircularGauge score={98} label="Performance" />
+            <CircularGauge score={76} label="Accessibility" />
+            <CircularGauge score={96} label="Best Practices" />
+            <CircularGauge score={92} label="SEO" />
+          </div>
+
+          <div className="mt-12 text-center max-w-md mx-auto">
+            <div className="relative inline-block">
+              <svg width="140" height="140" viewBox="0 0 80 80" className="transform -rotate-90">
+                <circle cx="40" cy="40" r="34" stroke="#F1F5F9" strokeWidth="6" fill="none" />
+                <circle cx="40" cy="40" r="34" stroke="#0CCE6B" strokeWidth="6" fill="none" strokeDasharray={213} strokeDashoffset={213 - (98/100)*213} strokeLinecap="round" />
+              </svg>
+              <div className="absolute inset-0 flex items-center justify-center text-4xl font-bold text-emerald-500">98</div>
+            </div>
+            <h4 className="text-xl font-bold text-slate-800 mt-2">Performance</h4>
+            <p className="text-xs text-slate-400 mt-2">Values are estimated and may vary. The performance score is calculated directly from these metrics.</p>
+          </div>
+        </div>
+
+        {/* Section 3: UI Dashboards */}
+        <div>
+          <h3 className="text-3xl font-bold text-slate-800 mb-8 text-center">Responsive User Interface</h3>
+          <div className="grid md:grid-cols-4 gap-8 items-center">
+            
+            {/* Desktop View */}
+            <div className="md:col-span-3 rounded-[2rem] overflow-hidden border border-slate-200 shadow-xl bg-white p-2">
+              <div className="w-full bg-slate-100 rounded-t-xl h-8 flex items-center px-4 gap-2 mb-2">
+                <div className="w-3 h-3 rounded-full bg-red-400"></div>
+                <div className="w-3 h-3 rounded-full bg-amber-400"></div>
+                <div className="w-3 h-3 rounded-full bg-green-400"></div>
+              </div>
+              <img src="photo_2026-07-14_22-11-18.jpg" alt="Desktop Dashboard UI" className="w-full h-auto rounded-b-xl border border-slate-100" />
+            </div>
+
+            {/* Mobile View */}
+            <div className="md:col-span-1 mx-auto max-w-[280px]">
+              <div className="rounded-[2.5rem] overflow-hidden border-8 border-slate-800 shadow-2xl relative bg-white">
+                <div className="absolute top-0 inset-x-0 h-6 bg-slate-800 rounded-b-xl w-32 mx-auto z-10"></div> {/* Notch */}
+                <img src="photo_2026-07-14_22-11-20.jpg" alt="Mobile Dashboard UI" className="w-full h-auto object-cover" />
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Section 4: Hydration Error Handling */}
+        <div>
+          <h3 className="text-3xl font-bold text-slate-800 mb-8 text-center">Hydration State Management</h3>
+          <div className="max-w-4xl mx-auto rounded-[2rem] overflow-hidden border border-slate-200 shadow-xl bg-white p-2">
+            {/* Browser Header Mockup */}
+            <div className="w-full bg-slate-100 rounded-t-xl h-8 flex items-center px-4 gap-2 mb-2">
+              <div className="w-3 h-3 rounded-full bg-red-400"></div>
+              <div className="w-3 h-3 rounded-full bg-amber-400"></div>
+              <div className="w-3 h-3 rounded-full bg-green-400"></div>
+              <div className="flex-1 ml-4 bg-white/50 h-4 rounded-full"></div>
+            </div>
+            {/* 
+               Hydration Image (Replace the src with your actual hydration image name if different) 
+               The user was instructed to name the image 'hydration.jpg' in the project folder.
+            */}
+            <img src="hydration.jpg" alt="Hydration State Mismatch Error Handling" className="w-full h-auto rounded-b-xl border border-slate-100" />
+          </div>
+        </div>
+
+      </div>
+    </PremiumSlideTemplate>
+  );
+};
+
+/* =========================================================================
+   10. Running Project (Live Demo)
    ========================================================================= */
 const RunningProjectPage = () => (
   <PremiumSlideTemplate>
@@ -281,23 +1221,14 @@ const RunningProjectPage = () => (
 );
 
 /* =========================================================================
-   6. System Design (Custom UML Render Engines)
+   11. System Design (Custom UML Render Engines)
    ========================================================================= */
 
-const MultiText = ({ x, y, text, fontSize=12, fill="#0F172A", fontWeight="normal" }: any) => {
-  const lines = text.split('\n');
-  return (
-    <text x={x} y={y} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fontWeight={fontWeight} fill={fill}>
-      {lines.map((l: string, i: number) => <tspan x={x} dy={i === 0 ? `-${(lines.length-1)*0.5}em` : "1.2em"} key={i}>{l}</tspan>)}
-    </text>
-  );
-}
-
-// 1. PERFECTLY ALIGNED ARCHITECTURE DIAGRAM (Academic Advisor -> Web Portal Fixed)
+// 1. PERFECTLY ALIGNED ARCHITECTURE DIAGRAM
 const CodeArchitectureDiagram = () => (
   <div className="w-full bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200/60 overflow-x-auto mb-16">
     <h3 className="text-2xl font-semibold text-slate-800 mb-8 text-center">System Architecture</h3>
-    <svg viewBox="0 0 1150 500" className="w-full h-auto min-w-[900px] font-sans">
+    <svg viewBox="0 0 1150 500" className="w-full h-auto font-sans">
       <defs>
         <marker id="arr-blue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#64748B"/></marker>
         <marker id="arr-blue-rev" markerWidth="10" markerHeight="10" refX="1" refY="5" orient="auto"><path d="M10,0 L0,5 L10,10 Z" fill="#64748B"/></marker>
@@ -339,9 +1270,6 @@ const CodeArchitectureDiagram = () => (
             <text x="130" y={mod.y+17.5} textAnchor="middle" dominantBaseline="middle" fontSize="12" fontWeight="600" fill="#065F46">{mod.label}</text>
           </g>
         ))}
-        
-        <rect x="0" y="360" width="260" height="60" rx="12" fill="#FEF2F2" stroke="#EF4444" strokeWidth="2" />
-        <MultiText x={130} y={390} text="University SIS\n(Ibn Al-Haitham)" fontSize="13" fontWeight="bold" fill="#B91C1C" />
       </g>
       
       {/* COLUMN 4: AI & DATABASES */}
@@ -368,33 +1296,16 @@ const CodeArchitectureDiagram = () => (
       </g>
       
       {/* SMOOTH CURVED CONNECTIONS */}
-      {/* Student (160, 85) to Mobile App (280, 100) */}
       <path d="M 160 85 C 220 85, 220 100, 280 100" fill="none" stroke="#64748B" strokeWidth="2" markerEnd="url(#arr-blue)" />
-      {/* Student (160, 85) to Web Portal (280, 240) */}
       <path d="M 160 85 C 220 85, 220 240, 280 240" fill="none" stroke="#64748B" strokeWidth="2" markerEnd="url(#arr-blue)" />
-      
-      {/* Academic Advisor (160, 185) to Web Portal (280, 240) */}
       <path d="M 160 185 C 220 185, 220 240, 280 240" fill="none" stroke="#64748B" strokeWidth="2" markerEnd="url(#arr-blue)" />
-      
-      {/* Instructor (160, 285) to Web Portal (280, 240) */}
       <path d="M 160 285 C 220 285, 220 240, 280 240" fill="none" stroke="#64748B" strokeWidth="2" markerEnd="url(#arr-blue)" />
-      
-      {/* Admin (160, 385) to Web Portal (280, 240) */}
       <path d="M 160 385 C 220 385, 220 240, 280 240" fill="none" stroke="#64748B" strokeWidth="2" markerEnd="url(#arr-blue)" />
       
-      {/* Mobile App <-> ASP.NET */}
       <line x1="460" y1="100" x2="560" y2="100" stroke="#64748B" strokeWidth="2" markerEnd="url(#arr-blue)" markerStart="url(#arr-blue-rev)" />
-      
-      {/* Web Portal <-> ASP.NET */}
       <line x1="460" y1="240" x2="560" y2="240" stroke="#64748B" strokeWidth="2" markerEnd="url(#arr-blue)" markerStart="url(#arr-blue-rev)" />
       
-      {/* ASP.NET <-> SIS */}
-      <line x1="690" y1="320" x2="690" y2="360" stroke="#64748B" strokeWidth="2" markerEnd="url(#arr-blue)" markerStart="url(#arr-blue-rev)" />
-      
-      {/* ASP.NET <-> AI Engine */}
       <line x1="820" y1="135" x2="900" y2="135" stroke="#64748B" strokeWidth="2" markerEnd="url(#arr-blue)" markerStart="url(#arr-blue-rev)" />
-      
-      {/* ASP.NET <-> Persistence */}
       <path d="M 820 280 C 860 280, 860 325, 900 325" fill="none" stroke="#64748B" strokeWidth="2" markerEnd="url(#arr-blue)" markerStart="url(#arr-blue-rev)" />
     </svg>
   </div>
@@ -405,13 +1316,12 @@ const UMLClass = ({ title, data }: any) => {
   return (
     <div className="w-full bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200/60 overflow-x-auto mb-16">
       <h3 className="text-2xl font-semibold text-slate-800 mb-6 text-center">{title}</h3>
-      <svg viewBox="0 0 1600 1100" className="w-full h-auto min-w-[1200px] font-sans">
+      <svg viewBox="0 0 1600 1100" className="w-full h-auto font-sans">
         <defs>
           <marker id="arr-class" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#000"/></marker>
           <marker id="arr-hollow" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto"><polygon points="0,0 12,6 0,12" fill="#fff" stroke="#000" strokeWidth="1.5"/></marker>
         </defs>
         
-        {/* Draw the geometric paths connecting the boxes */}
         {data.links.map((l:any, i:number) => (
           <g key={`l${i}`}>
             <path d={l.path} fill="none" stroke="#000" strokeWidth="1.5" strokeDasharray={l.d ? "6,6" : "none"} markerEnd={l.type === 'inherit' ? "url(#arr-hollow)" : (l.type === 'assoc' ? "url(#arr-class)" : "none")} />
@@ -420,7 +1330,6 @@ const UMLClass = ({ title, data }: any) => {
           </g>
         ))}
         
-        {/* Draw the class boxes precisely on the grid */}
         {data.classes.map((c:any, i:number) => {
           const w = 150;
           const h = 30 + (c.a.length * 15) + 10 + (c.m.length * 15) + 10;
@@ -444,7 +1353,7 @@ const UMLClass = ({ title, data }: any) => {
 const UMLActivityAuth = () => (
   <div className="w-full bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200/60 overflow-x-auto mb-16">
     <h3 className="text-2xl font-semibold text-slate-800 mb-6 text-center">Activity Diagram: User Authentication & Flow</h3>
-    <svg viewBox="0 0 1200 1100" className="w-full h-auto min-w-[1000px] font-sans bg-[#ffffe0]">
+    <svg viewBox="0 0 1200 1100" className="w-full h-auto font-sans bg-[#ffffe0]">
       <defs><marker id="arr-red" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ff0000"/></marker></defs>
       
       {/* Node Helper */}
@@ -452,11 +1361,11 @@ const UMLActivityAuth = () => (
       <path d="M 600 54 V 80" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
       
       <rect x="520" y="80" width="160" height="46" rx="23" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
-      <MultiText x={600} y={103} text="Authentication\nPhase" fontSize="12" />
+      <MultiText x={600} y={103} text={"Authentication\nPhase"} fontSize="12" />
       <path d="M 600 126 V 160" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
 
       <rect x="520" y="160" width="160" height="46" rx="23" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
-      <MultiText x={600} y={183} text="Enter Login\nCredentials" fontSize="12" />
+      <MultiText x={600} y={183} text={"Enter Login\nCredentials"} fontSize="12" />
       <path d="M 600 206 V 240" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
 
       <polygon points="600,240 640,265 600,290 560,265" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
@@ -501,7 +1410,7 @@ const UMLActivityAuth = () => (
 
       {/* Col 2 */}
       <rect x="270" y="530" width="120" height="46" rx="23" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
-      <MultiText x={330} y={553} text="Reminder of\nimportant events" fontSize="11" />
+      <MultiText x={330} y={553} text={"Reminder of\nimportant events"} fontSize="11" />
       <path d="M 330 576 V 980" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
 
       {/* Col 3 */}
@@ -516,7 +1425,7 @@ const UMLActivityAuth = () => (
       <path d="M 540 625 H 580" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
       
       <rect x="580" y="602" width="100" height="46" rx="23" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
-      <MultiText x={630} y={625} text="Only academic\nquestion" fontSize="10" />
+      <MultiText x={630} y={625} text={"Only academic\nquestion"} fontSize="10" />
       
       <text x="520" y="665" dominantBaseline="middle" fontSize="12" fill="#000">yes</text>
       <path d="M 510 650 V 680" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
@@ -527,27 +1436,27 @@ const UMLActivityAuth = () => (
 
       {/* Col 4 */}
       <rect x="630" y="530" width="120" height="46" rx="23" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
-      <MultiText x={690} y={553} text="Performance\ntracker" fontSize="12" />
+      <MultiText x={690} y={553} text={"Performance\ntracker"} fontSize="12" />
       <path d="M 690 576 V 980" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
 
       {/* Col 5 */}
       <rect x="740" y="580" width="90" height="46" rx="20" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
-      <MultiText x={785} y={603} text="View courses\ndetails" fontSize="11" />
+      <MultiText x={785} y={603} text={"View courses\ndetails"} fontSize="11" />
       <path d="M 785 626 V 980" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
       
       <path d="M 870 530 V 555 H 910 V 580" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
       <path d="M 870 530 V 555 H 785 V 580" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
 
       <rect x="860" y="580" width="100" height="46" rx="20" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
-      <MultiText x={910} y={603} text="Enroll in\ncourses" fontSize="11" />
+      <MultiText x={910} y={603} text={"Enroll in\ncourses"} fontSize="11" />
       <path d="M 910 626 V 650" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
       
       <rect x="860" y="650" width="100" height="46" rx="20" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
-      <MultiText x={910} y={673} text="Recommend\ncourses" fontSize="11" />
+      <MultiText x={910} y={673} text={"Recommend\ncourses"} fontSize="11" />
       <path d="M 910 696 V 720" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
       
       <rect x="860" y="720" width="100" height="46" rx="20" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
-      <MultiText x={910} y={743} text="Generate smart\ntable" fontSize="11" />
+      <MultiText x={910} y={743} text={"Generate smart\ntable"} fontSize="11" />
       <path d="M 910 766 V 790" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
 
       <polygon points="910,790 940,815 910,840 880,815" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
@@ -561,7 +1470,7 @@ const UMLActivityAuth = () => (
       <path d="M 910 840 V 870" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
 
       <rect x="860" y="870" width="100" height="46" rx="20" fill="#ffff99" stroke="#ff0000" strokeWidth="2" />
-      <MultiText x={910} y={893} text="Save\nregistration" fontSize="11" />
+      <MultiText x={910} y={893} text={"Save\nregistration"} fontSize="11" />
       <path d="M 910 916 V 980" fill="none" stroke="#ff0000" strokeWidth="2" markerEnd="url(#arr-red)" />
 
       {/* C6 */}
@@ -589,7 +1498,7 @@ const UMLActivityAuth = () => (
 const UMLUseCase = ({ title, data, w=1000, h=950 }: any) => (
   <div className="w-full bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200/60 overflow-x-auto mb-16">
     <h3 className="text-2xl font-semibold text-slate-800 mb-6 text-center">{title}</h3>
-    <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-auto min-w-[800px] font-sans">
+    <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-auto font-sans">
       <defs><marker id="arr-uc" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#000"/></marker></defs>
       
       {/* System Boundary */}
@@ -638,13 +1547,13 @@ const UMLSequence = ({ title, data }: any) => {
   return (
     <div className="w-full bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200/60 overflow-x-auto mb-16">
       <h3 className="text-2xl font-semibold text-slate-800 mb-6 text-center">{title}</h3>
-      <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-auto min-w-[800px] font-sans">
+      <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-auto font-sans">
         <defs><marker id="arr-seq" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#000"/></marker></defs>
         {data.lifelines.map((l: string, i: number) => {
           const cx = i * colW + colW/2;
           return (
             <g key={i}>
-              {l.includes("User") || l.includes("Actor") ? (
+              {l.includes("User") || l.includes("Actor") || l.includes("Student") ? (
                 <g transform={`translate(${cx}, 30)`}>
                   <circle cx="0" cy="-15" r="7" fill="none" stroke="#000" strokeWidth="2" />
                   <line x1="0" y1="-8" x2="0" y2="10" stroke="#000" strokeWidth="2" />
@@ -811,12 +1720,17 @@ const dataSeqChatbot = {
   ]
 };
 
-const dataSeqAlerts = {
-  lifelines: ["Actor", "Student Dashboard", "AlertService", "NotificationService", "EvenMonitor", "GradSystem"],
+const dataSeqSmartSchedule = {
+  lifelines: ["Student", "UI", "AI Engine", "Database"],
   msgs: [
-    { f: 5, t: 4, l: "Student grad drops below threshold" }, { f: 4, t: 2, l: "Trigger Grade drop Alert" },
-    { f: 2, t: 2, l: "generate drop alert", self: true }, { f: 2, t: 3, l: "send grade drop notification" },
-    { f: 3, t: 1, l: "display grade drop alert", d: true }, { f: 1, t: 0, l: "Show Grade Alert", d: true }
+    { f: 0, t: 1, l: "Request Smart Schedule" },
+    { f: 1, t: 3, l: "Fetch selected course details" },
+    { f: 3, t: 1, l: "Return course data", d: true },
+    { f: 1, t: 2, l: "Send Courses data for scheduling" },
+    { f: 2, t: 2, l: "Conflict-free schedule", self: true },
+    { f: 2, t: 1, l: "Return optimized schedule", d: true },
+    { f: 1, t: 1, l: "Format Schedule", self: true },
+    { f: 1, t: 0, l: "Display schedule", d: true }
   ]
 };
 
@@ -833,14 +1747,14 @@ const SystemDesignPage = () => {
         <UMLUseCase title="Global Use Case Diagram (Admin, Advisor, Agent)" data={dataUC2} h={1000} />
         <UMLActivityAuth />
         <UMLSequence title="Sequence Diagram (Chatbot)" data={dataSeqChatbot} />
-        <UMLSequence title="Sequence Diagram (Alerts)" data={dataSeqAlerts} />
+        <UMLSequence title="Sequence Diagram (Smart Schedule)" data={dataSeqSmartSchedule} />
       </div>
     </PremiumSlideTemplate>
   );
 };
 
 /* =========================================================================
-   7. Used Technologies, Tools and Algorithms
+   12. Used Technologies, Tools and Algorithms
    ========================================================================= */
 const TechStackPage = () => {
   const categories = [
@@ -878,7 +1792,7 @@ const TechStackPage = () => {
 };
 
 /* =========================================================================
-   8. Time Plan
+   13. Time Plan
    ========================================================================= */
 const TimePlanPage = () => {
   const plan = [
@@ -920,7 +1834,7 @@ const TimePlanPage = () => {
 };
 
 /* =========================================================================
-   9. Team Roles
+   14. Team Roles
    ========================================================================= */
 const TeamRolesPage = () => {
   const teamRoles = [
@@ -963,7 +1877,7 @@ const TeamRolesPage = () => {
 };
 
 /* =========================================================================
-   10. References
+   15. References
    ========================================================================= */
 const ReferencesPage = () => {
   const references = [
@@ -1002,6 +1916,48 @@ const ReferencesPage = () => {
 export default function App() {
   const [currentPage, setCurrentPage] = useState('landing');
 
+  // KEYBOARD NAVIGATION STATE (PRESENTATION MODE)
+  const slideOrder = [
+    'landing',
+    'problem',
+    'goals',
+    'previous-work',
+    'tech-stack',
+    'chatbot',
+    'smart-timetable',
+    'recommendation-system',
+    'backend',
+    'frontend',
+    'system-design',
+    'bmc',
+    'running-project',
+    'time-plan',
+    'team-roles',
+    'references'
+  ];
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Prevent changing slides if typing in an input (just a safeguard)
+      if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement).tagName)) return;
+
+      const currentIndex = slideOrder.indexOf(currentPage);
+
+      if (e.key === 'ArrowRight') {
+        if (currentIndex < slideOrder.length - 1) {
+          setCurrentPage(slideOrder[currentIndex + 1]);
+        }
+      } else if (e.key === 'ArrowLeft') {
+        if (currentIndex > 0) {
+          setCurrentPage(slideOrder[currentIndex - 1]);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentPage]);
+
   if (currentPage === 'landing') {
     return (
       <main className="min-h-screen w-full bg-white">
@@ -1021,6 +1977,11 @@ export default function App() {
       {currentPage === 'goals' && <ProjectGoalsPage />}
       {currentPage === 'bmc' && <BusinessModelCanvasPage />}
       {currentPage === 'previous-work' && <PreviousWorkPage />}
+      {currentPage === 'chatbot' && <ChatbotPage />}
+      {currentPage === 'smart-timetable' && <SmartTimetablePage />}
+      {currentPage === 'recommendation-system' && <RecommendationSystemPage />}
+      {currentPage === 'backend' && <BackendPage />}
+      {currentPage === 'frontend' && <FrontendPage />}
       {currentPage === 'running-project' && <RunningProjectPage />}
       {currentPage === 'system-design' && <SystemDesignPage />}
       {currentPage === 'tech-stack' && <TechStackPage />}
